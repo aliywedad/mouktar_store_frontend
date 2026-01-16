@@ -1,0 +1,130 @@
+<role *ngIf="!UserHaveRole && !isLoading"></role>
+<html dir="rtl" lang="ar" *ngIf="UserHaveRole">
+  <mat-card class="cardWithShadow">
+    <mat-card-content class="mat-card-content">
+      <!-- Title -->
+      <mat-card-title class="title">قائمة الديون</mat-card-title>
+
+      <!-- Search and Add -->
+      <div class="row align-items-center">
+        <div class="row">
+          <div class="col-8">
+            <input class="search" placeholder="ابحث  " />
+          </div>
+          <div class="col-4">
+            <button class="search-btn" (click)="goToAddPage()">
+              إضافة دين
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="t">
+        <!-- <span class="title-sale">المنتج الأكثر بيعا هذا الأسبوع </span> -->
+        <span class="p-title"> مجموع الديون </span>
+        <mat-progress-spinner
+          mode="indeterminate"
+          diameter="16"
+          strokeWidth="4"
+          color="primary"
+          *ngIf="!totale_debts"
+        ></mat-progress-spinner>
+        <div *ngIf="totale_debts">
+          <span class="sale-value" *ngIf="totale_debts"
+            >{{ totale_debts | number : "1.0-2" }}
+          </span>
+        </div>
+      </div>
+
+      <!-- Loader -->
+      <loading *ngIf="isLoading"></loading>
+
+      <!-- Debts Table -->
+      <div
+        *ngIf="!isLoading && debts && debts?.length"
+        class="table-responsive"
+      >
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th>اسم المدين</th>
+              <th>الوصف</th>
+              <th>الهاتف</th>
+              <th>المبلغ الأصلي</th>
+              <th>الالمحفظة الحالي</th>
+              <th>تاريخ الإنشاء</th>
+              <th class="text-center">الإجراءات</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              *ngFor="let debt of debts; trackBy: trackById"
+              class="align-middle"
+            >
+              <td
+                [ngClass]="{ done: debt.done && debt.balance == 0 }"
+                class="nowrap"
+              >
+                {{ debt.name }}
+              </td>
+              <td
+                [ngClass]="{ done: debt.done && debt.balance == 0 }"
+                class="nowrap"
+              >
+                {{ debt.description || "---" }}
+              </td>
+              <td [ngClass]="{ done: debt.done && debt.balance == 0 }">
+                {{ debt.phone || "---" }}
+              </td>
+              <td [ngClass]="{ done: debt.done && debt.balance == 0 }">
+                {{ debt.initAmount | number : "1.0-2" }} MRU
+              </td>
+              <td [ngClass]="{ done: debt.done && debt.balance == 0 }">
+                {{ debt.balance | number : "1.0-2" }} MRU
+              </td>
+              <td
+                [ngClass]="{ done: debt.done && debt.balance == 0 }"
+                dir="ltr"
+              >
+                {{ debt.created_at | date : "yyyy-MM-dd HH:mm" }}
+              </td>
+
+              <!-- Actions Column -->
+              <td class="text-center">
+                <button
+                  mat-icon-button
+                  [matMenuTriggerFor]="menu"
+                  aria-label="خيارات الدين"
+                >
+                  <mat-icon>more_vert</mat-icon>
+                </button>
+                <mat-menu #menu="matMenu">
+                  <!-- <button mat-menu-item>
+                    <mat-icon>edit</mat-icon>
+                    <span>تعديل</span>
+                  </button> -->
+                  <!-- <button mat-menu-item>
+                    <mat-icon>delete</mat-icon>
+                    <span>حذف</span>
+                  </button> -->
+                  <button mat-menu-item (click)="goToDetailsPage(debt.id)">
+                    <mat-icon>visibility</mat-icon>
+                    <span>عرض التفاصيل</span>
+                  </button>
+                </mat-menu>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- No Debts -->
+      <div
+        *ngIf="!isLoading && (!debts || debts.length === 0)"
+        class="text-center p-4"
+      >
+        <mat-icon color="warn" fontSize="40">account_balance</mat-icon>
+        <p class="m-t-8">لا توجد ديون مضافة بعد</p>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</html>

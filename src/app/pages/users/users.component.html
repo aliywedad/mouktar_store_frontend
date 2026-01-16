@@ -1,0 +1,91 @@
+<role *ngIf="!UserHaveRole && !isLoading"></role>
+<html dir="rtl" lang="ar" *ngIf="UserHaveRole">
+  <mat-card class="cardWithShadow">
+    <mat-card-content class="mat-card-content">
+      <mat-card-title class="title">قائمة المستخدمين</mat-card-title>
+      <div class="row">
+        <div class="col-8">
+          <input
+            class="search"
+            placeholder="ابحث عن مستخدم"
+            [formControl]="filterControl"
+          />
+        </div>
+        <div class="col-4">
+          <button class="search-btn" (click)="goToAddPage()">
+            إضافة مستخدم
+          </button>
+        </div>
+      </div>
+      <loading *ngIf="isLoading"></loading>
+      <div *ngIf="!isLoading" class="table-responsive">
+        <table class="table table-hover">
+          <!-- Table Head -->
+          <thead>
+            <tr>
+              <th scope="col">الاسم</th>
+              <th scope="col">رقم الهاتف</th>
+              <th scope="col">الوكالة</th>
+              <th scope="col">الأدوار</th>
+              <th scope="col" class="text-center">الإجراءات</th>
+            </tr>
+          </thead>
+
+          <!-- Table Body -->
+          <tbody>
+            <tr
+              *ngFor="let user of filteredUsers; trackBy: trackById"
+              class="align-middle"
+            >
+              <td class="nowrap">{{ user.name }}</td>
+              <td class="nowrap">{{ user.phone }}</td>
+              <td>
+                <div class="agency-grid">
+                  <span class="role" *ngFor="let role of user.agency">
+                    {{ role }}
+                  </span>
+                </div>
+              </td>
+              <td>
+                <div class="role-grid">
+                  <span class="role" *ngFor="let role of user.roles">
+                    {{ getArRole(role) }}
+                  </span>
+                </div>
+              </td>
+              <!-- Actions -->
+              <td class="text-center">
+                <button
+                  mat-icon-button
+                  [matMenuTriggerFor]="menu"
+                  aria-label="خيارات المستخدم"
+                  class="p-0 m-0"
+                >
+                  <mat-icon>more_vert</mat-icon>
+                </button>
+                <mat-menu #menu="matMenu">
+                  <button mat-menu-item (click)="goToAddPage()">
+                    <mat-icon>add</mat-icon>
+                    <span>إضافة</span>
+                  </button>
+                  <button mat-menu-item (click)="goToEditPage(user.id)">
+                    <mat-icon>edit</mat-icon>
+                    <span>تعديل</span>
+                  </button>
+                  <button mat-menu-item (click)="deleteUser(user.id)">
+                    <mat-icon>delete</mat-icon>
+                    <span>حذف</span>
+                  </button>
+                  <button mat-menu-item>
+                    <mat-icon>lock</mat-icon>
+                    <span>block </span>
+                  </button>
+                </mat-menu>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</html>

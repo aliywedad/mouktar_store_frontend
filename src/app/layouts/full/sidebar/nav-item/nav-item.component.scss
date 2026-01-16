@@ -1,0 +1,26 @@
+.hide-menu {
+}
+
+@media (max-width: 600px) {
+  .nav-title {
+    font-size: 15px !important;
+    color: #5a86aa;
+    font-weight: bolder !important;
+    border-radius: 10px;
+    display: flex;
+        font-family: 'Cairo', 'Amiri', 'Tajawal', sans-serif;
+
+    align-items: center;
+    justify-content: center;
+    height: 50px;
+  }
+  i {
+    font-size: 14px !important;
+    padding: 2px;
+    color: #5a86aa;
+  }
+  .selected {
+    // background-color: ;
+    color: white !important;
+   }
+}

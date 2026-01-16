@@ -1,0 +1,36 @@
+@if(item.navCap){
+  <div mat-subheader class="nav-caption">
+    {{ item.navCap }}
+  </div>
+} @if(!item.navCap && !item.external && !item.twoLines) {
+  <a
+    mat-list-item
+    (click)="onItemSelected(item)"
+    [ngClass]="{
+      'mat-toolbar mat-primary activeMenu rounded': item.route
+        ? router.isActive(item.route, true)
+        : false
+    }"
+    class="menu-list-item"
+  >
+    <span class="hide-menu">
+      <!-- <i 
+        [ngClass]="[
+          item.iconName,
+          item.route && router.isActive(item.route, true) ? 'selected' : ''
+        ]"
+      ></i> -->
+      <span
+        class="nav-title"
+        [ngClass]="{
+          'selected': item.route
+            ? router.isActive(item.route, true)
+            : false
+        }"
+      >
+        {{ item.arName }}
+        
+      </span>
+    </span>
+  </a>
+}

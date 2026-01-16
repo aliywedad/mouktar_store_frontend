@@ -1,0 +1,233 @@
+/* You can add global styles to this file, and also import other style files */
+
+
+
+/* 1️⃣ Register the regular font */
+@font-face {
+  font-family: 'Noto Naskh Arabic';
+  src: url('assets/fonts/notoNaskhArabic.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+/* 2️⃣ Register the bold font */
+@font-face {
+  font-family: 'Noto Naskh Arabic';
+  src: url('assets/fonts/notoNaskhArabicBold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+}
+
+/* 3️⃣ Apply globally */
+html, body {
+  // font-family: 'Noto Naskh Arabic', sans-serif !important;
+  direction: rtl; /* optional — use only if your app is in Arabic */
+  font-weight: 400;
+  // font-size: 16px;
+}
+
+
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  // font-family: "Tajawal", "Noto Sans Arabic", sans-serif;
+}
+.role-check {
+  margin-left: 10px;
+}
+.text-p {
+  color: #5a86aa;
+}
+.bg-p {
+  background-color: #5a86aa;
+}
+
+td,
+th {
+  // padding: 8px;
+  text-align: center;
+  border: 1px solid #3f3e3e !important;
+  padding: 3px;
+}
+th{
+  font-size: 20px;
+}
+.search-btn {
+  background-color: #5a86aa !important;
+  color: white !important;
+  border: none !important;
+  padding: 3px;
+  border-radius: 7px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+.loading-btn {
+  background-color: white !important;
+  color: #5a86aa !important;
+  border: 1px solid #5a86aa !important;
+  padding: 3px;
+  border-radius: 7px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+.f-w-600 {
+  color: #5a86aa !important;
+}
+.search {
+  border: 1px solid #5a86aa !important;
+  border-radius: 5px;
+  width: 100%;
+  padding: 5px 10px;
+}
+
+.error-text {
+  color: #f50408;
+}
+.center {
+  text-align: center;
+}
+.cardWithShadow {
+  height: 100% !important;
+min-height: 30vh;
+}
+.fa-arrow-up {
+  color: rgb(3, 194, 3);
+}
+.fa-arrow-down {
+  color: #f50408;
+}
+.payments {
+  overflow-y: scroll;
+}
+.title {
+  color: #5a86aa !important;
+  font-weight: bold;
+  padding-bottom: 20px;
+}
+.loading-con {
+  height: 60vh;
+}
+.myInput {
+  border: 1px solid #5a86aa !important;
+  border-radius: 5px;
+  width: 100%;
+  padding: 5px 10px;
+}
+@media (max-width: 800px) {
+  th {
+    font-size: 13px;
+  }
+  td {
+    font-size: 11px;
+    height: fit-content;
+  }
+  .title {
+    font-size: 16px;
+  }
+  .search {
+    font-size: 14px;
+  }
+  .search-btn {
+    font-size: 14px;
+  }
+}
+.col-4 {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+}
+.search-btn {
+  background-color: #5a86aa;
+  color: white;
+  border: none;
+  padding: 5px 5px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 15px;
+}
+.cncl-search-btn {
+  background-color: #fa5c30;
+  color: white;
+  border: none;
+  padding: 5px 5px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.text-nowrap {
+  text-wrap: nowrap;
+}
+.justify-content-center {
+  justify-content: center;
+  align-items: center;
+}
+.flex-row {
+  display: flex;
+  flex-direction: row;
+}
+
+.icon-view {
+  width: 20px;
+  color: rgb(79, 224, 246);
+  font-size: 30px;
+  margin: 5px;
+  margin-right: 50px;
+}
+
+.fit {
+  width: fit-content;
+}
+
+.image-container {
+  margin: 10px;
+  width: auto; /* Set the desired width */
+  height: 200px; /* Set the desired height */
+  overflow: hidden; /* Hide any overflow */
+  // border-radius: 7px;
+}
+
+/* Ensure all images have the same size */
+.fixed-size-image {
+  width: 100%; /* Fill the container width */
+  height: 100%; /* Fill the container height */
+  object-fit: cover; /* Crop the image to fit the container */
+}
+
+.image-details-container {
+  width: 500px; /* Set the desired width */
+  height: 500px; /* Set the desired height */
+  // overflow: hidden; /* Hide any overflow */
+}
+
+.bg-lightBlue {
+  background-color: #e3edf2 !important;
+}
+
+.done {
+  background-color: rgb(234, 252, 234);
+}
+
+.p-title {
+  color: #5a86aa;
+  font-size: 15px;
+  font-weight: bold;
+}
+.sale-value {
+  font-size: 18px;
+  font-weight: bold;
+  color: #5a86aa;
+}
+
+/* Importing Bootstrap SCSS file. */
+@import "bootstrap/scss/bootstrap";
+
+/* Importing Bootstrap SCSS file. */
+@import "bootstrap/scss/bootstrap";
+
+
+ 

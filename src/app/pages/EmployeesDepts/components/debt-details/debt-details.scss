@@ -1,0 +1,137 @@
+.card {
+  padding: 10px;
+  margin: 5px;
+}
+
+.payments {
+  height: 100%;
+  background-color: white;
+}
+
+.con {
+  height: 80vh;
+}
+
+.pay-grid {
+  columns: 2;
+  border-bottom: 1px solid #5a86aa;
+  padding: 5px 15px;
+}
+
+.debt-grid {
+  columns: 2;
+  padding: 5px 15px;
+}
+
+.felx-amount {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: flex-end !important;
+}
+.remain-amount {
+  font-size: 13px;
+  color: #5a86aa;
+  font-weight: bold;
+}
+.flex {
+  display: flex;
+  gap: 10px;
+}
+.search {
+  width: 60vw;
+}
+
+.error-text {
+  color: #e53935; /* أحمر */
+  font-size: 13px;
+  margin-top: 5px;
+  display: block;
+}
+
+.success-text {
+  color: #43a047; /* أخضر */
+  font-size: 13px;
+  margin-top: 5px;
+  display: block;
+}
+
+.origin-amount {
+  font-size: 20px;
+  color: #5a86aa;
+  font-weight: bold;
+}
+.amount {
+  font-size: 19px;
+  color: #5a86aa;
+  font-weight: bold;
+}
+
+.date {
+  font-size: 12px;
+  color: #5a86aa;
+  font-weight: bold;
+}
+.canceled {
+  background-color: rgb(248, 211, 211);
+}
+
+details {
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+.ng-scrollbar {
+  overflow-x: scroll;
+}
+th {
+  text-wrap: nowrap;
+  text-align: center;
+}
+.felx-date {
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+  justify-content: start;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+.loading-btn {
+  background-color: white;
+  border: 1px solid #5a86aa;
+}
+
+.method {
+  border: 1px solid #5a86aa;
+  color: #5a86aa;
+  padding: 5px;
+  border-radius: 7px;
+  text-align: center;
+}
+.selected-method {
+  background-color: #e4f3fc;
+  border: 3px solid #5a86aa;
+  color: #5a86aa;
+  padding: 5px;
+  font-weight: bold;
+  border-radius: 7px;
+  text-align: center;
+}
+.payment-info {
+  color: #5a86aa;
+  font-size: 17px;
+  font-weight: bold;
+  padding: 20px 15px;
+}
+
+.debt-grid {
+  margin: 10px 10px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.method-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 10px;
+}

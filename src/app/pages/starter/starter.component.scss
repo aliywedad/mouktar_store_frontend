@@ -1,0 +1,161 @@
+.hfull {
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.form {
+  width:fit-content;
+  // min-width: 1000px;
+
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 3px;
+  border: 1px solid #292828;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  background-color: rgb(248, 247, 247);
+}
+@media (max-width:1000px) {
+.form{
+  width: 90vw;
+}  
+}
+input button {
+  border-radius: 5px;
+  padding: 5px;
+  margin: 5px;
+  height: 30px;
+}
+
+.h-item {
+  background-color: white;
+}
+
+.form-item {
+  display: flex;
+  width: 200px;
+  flex-direction: column;
+  // background-color: rgb(248, 247, 247);
+  border-radius: 5px;
+  padding: 5px 10px;
+  margin: 5px;
+}
+.input {
+  border-radius: 5px;
+  padding: 5px;
+}
+.input::content {
+  padding: 5px;
+}
+.flex {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px 20px;
+}
+.t-con {
+  width: 100%;
+  border-collapse: collapse;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+table {
+  width: 95%;
+  border-collapse: collapse;
+  margin: 20px;
+  background-color: white;
+}
+.facteur-card {
+  background-color: rgb(248, 247, 247);
+  min-width: 1000px;
+  width: fit-content;
+  border: 1px solid #292828;
+}
+.f-titel {
+  font-weight: bold;
+  font-size: 18px;
+}
+th {
+  padding: 10px;
+  border: 3px solid #292828 !important;
+}
+.f-subtitel {
+  font-weight: normal;
+  font-size: 16px;
+}
+.f-constact {
+  font-weight: normal;
+  font-size: 16px;
+}
+.h-item {
+  color: black;
+  padding: 5px 10px;
+  font-weight: bold;
+  border: 1px solid #292828;
+  border-radius: 10px;
+}
+.left {
+  text-align: left;
+}
+.right {
+  text-align: right;
+}
+.head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px;
+}
+
+@media (max-width: 1361px) {
+  .facteur-card {
+    background-color: rgb(248, 247, 247);
+    min-width: 700px;
+    width: fit-content;
+    border: 1px solid #292828;
+  }
+}
+
+.total-con {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  padding: 10px 20px;
+}
+.total {
+  font-weight: bold;
+  font-size: 20px;
+  background-color: white;
+  width: 150px;
+  text-align: center;
+  border: 1px solid #292828;
+  border-radius: 10px;
+  padding: 5px 10px;
+}
+
+@media (max-width: 1000px) {
+  .form {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 10px;
+
+    // margin-bottom: 20px;
+  }
+}
+
+@media (max-width: 800px) {
+  .form {
+    // width: 100%;
+
+    // margin-bottom: 20px;
+  }
+}
+
+td {
+  border-bottom: 1px solid lightgray !important;
+  border-top: 1px solid lightgray !important;
+}

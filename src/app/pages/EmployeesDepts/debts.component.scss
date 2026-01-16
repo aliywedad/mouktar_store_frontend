@@ -1,0 +1,49 @@
+.role-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1px;
+}
+.role {
+  background-color: rgb(189, 186, 186);
+  border-radius: 5px;
+  text-wrap: nowrap;
+  padding: 3px 2px;
+  font-size: 9px;
+  margin: 0px 2px;
+}
+
+td,
+th {
+  border: 1px solid rgb(59, 59, 59);
+}
+table {
+  margin-top: 30px;
+}
+
+.search {
+  border-radius: 7px;
+  background-color: white;
+  border: 1px solid #03c9d7;
+  width: 200px;
+  padding: 1px 10px;
+}
+.cardWithShadow {
+  padding: 0px;
+}
+
+.mat-card-content {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+.search-btn {
+  border: 1px solid #0096ff;
+  text-wrap: nowrap;
+  background-color: #03c9d7;
+  // color: g;
+  border-radius: 7px;
+}
+
+.nowrap {
+  text-wrap: nowrap;
+  width: 80px;
+}

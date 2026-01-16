@@ -1,0 +1,136 @@
+<html dir="rtl">
+  <mat-card class="cardWithShadow theme-card">
+    <mat-card-header>
+      <mat-card-title class="m-b-0"> تعديل منتج</mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="b-t-1">
+      <!-- Loading -->
+      <div *ngIf="isLoading" class="loading-con">
+        <loading></loading>
+      </div>
+
+      <!-- Form -->
+      <div *ngIf="!isLoading">
+        <form #Form="ngForm" (ngSubmit)="onSubmit(Form)" novalidate>
+          <div class="row">
+            <!-- Product Name -->
+            <div class="col-lg-6">
+              <mat-label class="f-w-600 m-b-8 d-block">اسم المنتج</mat-label>
+              <mat-form-field class="w-100">
+                <input
+                  matInput
+                  placeholder="اسم المنتج"
+                  [(ngModel)]="product.name"
+                  name="name"
+                  required
+                />
+              </mat-form-field>
+              <div *ngIf="submitted && !product.name" class="error">
+                <small class="error-text">اسم المنتج مطلوب</small>
+              </div>
+            </div>
+
+            <!-- Purchase Price -->
+            <div class="col-lg-6">
+              <mat-label class="f-w-600 m-b-8 d-block">سعر الشراء</mat-label>
+              <mat-form-field class="w-100">
+                <input
+                  matInput
+                  type="text"
+                  inputmode="numeric"
+                  [(ngModel)]="product.purchase_price"
+                  name="purchase_price"
+                  required
+                  min="1"
+                />
+              </mat-form-field>
+              <div
+                *ngIf="
+                  submitted &&
+                  (!product.purchase_price || product.purchase_price <= 0)
+                "
+                class="error"
+              >
+                <small class="error-text">سعر الشراء مطلوب</small>
+              </div>
+            </div>
+
+            <!-- Sale Price -->
+            <div class="col-lg-6">
+              <mat-label class="f-w-600 m-b-8 d-block">سعر البيع</mat-label>
+              <mat-form-field class="w-100">
+                <input
+                  matInput
+                  type="text"
+                  inputmode="numeric"
+                  [(ngModel)]="product.sale_price"
+                  name="sale_price"
+                  required
+                  min="1"
+                />
+              </mat-form-field>
+              <div
+                *ngIf="
+                  submitted && (!product.sale_price || product.sale_price <= 0)
+                "
+                class="error"
+              >
+                <small class="error-text">سعر البيع مطلوب</small>
+              </div>
+            </div>
+
+            <!-- Stock Quantity -->
+            <div class="col-lg-6">
+              <mat-label class="f-w-600 m-b-8 d-block">الكمية</mat-label>
+              <mat-form-field class="w-100">
+                <input
+                  matInput
+                  type="text"
+                  inputmode="numeric"
+                  [(ngModel)]="product.stock_quantity"
+                  name="stock_quantity"
+                  required
+                  min="1"
+                />
+              </mat-form-field>
+              <div
+                *ngIf="
+                  submitted &&
+                  (!product.stock_quantity || product.stock_quantity <= 0)
+                "
+                class="error"
+              >
+                <small class="error-text">الكمية مطلوبة</small>
+              </div>
+            </div>
+          </div>
+        </form>
+
+        <!-- Actions -->
+        <div class="m-t-12">
+          <button
+            mat-stroked-button
+            type="submit"
+            color="primary"
+            class="m-r-8"
+            (click)="onSubmit(Form)"
+            [disabled]="isLoading"
+          >
+            <mat-progress-spinner
+              mode="indeterminate"
+              diameter="20"
+              strokeWidth="4"
+              color="primary"
+              *ngIf="isLoading"
+            >
+            </mat-progress-spinner>
+            <span *ngIf="!isLoading">حفظ</span>
+          </button>
+          <button (click)="goBack()" mat-stroked-button color="warn">
+            إلغاء
+          </button>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</html>

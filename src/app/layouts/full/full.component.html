@@ -1,0 +1,91 @@
+<mat-sidenav-container
+  class="mainWrapper blue_theme bg-lightBlue"
+  autosize
+  autoFocus
+  dir="ltr"
+>
+  <!-- ============================================================== -->
+  <!-- Vertical Sidebar -->
+  <!-- ============================================================== -->
+
+  <mat-sidenav
+    #leftsidenav
+    [mode]="isOver ? 'over' : 'side'"
+    [opened]="!isOver"
+    (openedChange)="onSidenavOpenedChange($event)"
+    (closedStart)="onSidenavClosedStart()"
+    class="sidebarNav"
+  >
+    <div class="flex-layout">
+      <app-sidebar
+        (toggleMobileNav)="sidenav.toggle()"
+        [showToggle]="isOver"
+      ></app-sidebar>
+      <ng-scrollbar class="position-relative" style="height: 100%">
+        <mat-nav-list class="sidebar-list">
+          <div class="hight"></div>
+          
+          
+
+          @for(item of navItems; track item) {
+          <app-nav-item
+            [item]="item"
+            (notify)="sidenav.toggle()"
+          >
+            [item]="item"
+          </app-nav-item>
+          }
+        </mat-nav-list>
+      </ng-scrollbar>
+    </div>
+  </mat-sidenav>
+
+  <!-- ============================================================== -->
+  <!-- Main Content -->
+  <!-- ============================================================== -->
+  <mat-sidenav-content class="contentWrapper main-con" #content>
+    <!-- ============================================================== -->
+    <!-- VerticalHeader -->
+    <!-- ============================================================== -->
+
+    <app-header
+      [showToggle]="!isOver"
+      (toggleCollapsed)="toggleCollapsed()"
+      (toggleMobileNav)="sidenav.toggle()"
+    ></app-header>
+
+    <main class="  p-2 pb-5">
+      <!-- ============================================================== -->
+      <!-- Outlet -->
+      <!-- ============================================================== -->
+      <router-outlet></router-outlet>
+
+    </main>
+    <div class="bottom-bar ">
+    <div class="b-con">
+    
+          @for(item of navItems; track item) {
+          <app-nav-item
+            [item]="item"
+            (notify)="sidenav.toggle()"
+            class="w-100 text-center  "
+          >
+            [item]="item"
+          <!--  -->
+          </app-nav-item>
+          }
+    </div>
+
+    </div>
+          <!-- <div class="bottom-bar fixed">
+                    @for(item of navItems; track item) {
+          <app-nav-item
+            *ngIf="roles.includes(item.displayName)"
+            [item]="item"
+            (notify)="sidenav.toggle()"
+          >
+          </app-nav-item>
+          }
+          </div> -->
+  </mat-sidenav-content>
+</mat-sidenav-container>

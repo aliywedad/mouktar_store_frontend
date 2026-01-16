@@ -1,0 +1,130 @@
+<html dir="rtl">
+  <mat-card class="cardWithShadow theme-card">
+    <mat-card-header>
+      <mat-card-title class="m-b-0">إضافة دين جديد</mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content class="b-t-1">
+      <!-- Loading -->
+      <div *ngIf="isLoading" class="loading-con">
+        <loading></loading>
+      </div>
+
+      <!-- Form -->
+      <div *ngIf="!isLoading">
+        <form #Form="ngForm" (ngSubmit)="onSubmit(Form)" novalidate>
+          <div class="row">
+            <!-- Name -->
+            <div class="col-lg-6">
+              <mat-label class="f-w-600 m-b-8 d-block">الاسم</mat-label>
+              <mat-form-field class="w-100">
+                <input
+                  matInput
+                  placeholder=" "
+                  [(ngModel)]="debt.name"
+                  name="name"
+                  required
+                />
+              </mat-form-field>
+              <div *ngIf="submitted && !debt.name" class="error">
+                <small class="error-text">الاسم مطلوب</small>
+              </div>
+            </div>
+
+            <!-- Phone -->
+            <div class="col-lg-6">
+              <mat-label class="f-w-600 m-b-8 d-block">رقم الهاتف</mat-label>
+              <mat-form-field class="w-100">
+                <input
+                  matInput
+                  type="tel"
+                  [(ngModel)]="debt.phone"
+                  name="phone"
+                />
+              </mat-form-field>
+            </div>
+
+            <!-- Description -->
+            <div class="col-lg-12">
+              <mat-label class="f-w-600 m-b-8 d-block">الوصف</mat-label>
+              <mat-form-field class="w-100">
+                <input
+                  matInput
+                  rows="3"
+                  [(ngModel)]="debt.description"
+                  name="description"
+                />
+              </mat-form-field>
+            </div>
+
+            <!-- Initial Amount -->
+            <div class="col-lg-6">
+              <mat-label class="f-w-600 m-b-8 d-block">المبلغ </mat-label>
+              <mat-form-field class="w-100">
+                <input
+                  matInput
+                  type="text"
+                  inputmode="numeric"
+                  [(ngModel)]="debt.initAmount"
+                  name="initAmount"
+                  required
+                  min="1"
+                />
+              </mat-form-field>
+              <div
+                *ngIf="submitted && (!debt.initAmount || debt.initAmount <= 0)"
+                class="error"
+              >
+                <small class="error-text">المبلغ مطلوب</small>
+              </div>
+            </div>
+
+            <!-- Current Balance -->
+            <!-- <div class="col-lg-6">
+              <mat-label class="f-w-600 m-b-8 d-block">الالمحفظة الحالي</mat-label>
+              <mat-form-field class="w-100">
+                <input
+                  matInput
+                              type="text"
+            inputmode="numeric"
+                  [(ngModel)]="debt.balance"
+                  name="balance"
+                  required
+                  min="0"
+                />
+              </mat-form-field>
+              <div *ngIf="submitted && debt.balance < 0" class="error">
+                <small class="error-text">الالمحفظة لا يمكن أن يكون سالباً</small>
+              </div>
+            </div> -->
+          </div>
+        </form>
+
+        <!-- Actions -->
+        <div class="m-t-12">
+          <button
+            mat-stroked-button
+            type="submit"
+            color="primary"
+            class="m-r-8"
+            (click)="onSubmit(Form)"
+            [disabled]="isLoading"
+          >
+            <mat-progress-spinner
+              mode="indeterminate"
+              diameter="20"
+              strokeWidth="4"
+              color="primary"
+              *ngIf="isLoading"
+            >
+            </mat-progress-spinner>
+            <span *ngIf="!isLoading">حفظ</span>
+          </button>
+          <button (click)="goBack()" mat-stroked-button color="warn">
+            إلغاء
+          </button>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</html>

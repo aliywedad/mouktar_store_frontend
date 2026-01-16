@@ -1,0 +1,129 @@
+<html dir="rtl" lang="ar">
+  <mat-card class="cardWithShadow">
+    <mat-card-content class="mat-card-content">
+      <!-- التحميل -->
+      <div *ngIf="isLoading" class="loading-con">
+        <loading></loading>
+      </div>
+
+      <!-- نموذج الزبون -->
+      <div *ngIf="!isLoading" class="form">
+        <form novalidate>
+          <div class="p">
+            <div class="row">
+              <!-- اسم الزبون -->
+              <div class="col-6 px-3">
+                <mat-label class="f-w-600 m-b-8 d-block">الاسم</mat-label>
+                <mat-form-field class="w-100">
+                  <input
+                    matInput
+                    type="text"
+                    [(ngModel)]="client.name"
+                    name="name"
+                    required
+                    placeholder="أدخل اسم الزبون"
+                  />
+                </mat-form-field>
+              </div>
+
+              <!-- رقم الهاتف -->
+              <div class="col-6 px-3">
+                <mat-label class="f-w-600 m-b-8 d-block">رقم الهاتف</mat-label>
+                <mat-form-field class="w-100">
+                  <input
+                    matInput
+                    type="tel"
+                    [(ngModel)]="client.tel"
+                    name="tel"
+                    required
+                    placeholder="أدخل رقم الهاتف"
+                  />
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+        </form>
+
+        <div class="m-t-12">
+          <button
+            mat-stroked-button
+            type="button"
+            color="primary"
+            class="m-r-8"
+            (click)="onSubmit()"
+            [disabled]="isLoading"
+          >
+            <mat-progress-spinner
+              mode="indeterminate"
+              diameter="20"
+              strokeWidth="4"
+              color="primary"
+              *ngIf="isLoading"
+            >
+            </mat-progress-spinner>
+            <span *ngIf="!isLoading">حفظ</span>
+          </button>
+          <button (click)="goBack()" mat-stroked-button color="warn">
+            إلغاء
+          </button>
+        </div>
+      </div>
+
+      <mat-card-title class="title">قائمة العملاء</mat-card-title>
+
+      <!-- محمل -->
+      <loading *ngIf="isLoading"></loading>
+
+      <!-- جدول العملاء -->
+      <div *ngIf="!isLoading" class="table-responsive">
+        <table class="table table-hover">
+          <!-- رأس الجدول -->
+          <thead>
+            <tr>
+              <th class="text-center" scope="col">التاريخ</th>
+              <th class="text-center" scope="col">الاسم</th>
+              <th class="text-center" scope="col">رقم الهاتف</th>
+              <th scope="col" class="text-center">الإجراءات</th>
+            </tr>
+          </thead>
+
+          <!-- جسم الجدول -->
+          <tbody>
+            <tr
+              *ngFor="let item of clients; trackBy: trackById"
+              class="align-middle"
+            >
+              <td class="nowrap text-center">{{ item.date }}</td>
+              <td class="nowrap text-center">{{ item.name }}</td>
+              <td class="text-center" style="width: 100px">{{ item.tel }}</td>
+              <td class="text-center" style="width: 100px">
+                <button
+                  mat-icon-button
+                  [matMenuTriggerFor]="menu"
+                  aria-label="خيارات الزبون"
+                  class="p-0 m-0"
+                >
+                  <mat-icon>more_vert</mat-icon>
+                </button>
+                <mat-menu #menu="matMenu">
+                  <button mat-menu-item (click)="goToEditPage(item.id)">
+                    <mat-icon>edit</mat-icon>
+                    <span>تعديل</span>
+                  </button>
+                  <button mat-menu-item (click)="deleteClient(item.id)">
+                    <mat-icon>delete</mat-icon>
+                    <span>حذف</span>
+                  </button>
+                  <!-- <button mat-menu-item>
+                    <mat-icon>visibility</mat-icon>
+                    <span>عرض التفاصيل</span>
+                  </button> -->
+                </mat-menu>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</html>

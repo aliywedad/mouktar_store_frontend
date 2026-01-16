@@ -1,0 +1,143 @@
+<html dir="rtl">
+  <mat-card class="cardWithShadow theme-card">
+    <mat-card-header>
+      <mat-card-title class="m-b-0">إضافة مستخدم جديد</mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="b-t-1">
+      <div *ngIf="isLoading" class="loading-con">
+        <loading></loading>
+      </div>
+
+      <div *ngIf="!isLoading">
+        <form #userForm="ngForm" (ngSubmit)="onSubmit(userForm)" novalidate>
+          <div class="row">
+            <!-- الاسم -->
+            <div class="col-lg-6">
+              <mat-label class="f-w-600 m-b-8 d-block">الاسم</mat-label>
+              <mat-form-field class="w-100">
+                <input
+                  matInput
+                  placeholder="اسم المستخدم"
+                  [(ngModel)]="user.name"
+                  name="name"
+                  required
+                />
+              </mat-form-field>
+              <div *ngIf="submitted && !user.name" class="error">
+                <small class="error-text">اسم المستخدم مطلوب</small>
+              </div>
+            </div>
+
+            <!-- رقم الهاتف -->
+            <div class="col-lg-6">
+              <mat-label class="f-w-600 m-b-8 d-block">رقم الهاتف</mat-label>
+              <mat-form-field class="w-100">
+                <input
+                  matInput
+                  type="text"
+                  inputmode="numeric"
+                  [(ngModel)]="user.phone"
+                  name="phone"
+                  placeholder="رقم الهاتف"
+                  required
+                />
+              </mat-form-field>
+              <div
+                *ngIf="
+                  submitted &&
+                  (!user.phone || user.phone.toString().length !== 8)
+                "
+                class="error"
+              >
+                <small class="error-text">رقم الهاتف يجب أن يكون 8 أرقام</small>
+              </div>
+            </div>
+
+            <!-- البريد الإلكتروني -->
+            <!-- <div class="col-lg-6">
+              <mat-label class="f-w-600 m-b-8 d-block"
+                >البريد الإلكتروني</mat-label
+              >
+              <mat-form-field class="w-100">
+                <input
+                  matInput
+                  type="email"
+                  [(ngModel)]="user.email"
+                  name="email"
+                  placeholder="البريد الإلكتروني"
+                  required
+                />
+              </mat-form-field>
+              <div *ngIf="submitted && !user.email" class="error">
+                <small class="error-text">البريد الإلكتروني مطلوب</small>
+              </div>
+            </div> -->
+
+            <!-- كلمة المرور -->
+            <div class="col-lg-6">
+              <mat-label class="f-w-600 m-b-8 d-block">كلمة المرور</mat-label>
+              <mat-form-field class="w-100">
+                <input
+                  matInput
+                  type="password"
+                  [(ngModel)]="user.password"
+                  name="password"
+                  placeholder="كلمة المرور"
+                  required
+                />
+              </mat-form-field>
+            </div>
+
+            <!-- الصلاحيات -->
+            <span class="f-w-600 m-b-8 d-block">الصلاحيات</span>
+            <div class="role-grid">
+              <div class="role-con" *ngFor="let item of roles; let i = index">
+                <label for="role-{{ i }}">{{ roles_dics[item] }}</label>
+                <input
+                  class="role-check"
+                  id="role-{{ i }}"
+                  type="checkbox"
+                  [checked]="user.roles?.includes(item)"
+                  (click)="updateRoles(item)"
+                />
+              </div>
+            </div>
+            <span class="f-w-600 m-b-8 d-block">الوكالة</span>
+            <div class="agencies-grid">
+              <div
+                class="role-con"
+                *ngFor="let item of agencies; let i = index"
+              >
+                <label for="agency-{{ i }}">{{ item }}</label>
+                <input
+                  class="role-check"
+                  id="agency-{{ i }}"
+                  type="checkbox"
+                  [checked]="user.agency?.includes(item)"
+                  (click)="updateAgency(item)"
+                />
+              </div>
+            </div>
+          </div>
+
+          <!-- أزرار الحفظ والإلغاء -->
+        </form>
+        <div class="m-t-12">
+          <button
+            mat-stroked-button
+            (click)="onSubmit(userForm)"
+            type="submit"
+            color="primary"
+            class="m-r-8"
+            [disabled]="isLoading"
+          >
+            حفظ
+          </button>
+          <button (click)="goBack()" mat-stroked-button color="warn">
+            إلغاء
+          </button>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</html>

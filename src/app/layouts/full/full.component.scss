@@ -1,0 +1,47 @@
+ .hight{
+    height: 70px;
+ }
+
+ .mainWrapper{
+    background-color: wheat;
+ }
+   .bottom-bar{
+      visibility: hidden;
+   }
+ 
+ @media (max-width:1009px) {
+   .bottom-bar{
+      visibility: visible;
+   }
+   
+ }
+
+.b-con{
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+   width: 100vw;
+   padding: 0px 1px;
+}
+ 
+ .bottom-bar {
+   padding: 1px 1px;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100vw;
+  height: 58px; // adjust as needed
+  background:white; // example color
+  border-top: 1px solid #949596;
+  color: white;
+  z-index: 1000; // make sure it stays above content
+   display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow-x: auto;
+  padding: 10px 20px ;
+}
+
+
+
+ 

@@ -1,0 +1,83 @@
+<html dir="rtl">
+  <mat-card class="cardWithShadow theme-card">
+    <mat-card-header>
+      <mat-card-title class="m-b-0">إضافة منتج جديد</mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="b-t-1">
+      <!-- Loading -->
+      <div *ngIf="isLoading" class="loading-con">
+        <loading></loading>
+      </div>
+
+      <!-- Form -->
+      <div *ngIf="!isLoading">
+        <form
+          #Form="ngForm"
+          class="form"
+          (ngSubmit)="onSubmit(Form)"
+          novalidate
+        >
+          <div class="prod-con">
+            <div class="row">
+              <!-- Purchase Price -->
+              <div class="col-12 px-3">
+                <mat-label class="f-w-600 m-b-8 d-block"> name</mat-label>
+                <mat-form-field class="w-100">
+                  <input
+                    matInput
+                    type="text"
+                    inputmode="numeric"
+                    [(ngModel)]="client.name"
+                    name="name"
+                    required
+                    min="1"
+                  />
+                </mat-form-field>
+              </div>
+
+              <!-- Sale Price -->
+              <div class="col-12 px-3">
+                <mat-label class="f-w-600 m-b-8 d-block"> phone </mat-label>
+                <mat-form-field class="w-100">
+                  <input
+                    matInput
+                    type="text"
+                    inputmode="numeric"
+                    [(ngModel)]="client.tel"
+                    name="tel"
+                    required
+                    min="1"
+                  />
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+        </form>
+
+        <div class="m-t-12">
+          <button
+            mat-stroked-button
+            type="submit"
+            color="primary"
+            class="m-r-8"
+            (click)="onSubmit(Form)"
+            [disabled]="isLoading"
+          >
+            <mat-progress-spinner
+              mode="indeterminate"
+              diameter="20"
+              strokeWidth="4"
+              color="primary"
+              *ngIf="isLoading"
+            >
+            </mat-progress-spinner>
+            <span *ngIf="!isLoading">حفظ</span>
+          </button>
+          <button (click)="goBack()" mat-stroked-button color="warn">
+            إلغاء
+          </button>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</html>

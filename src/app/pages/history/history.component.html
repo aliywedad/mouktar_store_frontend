@@ -1,0 +1,183 @@
+<role *ngIf="!UserHaveRole && !isLoading"></role>
+<html dir="rtl" lang="ar" *ngIf="UserHaveRole">
+  <mat-card class="cardWithShadow hight">
+    <mat-card-title class="text-xl font-bold mb-6 text-gray-800 title p-2">
+    </mat-card-title>
+
+    <div>
+      <div class="row">
+        <div class="col-8">
+          <!-- <p class="text-gray-600 mb-1">
+            <strong> {{ day.date }}</strong>
+          </p> -->
+          <select
+            class="form-select"
+            [(ngModel)]="selectedDay_id"
+            aria-label="Default select example"
+          >
+            <option
+              *ngFor="let d of days"
+              [value]="d.id"
+              [selected]="d.id === day.id"
+            >
+              {{ d.date }}
+            </option>
+          </select>
+          <div class="row">
+            <div class="col-6">
+              <button
+                class="btn btn-done mt-2 py-1 px-3 mx-2"
+                (click)="loadDay(selectedDay_id)"
+              >
+                بحث
+              </button>
+            </div>
+            <div
+              class="col-6"
+              *ngIf="!isLoading && transactions && transactions?.length"
+            >
+              <button class="btn btn-done mt-2 py-1 px-3 mx-2" (click)="exportPDF()">
+                pdf
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-3 g-item">
+        <p class="v-title">سحب</p>
+        <p class="v-value">{{ day.operationsR }}</p>
+      </div>
+      <div class="col-3 g-item">
+        <p class="v-title">العمولة</p>
+        <p class="v-value">
+          {{ day.benefit | number : "1.0-2" }}
+        </p>
+      </div>
+      <div class="col-3 g-item">
+        <p class="v-title">الخزينة</p>
+        <p class="v-value">
+          {{ day.Balance + day.cash | number : "1.0-2" }}
+        </p>
+      </div>
+
+      <div class="col-3 g-item">
+        <p class="v-title">إيداع</p>
+        <p class="v-value">{{ day.operationsV }}</p>
+      </div>
+    </div>
+  </mat-card>
+  <mat-card class="cardWithShadow hight">
+    <div
+      *ngIf="!isLoading && transactions && transactions?.length"
+      class="table-responsive"
+    >
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>العملية</th>
+            <th>المبلغ</th>
+            <th>الرقم</th>
+            <th>العمولة</th>
+            <th>قبل العملية</th>
+            <th>بعد العملية</th>
+            <th>المستخدم</th>
+            <th>تاريخ</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            *ngFor="let trans of transactions; trackBy: trackById"
+            class="align-middle"
+          >
+            <td
+              [ngClass]="{ augment: trans.type == 'augment',
+                'canceled': trans.isCanceled }"
+              *ngIf="trans.type != 'check'"
+              class="nowrap"
+            >
+              <span>
+                <i
+                  *ngIf="trans.type == 'versement'"
+                  class="fa-solid fa-arrow-up"
+                ></i>
+                <i
+                  class="fa-solid fa-arrow-down"
+                  *ngIf="trans.type == 'retrait'"
+                ></i>
+                {{ dics[trans.type] }}
+              </span>
+            </td>
+            <td
+              [ngClass]="{ augment: trans.type === 'augment',
+                'canceled': trans.isCanceled }"
+              *ngIf="trans.type != 'check'"
+              class="nowrap"
+            >
+              {{ trans.amount | number : "1.0-2" }}
+            </td>
+            <td
+              [ngClass]="{ augment: trans.type === 'augment',
+                'canceled': trans.isCanceled }"
+              *ngIf="trans.type != 'check'"
+            >
+              {{ trans.phone || "---" }}
+            </td>
+            <td
+              [ngClass]="{ augment: trans.type === 'augment' ,
+                'canceled': trans.isCanceled }"
+              *ngIf="trans.type != 'check'"
+            >
+              {{ trans.comission | number : "1.0-2" }}
+            </td>
+            <td
+              [ngClass]="{
+                augment: trans.type == 'augment' && !trans.isCanceled,
+                'canceled': trans.isCanceled
+              }"
+              *ngIf="trans.type != 'check'"
+            >
+              <span class="amount-t"> نقدا : </span
+              >{{ trans.cashBefore | number : "1.0-2" }}<br />
+              <span class="amount-t">المحفظة : </span
+              >{{ trans.before | number : "1.0-2" }}
+            </td>
+            <td
+              [ngClass]="{
+                augment: trans.type == 'augment' && !trans.isCanceled,
+                'canceled': trans.isCanceled
+              }"
+              *ngIf="trans.type != 'check'"
+            >
+              <span class="amount-t"> نقدا : </span
+              >{{ trans.cashAfter | number : "1.0-2" }}<br />
+              <span class="amount-t">المحفظة : </span
+              >{{ trans.after | number : "1.0-2" }}
+            </td>
+            <td
+              [ngClass]="{ augment: trans.type == 'augment' ,
+                'canceled': trans.isCanceled  }"
+              *ngIf="trans.type != 'check'"
+            >
+              {{ trans.userName }}
+            </td>
+            <td
+              [ngClass]="{ augment: trans.type == 'augment' }"
+              *ngIf="trans.type != 'check'"
+              dir="ltr"
+            >
+              {{ trans.created_at | date : "yyyy-MM-dd HH:mm" }}
+            </td>
+            <td *ngIf="trans.type === 'check'" colspan="9" class="text-right">
+              <span class="text-success"
+                ><i class="fa-solid fa-check"></i>
+                {{ trans.descriptions }}
+              </span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </mat-card>
+</html>

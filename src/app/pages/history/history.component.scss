@@ -1,0 +1,224 @@
+.bank-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 2.2rem 1.2rem; /* المسافة بين العناصر */
+  padding: 5px;
+}
+
+.sales-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2.2rem 1.2rem; /* المسافة بين العناصر */
+  padding: 5px;
+}
+.text-success {
+  color: rgb(11, 129, 11);
+  font-weight: bold;
+  font-size: 13px;
+}
+
+.title-sale {
+  padding: 15px 0px;
+}
+.augment {
+  background-color: rgb(225, 250, 225) !important;
+}
+.cardWithShadow {
+  margin: 10px 2px;
+}
+.top-con {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+}
+.init-balance {
+  display: flex;
+  align-items: start;
+  justify-content: start;
+  // background-color: #555;
+}
+.g-item {
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  // height: 100px;
+  // justify-content: center;
+  text-align: center;
+}
+.tabs {
+  display: flex;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  overflow: hidden;
+  width: fit-content;
+  cursor: pointer;
+  width: 100%;
+}
+.tab {
+  flex: 1;
+  text-align: center;
+  padding: 7px 0;
+  background-color: #f9f9f9;
+  color: #333;
+  font-weight: bold;
+  transition: background-color 0.3s, color 0.3s;
+}
+.selected {
+  background-color: #5a86aa;
+  color: white;
+}
+.v-title {
+  font-size: 14px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+.v-value {
+  font-size: 17px;
+  font-weight: bold;
+  color: #3e5e77;
+}
+
+.btn-export {
+  border: 1px solid #3e5e77;
+  color: #3e5e77;
+  padding: 5px 10px;
+  border-radius: 8px;
+  background-color: #d8e9f7;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+.btn-done {
+  background-color: #5a86aa;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.btn-done:focus,
+.btn-done:active {
+  background-color: #5a86aa;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+input select,
+input[type="text"],
+input[type="text"],
+input[type="button"],
+textarea {
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  padding: 8px;
+  width: 100%;
+  box-sizing: border-box;
+  font-size: 14px;
+  margin-bottom: 15px;
+}
+
+
+.canceled {
+  background-color: rgb(252, 230, 230) !important;
+}
+
+
+.hight {
+  min-height: 100% !important;
+  max-height: 80vh;
+  flex: 1;
+  overflow-y: scroll;
+  padding: 10px;
+}
+.bank {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  text-align: center;
+  padding: 15px 10px;
+}
+.p-name {
+  font-size: 13px;
+  text-align: right;
+  padding: 2px;
+  height: fit-content;
+  font-weight: bold;
+  // background-color: red;
+  // margin: 0;
+}
+
+.h-info {
+  padding: 10px;
+}
+.p-quantity {
+  font-size: 12px;
+  text-align: right;
+  padding: 2px;
+  height: fit-content;
+
+  // background-color: red;
+  // margin: 0;
+}
+.count-number {
+  font-size: 18px;
+  font-weight: bold;
+  color: #5a86aa;
+}
+
+.bank:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.12);
+}
+.hight {
+  min-height: 100% !important;
+  flex: 1;
+  padding: 10px;
+}
+.bank img {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+  margin-bottom: 0.75rem;
+}
+
+.bank-total {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2.2rem 1.2rem; /* المسافة بين العناصر */
+  padding: 5px;
+  grid-auto-rows: 100px;
+}
+.totale-item {
+  // background-color: white;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  text-align: center;
+  padding: 15px 10px;
+}
+.bank .title {
+  font-weight: 600;
+  font-size: 1rem;
+  margin-bottom: 0.25rem;
+  color: #333;
+}
+
+.bank .amount {
+  font-size: 1rem;
+  color: #555;
+  font-weight: bold;
+}

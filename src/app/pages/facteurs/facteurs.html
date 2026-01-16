@@ -1,0 +1,144 @@
+<html dir="rtl" lang="ar">
+  <mat-card class="cardWithShadow">
+    <mat-card-content class="mat-card-content">
+      <mat-card-title class="title">قائمة الفواتير</mat-card-title>
+      <span>
+        {{showNotes?"hide the notes ":"show the notes "}}
+        <i
+          (click)="showNotes=!showNotes"
+          *ngIf="showNotes"
+          class="fa-solid fa-eye-slash"
+        ></i>
+        <i
+          (click)="showNotes=!showNotes"
+          *ngIf="!showNotes"
+          class="fa-solid fa-eye"
+        ></i>
+      </span>
+      <div class="card">
+        <div class="form">
+          <div class="form-item">
+            <label> To</label>
+            <input
+              class="date"
+              type="date"
+              name="Designation"
+              [(ngModel)]="toDate"
+            />
+          </div>
+          <div class="form-item">
+            <label> From </label>
+            <input
+              class="date"
+              type="date"
+              name="Quantity"
+              [(ngModel)]="fromDate"
+            />
+          </div>
+          <div class="form-item">
+            <label> tel </label>
+            <input
+              class="date"
+              type="number"
+              name="Quantity"
+              [(ngModel)]="tel"
+            />
+          </div>
+          <div class="form-item">
+            <!-- <label>الزبون</label>
+        <input
+          class="input"
+          name="prixTotal"
+          [(ngModel)]="client.name"
+        /> -->
+ 
+          </div>
+        </div>
+        <div style="width: fit-content; padding-top: 10px">
+          <button class="btn btn-primary" (click)="loadDATA()">search</button>
+        </div>
+      </div>
+
+      <!-- مؤشر التحميل -->
+      <loading *ngIf="isLoading"></loading>
+
+      <!-- جدول الفواتير -->
+      <div *ngIf="!isLoading" class="table-responsive">
+        <table class="table table-hover">
+          <!-- رأس الجدول -->
+          <thead>
+            <tr>
+              <th class="text-center" scope="col">التاريخ</th>
+              <th class="text-center" scope="col">الزبون</th>
+              <th class="text-center" scope="col">tel</th>
+              <th class="text-center" *ngIf="showNotes" scope="col">notes</th>
+
+              <th class="text-center" scope="col">المبلغ الإجمالي</th>
+              <th class="text-center" scope="col">عدد العناصر</th>
+              <th class="text-center" scope="col">الناقل</th>
+              <th class="text-center" scope="col">الكراج</th>
+              <th class="text-center" scope="col">المبلغ المدفوع</th>
+              <th class="text-center" scope="col">المبلغ المتبقي</th>
+              <th scope="col" class="text-center">الإجراءات</th>
+            </tr>
+          </thead>
+
+          <!-- جسم الجدول -->
+          <tbody>
+            <tr
+              *ngFor="let item of facteurs; trackBy: trackById"
+              class="align-middle"
+            >
+              <td class="nowrap">{{ item.date }}</td>
+              <td class="nowrap">{{ item.name }}</td>
+              <td class="nowrap">{{ item.tel }}</td>
+              <td
+                class=""
+                style="text-wrap: wrap; max-width: 200px"
+                *ngIf="showNotes"
+              >
+                {{ item.note }}
+              </td>
+              <td>{{ item.total | number : "1.0-2" }}</td>
+              <td>{{ item.data.length }}</td>
+              <td>{{ item.transporter }}</td>
+              <td>{{ item.garage }}</td>
+              <td>{{ item.payed_price }}</td>
+              <td>{{ item.total-item.payed_price }}</td>
+
+              <!-- عمود الإجراءات -->
+              <td class="text-center">
+                <button
+                  mat-icon-button
+                  [matMenuTriggerFor]="menu"
+                  aria-label="خيارات الفاتورة"
+                  class="p-0 m-0"
+                >
+                  <mat-icon>more_vert</mat-icon>
+                </button>
+                <mat-menu #menu="matMenu">
+                  <button mat-menu-item (click)="goToAddPage()">
+                    <mat-icon>add</mat-icon>
+                    <span>إضافة</span>
+                  </button>
+                  <button mat-menu-item (click)="goToEditPage(item.id)">
+                    <mat-icon>edit</mat-icon>
+                    <span>تعديل</span>
+                  </button>
+                  <button mat-menu-item (click)="deleteFacteur(item.id)">
+                    <mat-icon>delete</mat-icon>
+                    <span>حذف</span>
+                  </button>
+                  <button mat-menu-item (click)="goToDetails(item.id)">
+                    <mat-icon>visibility</mat-icon>
+                    <span>عرض التفاصيل</span>
+                  </button>
+                </mat-menu>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</html>

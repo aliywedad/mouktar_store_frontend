@@ -1,0 +1,162 @@
+<html dir="rtl">
+  <div class="con">
+    <div class="card">
+      <div class="row align-items-center">
+        <div class="debt-grid">
+          <div class="felx-amount">
+            <span>المبلغ المتبقي </span>
+            <mat-progress-spinner
+              mode="indeterminate"
+              diameter="20"
+              strokeWidth="4"
+              color="primary"
+              *ngIf="isLoading"
+            >
+            </mat-progress-spinner>
+            <span class="origin-amount" *ngIf="!isLoading"
+              >{{debt.balance | number : "1.0-2"}}</span
+            >
+          </div>
+          <div class="felx-date">
+            <span>المبلغ الأصلي </span>
+            <mat-progress-spinner
+              mode="indeterminate"
+              diameter="20"
+              strokeWidth="4"
+              color="primary"
+              *ngIf="isLoading"
+            ></mat-progress-spinner>
+            <span class="remain-amount" *ngIf="!isLoading"
+              >{{debt.initAmount | number : "1.0-2" }}</span
+            >
+
+            <span dir="ltr" class="date"
+              >{{debt.created_at | date:'yyyy-MM-dd HH:mm:ss' }}</span
+            >
+          </div>
+        </div>
+        <details class="" *ngIf="debt.bill && debt.bill.sales">
+          <summary>معلومات الفاتورة</summary>
+          <div class="ng-scrollbar">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th class="" scope="col">اسم المنتج</th>
+                  <th class="" scope="col">الكمية</th>
+                  <th class="" scope="col">سعر الوحدة</th>
+                  <th class="" scope="col">الإجمالي</th>
+                  <th class="" scope="col">تاريخ</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  *ngFor="let sale of debt.bill.sales ; trackBy: trackById"
+                  class="align-middle"
+                >
+                  <td [ngClass]="{ canceled: sale.canceled }" class="nowrap">
+                    {{ sale.ProductName }}
+                  </td>
+
+                  <td [ngClass]="{ canceled: sale.canceled }">
+                    {{ sale.quantity }}
+                  </td>
+
+                  <td [ngClass]="{ canceled: sale.canceled }">
+                    {{ sale.price_unit | number : "1.0-2" }} MRU
+                  </td>
+                  <td [ngClass]="{ canceled: sale.canceled }">
+                    {{ sale.price_total | number : "1.0-2" }} MRU
+                  </td>
+
+                  <td [ngClass]="{ canceled: sale.canceled }">
+                    <html dir="ltr">
+                      {{ sale.created_at | date : "yyyy-MM-dd HH:mm" }}
+                    </html>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </details>
+        <div
+          class="row"
+          *ngIf="debt.balance && debtPaymentObject.balance !== debt.balance"
+        >
+          <div class="flex">
+            <button
+              [disabled]="isLoading"
+              (click)="sendAmount()"
+              [ngClass]="{'loading-btn': isLoading,'search-btn': !isLoading}"
+            >
+              <mat-progress-spinner
+                mode="indeterminate"
+                diameter="16"
+                strokeWidth="4"
+                color="primary"
+                *ngIf="isLoading"
+              ></mat-progress-spinner>
+              <span *ngIf="!isLoading">تسديد</span>
+            </button>
+
+            <input
+              class="search"
+              [(ngModel)]="debtPaymentObject.balance"
+              name="balance"
+              placeholder="المبلغ  "
+            />
+          </div>
+        </div>
+        <small
+          *ngIf="submitted && debtPaymentObject.balance > debt.balance"
+          class="error-text"
+        >
+          ⚠️ المبلغ المُدخل أكبر من المبلغ المتبقي ({{debt.balance}}). الرجاء
+          إدخال مبلغ صحيح.
+        </small>
+
+        <small
+          *ngIf="submitted && debtPaymentObject.balance <= 0"
+          class="error-text"
+        >
+          ⚠️ لا يمكن إدخال مبلغ فارغ أو أقل من الصفر. الرجاء إدخال مبلغ صحيح.
+        </small>
+      </div>
+
+      <span class="payment-info" *ngIf="debtPaymentObject.balance>0"
+        >خيارات الدفع</span
+      >
+      <div class="method-grid" *ngIf="debtPaymentObject.balance>0">
+        <span
+          *ngFor="let item of bancks"
+          class="method"
+          [ngClass]="{ 'selected-method': item.label == type }"
+          (click)="type = item.label"
+        >
+          {{ item.value }}
+        </span>
+      </div>
+    </div>
+    <div class="card payments">
+      <span *ngIf="!isLoading && payments.length==0" class="amount"
+        >لا توجد عمليات حاليا
+      </span>
+      <div *ngIf="payments.length>0">
+        <div *ngFor="let item of payments">
+          <div class="pay-grid">
+            <div class="felx-amount">
+              <span>تم تسديد</span>
+              <span class="amount">{{item.balance | number : "1.0-2"}}</span>
+            </div>
+            <div class="felx-date">
+              <span>بتاريخ</span>
+              <span dir="ltr" class="date"
+                >{{item.created_at | date:'yyyy-MM-dd HH:mm:ss' }}</span
+              >
+              <span dir="ltr" class="date">{{item.type }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</html>

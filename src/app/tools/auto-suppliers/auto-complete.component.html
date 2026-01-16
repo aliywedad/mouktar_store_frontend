@@ -1,0 +1,19 @@
+<mat-form-field class="example-full-width">
+  <mat-label>المنتج</mat-label>
+  <input
+    #input
+    type="text"
+    placeholder="اختر منتج"
+    matInput
+    [formControl]="myControl"
+    [matAutocomplete]="auto"
+    (input)="filter()"
+    (focus)="filter()"
+  />
+
+  <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onSelect($event.option.value)">
+    <mat-option *ngFor="let option of filteredOptions" [value]="option">
+      {{ option.name }} <strong>|</strong>{{ option.phone }}  
+    </mat-option>
+  </mat-autocomplete>
+</mat-form-field>

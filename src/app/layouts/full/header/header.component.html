@@ -1,0 +1,109 @@
+<mat-toolbar class="topbar">
+  <!-- Mobile Menu -->
+  <!-- <button
+    mat-icon-button
+    (click)="toggleMobileNav.emit()"
+    class="d-flex d-md-none justify-content-center"
+  >
+    <i class="fa-solid fa-bars"></i>
+  </button> -->
+  <!-- <div class="head-con">
+    <div class="logo-con">
+      <img src="assets/images/logo.png" alt="logo" class="sidebar-logo" />
+      <small class="e-name">كرنتي </small>
+    </div>
+    <div class="navbar agency">
+      {{ selectedAgency }}
+    </div>
+  <span class="flex-1-auto"></span>  
+
+   القائمة الشخصية  
+   </div> -->
+
+<!-- <span>
+ 
+  <i
+    [matMenuTriggerFor]="profilemenu"
+    aria-label="Profile"
+    class="fa-solid fa-user head-icon"
+  ></i>
+
+</span> -->
+  <!-- </button> -->
+
+  <!-- <mat-menu #profilemenu="matMenu" class="cardWithShadow">
+    <button mat-menu-item class="menu-item" *ngIf="!Loaded">
+      <mat-icon class="d-flex align-items-right"></mat-icon>
+      <mat-progress-spinner
+        mode="indeterminate"
+        diameter="50"
+        strokeWidth="4"
+        color="primary"
+      >
+      </mat-progress-spinner>
+    </button>
+
+    <div *ngIf="Loaded" dir="rtl" (click)="$event.stopPropagation()">
+      <button mat-menu-item><i class="fa-solid fa-user"></i> {{ name }}</button>
+
+      <button mat-menu-item>
+        <i class="fa-solid fa-envelope"></i> {{ email }}
+      </button>
+
+      <button mat-menu-item>
+        <i class="fa-solid fa-phone"></i> {{ phone }}
+      </button>
+
+      <button mat-menu-item>
+        <i class="fa-solid fa-clock"></i> المتبقي: {{ remainingDays }}
+        أيام
+      </button>
+
+      <div
+        (click)="$event.stopPropagation()"
+        *ngIf="agencies.length && agencies.length > 1"
+      >
+        <div class="navbar agency" mat-icon-button [matMenuTriggerFor]="menu">
+          {{ selectedAgency }}
+          <i
+            class="fa-solid fa-caret-down"
+            *ngIf="agencies.length && agencies.length > 1"
+          ></i>
+        </div>
+
+ 
+        <mat-menu #menu="matMenu">
+          <button
+            mat-menu-item
+            class="menu-item"
+            *ngFor="let item of agencies"
+            (click)="changeAgency(item)"
+          >
+            <span> {{ item }} </span>
+          </button>
+        </mat-menu>
+      </div>
+    </div>
+
+    <div class="p-x-12 m-t-12">
+      <a
+        [routerLink]="['/admin/contact']"
+        mat-stroked-button
+        color="primary"
+        class="w-100"
+        >معلومات التواصل
+      </a>
+    </div>
+
+    <div class="p-x-12 m-t-12">
+      <a
+        [routerLink]="['/login']"
+        mat-stroked-button
+        color="primary"
+        class="w-100"
+      >
+        تسجيل الخروج
+      </a>
+    </div>
+  </mat-menu> -->
+</mat-toolbar>

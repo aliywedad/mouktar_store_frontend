@@ -1,0 +1,94 @@
+i {
+  color: #5a86aa;
+}
+
+.spin-icon {
+  display: inline-block;
+  animation: spin 2s linear infinite; /* 2s per rotation, infinite loop */
+}
+.agency {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #395872;
+  font-size: 15px;
+  text-align: center;
+  // background-color: aqua;
+  // border-bottom:2px solid #5a86aa ;
+}
+.e-name{
+  font-size: 14px;
+    font-family: 'Cairo', 'Amiri', 'Tajawal', sans-serif;
+  color: #5a86aa;
+  // background-color: antiquewhite;
+  margin-bottom: 10px;
+}
+
+.head-con{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100vw;
+}
+.logo-con{
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  // gap: 8px;
+  height: fit-content;
+  padding: 0px;
+  // background-color: yellowgreen;
+}
+.sidebar-logo {
+  width: 50px;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+  // background-color: red;
+  margin: 0px;
+}
+.fa-caret-down {
+  margin: 2px;
+}
+
+.menu-item{
+//  background-color: aqua;
+}
+
+.fa-solid{
+  margin: 0px 2px ;
+}
+.head-icon{
+    font-size: 20px;
+    padding: 1px 15px 1px 35px;
+
+}
+.btn-tenzil {
+  background-color: #5a86aa;
+  color: white;
+  border: 1px solid #5a86aa;
+  width: 100%;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.fa-rotate {
+  color: #5a86aa;
+  margin-right: 10px;
+  font-size: 23px;
+  font-size: bold;
+  cursor: pointer;
+}

@@ -1,0 +1,169 @@
+<html dir="rtl">
+  <mat-card class="cardWithShadow theme-card">
+    <mat-card-header>
+      <mat-card-title class="m-b-0">إضافة منتج جديد</mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="b-t-1">
+      <!-- Loading -->
+      <div *ngIf="isLoading" class="loading-con">
+        <loading></loading>
+      </div>
+
+      <!-- Form -->
+      <div *ngIf="!isLoading">
+        <form #Form="ngForm" (ngSubmit)="onSubmit(Form)" novalidate>
+          <div *ngFor="let product of facteurs; let i = index" class="prod-con">
+            <div class="row">
+              <div class="col-12 delet-row" *ngIf="i !== 0">
+                <span (click)="removeSale(i)">حذف</span>
+              </div>
+              <!-- Product Name -->
+              <div class="col-8 px-3">
+                <mat-label class="f-w-600 m-b-8 d-block">اسم المنتج</mat-label>
+                <mat-form-field class="w-100">
+                  <input
+                    matInput
+                    placeholder="اسم المنتج"
+                    [(ngModel)]="product.name"
+                    name="name-{{ i }}"
+                    required
+                  />
+                </mat-form-field>
+                <div *ngIf="submitted && !product.name" class="error">
+                  <small class="error-text">اسم المنتج مطلوب</small>
+                </div>
+              </div>
+
+              <!-- Stock Quantity -->
+              <div class="col-4 px-3">
+                <mat-label class="f-w-600 m-b-8 d-block">الكمية</mat-label>
+                <mat-form-field class="w-100">
+                  <input
+                    matInput
+                    type="text"
+                    inputmode="numeric"
+                    [(ngModel)]="product.stock_quantity"
+                    name="stock_quantity-{{ i }}"
+                    required
+                    min="1"
+                  />
+                </mat-form-field>
+                <div
+                  *ngIf="
+                    submitted &&
+                    (!product.stock_quantity || product.stock_quantity <= 0)
+                  "
+                  class="error"
+                >
+                  <small class="error-text">الكمية مطلوبة</small>
+                </div>
+              </div>
+
+              <!-- Purchase Price -->
+              <div class="col-6 px-3">
+                <mat-label class="f-w-600 m-b-8 d-block">سعر الشراء</mat-label>
+                <mat-form-field class="w-100">
+                  <input
+                    matInput
+                    type="text"
+                    inputmode="numeric"
+                    [(ngModel)]="product.purchase_price"
+                    name="purchase_price-{{ i }}"
+                    required
+                    min="1"
+                  />
+                </mat-form-field>
+                <div
+                  *ngIf="
+                    submitted &&
+                    (!product.purchase_price || product.purchase_price <= 0)
+                  "
+                  class="error"
+                >
+                  <small class="error-text">سعر الشراء مطلوب</small>
+                </div>
+              </div>
+
+              <!-- Sale Price -->
+              <div class="col-6 px-3">
+                <mat-label class="f-w-600 m-b-8 d-block">سعر البيع</mat-label>
+                <mat-form-field class="w-100">
+                  <input
+                    matInput
+                    type="text"
+                    inputmode="numeric"
+                    [(ngModel)]="product.sale_price"
+                    name="sale_price-{{ i }}"
+                    required
+                    min="1"
+                  />
+                </mat-form-field>
+                <div
+                  *ngIf="
+                    submitted &&
+                    (!product.sale_price || product.sale_price <= 0)
+                  "
+                  class="error"
+                >
+                  <small class="error-text">سعر البيع مطلوب</small>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+
+        <button
+          mat-stroked-button
+          type="submit"
+          color="primary"
+          class="m-r-8"
+          (click)="addSale()"
+        >
+          إضافة منتج آخر
+        </button>
+        <div class="row">
+          <div class="sup-con col-12">
+            <mat-form-field>
+              <mat-label>اختيار المورد</mat-label>
+              <mat-select [(ngModel)]="selectedSupplier" name="food">
+                @for (s of supplier; track s.id) {
+                <mat-option class="w-full" [value]="s.id">
+                  <div class="flex-option">
+                    <span>{{ s.name }}</span>
+                    <!-- <span>{{ s.phone }}</span> -->
+                  </div>
+                </mat-option>
+                }
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <!-- Actions -->
+        <div class="m-t-12">
+          <button
+            mat-stroked-button
+            type="submit"
+            color="primary"
+            class="m-r-8"
+            (click)="onSubmit(Form)"
+            [disabled]="isLoading"
+          >
+            <mat-progress-spinner
+              mode="indeterminate"
+              diameter="20"
+              strokeWidth="4"
+              color="primary"
+              *ngIf="isLoading"
+            >
+            </mat-progress-spinner>
+            <span *ngIf="!isLoading">حفظ</span>
+          </button>
+          <button (click)="goBack()" mat-stroked-button color="warn">
+            إلغاء
+          </button>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</html>
