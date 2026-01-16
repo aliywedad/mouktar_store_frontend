@@ -23,7 +23,9 @@ export class PageLoaderComponent implements OnInit {
   ) {}
 
   async ngOnInit() {
-    this.initWebSite();
+    // this.initWebSite();
+    this.router.navigate(['/admin/']);
+
   }
   userId = Service.getUserId() ?? null;
   async initWebSite() {
