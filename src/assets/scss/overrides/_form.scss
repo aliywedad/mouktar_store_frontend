@@ -5,6 +5,22 @@
     .mdc-notched-outline__trailing,
     .mdc-notched-outline__notch {
       border-color: $borderColor;
+      transition: border-color 0.3s ease;
+    }
+    
+    &:hover .mdc-notched-outline__leading,
+    &:hover .mdc-notched-outline__trailing,
+    &:hover .mdc-notched-outline__notch {
+      border-color: $gray-300;
+    }
+    
+    &.mdc-text-field--focused {
+      .mdc-notched-outline__leading,
+      .mdc-notched-outline__trailing,
+      .mdc-notched-outline__notch {
+        border-color: $primary;
+        border-width: 2px;
+      }
     }
 
     .mdc-notched-outline .mdc-notched-outline__leading {
@@ -20,6 +36,8 @@
 
   .mdc-form-field > label {
     font-size: 14px;
+    font-weight: 500;
+    color: $textPrimary;
   }
 
   .hide-hint {

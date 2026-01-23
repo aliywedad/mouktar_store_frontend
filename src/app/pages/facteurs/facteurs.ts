@@ -16,12 +16,20 @@ import { AuthService } from '../side-login/auth.service';
 import { RoleAlert } from 'src/app/tools/RoleAlert/loading.component';
 import { clientsServicesComponent } from '../clients/clientsServices';
 import { FormsModule } from '@angular/forms';
+import { FacteurCardComponent } from '../factcteur-card/factcteur-card';
+import html2pdf from 'html2pdf.js';
+import html2canvas from 'html2canvas';
+
+import jsPDF from 'jspdf';
+import { set } from 'date-fns';
+
 
 @Component({
   selector: 'app-facteurs',
   standalone: true,
   imports: [
     MatTableModule,
+    FacteurCardComponent,
     LoadingComponent,
     FormsModule,
     CommonModule,
@@ -41,7 +49,7 @@ export class FacteurComponent implements OnInit {
 
     private myService: facteursServicesComponent,
     private router: Router,
-    private service: AuthService
+    private service: AuthService,
   ) {}
   isLoading = false;
   facteurs: any = [];
@@ -53,24 +61,101 @@ export class FacteurComponent implements OnInit {
   getFromTimestamp(): number {
     return new Date(this.fromDate + 'T00:00:00').getTime();
   }
+    expandedRowId: string | null = null;
+
+  toggleRow(id: string) {
+    this.expandedRowId = this.expandedRowId === id ? null : id;
+  }
 
   getToTimestamp(): number {
     return new Date(this.toDate + 'T23:59:59').getTime();
   }
-
+  timestampToDate(isoString: string): string {
+    const dateObj = new Date(isoString);
+    return dateObj.toLocaleString('EG', { hour12: false });
+  }
   fromDate!: string; // yyyy-MM-dd
   toDate!: string; // yyyy-MM-dd
-   formatDate(date: Date): string {
+  formatDate(date: Date): string {
     return date.toISOString().split('T')[0];
   }
-  showNotes=false
+  showNotes = false;
+
+  resetSearch() {
+    const now = new Date();
+    const yesterday = new Date(now.getTime() - 24 * 60 * 60 * 1000);
+    this.toDate = this.formatDate(now);
+    this.fromDate = this.formatDate(yesterday);
+    this.tel = '';
+    this.loadDATA();
+  }
+
+
+showFacteursToExport=false
+exportAllAsPDF() {
+  console.log('exportAllAsPDF started');
+
+  this.showFacteursToExport = true;
+
+  // Wait for Angular to render the DOM
+  setTimeout(async () => {
+    try {
+      const element = document.getElementById('facteuts-contents');
+      if (!element) {
+        console.error('Export element not found');
+        return;
+      }
+
+   const canvas = await html2canvas(element, {
+  scale: 2,
+  useCORS: true,
+  windowWidth: 1200,   // 👈 force desktop viewport
+  windowHeight: element.scrollHeight
+});
+
+      const imgData = canvas.toDataURL('image/png');
+      const pdf = new jsPDF('p', 'mm', 'a4');
+
+      const pageWidth = pdf.internal.pageSize.getWidth();
+      const pageHeight = pdf.internal.pageSize.getHeight();
+
+      const imgWidth = pageWidth;
+      const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+      let heightLeft = imgHeight;
+      let position = 0;
+
+      pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+      heightLeft -= pageHeight;
+
+      while (heightLeft > 0) {
+        position = heightLeft - imgHeight;
+        pdf.addPage();
+        pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+        heightLeft -= pageHeight;
+      }
+
+      pdf.save(`factures_${Date.now()}.pdf`);
+
+    } catch (error) {
+      console.error('Error exporting PDF:', error);
+    } finally {
+      // Hide AFTER export completes
+      this.showFacteursToExport = false;
+      console.log('exportAllAsPDF finished');
+    }
+  }, 0); // 👈 critical
+}
+
+
+  
 
   loadDATA() {
     this.isLoading = true;
     const fromTs = this.getFromTimestamp();
     const toTs = this.getToTimestamp();
- 
-    this.myService.getfacteursData(fromTs,toTs,this.tel).subscribe((data) => {
+
+    this.myService.getfacteursData(fromTs, toTs, this.tel).subscribe((data) => {
       this.facteurs = data.data;
       console.log('facteurs  ta is ', this.facteurs);
       this.isLoading = false;
@@ -83,10 +168,10 @@ export class FacteurComponent implements OnInit {
     this.toDate = this.formatDate(now);
     this.fromDate = this.formatDate(yesterday);
 
-     console.log('item info : ', Constants.admin);
+    console.log('item info : ', Constants.admin);
     this.loadDATA();
   }
- 
+
   goToAddPage() {
     this.router.navigate(['admin']);
   }
@@ -105,7 +190,7 @@ export class FacteurComponent implements OnInit {
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#d33',
-      cancelButtonColor: '#3085d6',
+      cancelButtonColor: '#4A90E2',
       confirmButtonText: 'نعم، احذف الفاتورة',
       cancelButtonText: 'إلغاء',
       reverseButtons: true,
@@ -122,7 +207,7 @@ export class FacteurComponent implements OnInit {
               title: 'تم الحذف!',
               text: 'تم حذف الفاتورة بنجاح.',
               icon: 'success',
-              confirmButtonColor: '#3085d6',
+              confirmButtonColor: '#4A90E2',
               confirmButtonText: 'حسناً',
               timer: 2000,
               timerProgressBar: true,
@@ -149,6 +234,73 @@ export class FacteurComponent implements OnInit {
       }
     });
   }
+
+
+  SendFacteur(id: string) {
+  Swal.fire({
+    title: 'هل أنت متأكد؟',
+    text: 'سيتم تأكيد وإرسال الفاتورة ولا يمكن التراجع عن ذلك.',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#4A90E2',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'نعم، أكد الفاتورة',
+    cancelButtonText: 'إلغاء',
+    reverseButtons: true,
+    customClass: {
+      confirmButton: 'swal2-confirm-arabic',
+      cancelButton: 'swal2-cancel-arabic',
+    },
+  }).then((result) => {
+    if (!result.isConfirmed) return;
+
+    this.isLoading = true;
+
+    this.myService.sendFacteur(id).subscribe({
+      next: () => {
+        this.isLoading = false;
+
+        // Update local list (mark as sent instead of deleting)
+        const facteur = this.facteurs.find((f: any) => f.id === id);
+        if (facteur) {
+          facteur.send = true;
+        }
+
+        Swal.fire({
+          title: 'تم بنجاح ✅',
+          text: 'تم تأكيد الفاتورة وإرسالها بنجاح.',
+          icon: 'success',
+          confirmButtonColor: '#4A90E2',
+          confirmButtonText: 'حسناً',
+          timer: 2000,
+          timerProgressBar: true,
+          showConfirmButton: false,
+          customClass: {
+            popup: 'swal2-popup-arabic',
+          },
+        });
+      },
+
+      error: (error) => {
+        this.isLoading = false;
+        console.error('Error sending facture:', error);
+
+        Swal.fire({
+          title: 'خطأ ❌',
+          text: 'حدث خطأ أثناء تأكيد الفاتورة. يرجى المحاولة مرة أخرى.',
+          icon: 'error',
+          confirmButtonColor: '#d33',
+          confirmButtonText: 'حسناً',
+          customClass: {
+            popup: 'swal2-popup-arabic',
+          },
+        });
+      },
+    });
+  });
+}
+
+
 
   showSuccessAlert(message: string) {
     Swal.fire({

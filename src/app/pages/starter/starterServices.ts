@@ -40,30 +40,30 @@ export class StarterServicesComponent {
 
   createFacteur(
     data: any,
-    date: string,
-    total: number,
-    transporter: string,
-    payed_price: number,
-    note: string,
-    garage: string,
-    timestamp: number,
-    tel:string,
-    name:string
+    // date: string,
+    // total: number,
+    // transporter: string,
+    // payed_price: number,
+    // note: string,
+    // garage: string,
+    // timestamp: number,
+    // tel:string,
+    // name:string
   ): Observable<any[]> {
-    const body = {
-      data: data,
-      date: date,
-      total: total,
-      transporter,
-      payed_price,
-      garage,
-      note,
-      timestamp,
-      tel,
-      name
-    };
+    // const body = {
+    //   data: data,
+    //   date: date,
+    //   total: total,
+    //   transporter,
+    //   payed_price,
+    //   garage,
+    //   note,
+    //   timestamp,
+    //   tel,
+    //   name
+    // };
 
-    return this.httpClient.post<any[]>(URLS.facteurs, body, {
+    return this.httpClient.post<any[]>(URLS.facteurs, data, {
       headers: Service.getAuthHeaders(),
     });
   }

@@ -16,7 +16,13 @@ export const navItems: NavItem[] = [
     route: '/admin/facteurs',
   },
 
- 
+  {
+    displayName: 'debts',
+    arName: 'الديون',
+    iconName: 'fa-solid fa-file-invoice',
+    route: '/admin/debts',
+  },
+
 
     {
     displayName: 'notes',

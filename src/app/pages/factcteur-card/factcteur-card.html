@@ -1,7 +1,16 @@
 <html dir="rtl" lang="ar">
-  <div class="card hfull">
+  <div
+    class="card"
+    style="
+      background-color: transparent;
+      border: none;
+      box-shadow: none;
+      margin: 10px;
+    "
+  >
     <loading *ngIf="isLoading"></loading>
     <div
+      *ngIf="showExports"
       style="
         margin: 20px;
         width: 100%;
@@ -55,11 +64,11 @@
             <div>
               <p *ngIf="factureData.name">الزبون: {{ factureData.name }}</p>
               <p *ngIf="factureData.tel">رقم الهاتف: {{ factureData.tel }}</p>
-              <p *ngIf="getTotaleDebts() > 0">
-                الدين سابقا: {{ getTotaleDebts()}}
+              <p *ngIf="getTotaleDebts > 0">
+                الدين سابقا: {{ getTotaleDebts }}
               </p>
-              <p *ngIf="getTotaleDebts() > 0">
-                المجموع بعد الدين : {{ getTotaleDebts()+getTotal }}
+              <p *ngIf="getTotaleDebts > 0">
+                المجموع بعد الدين : {{ getTotaleDebts + getTotal }}
               </p>
               <p *ngIf="factureData.payed_price">
                 المبلغ المدفوع : {{ factureData.payed_price }}
@@ -76,7 +85,7 @@
         </div>
 
         <div class="t-con">
-          <table class="w-full mt-1 border-collapse border border-gray-700">
+          <table class="w-full mt-1 border-collapse border border-gray-400">
             <tr>
               <th class="f-titel" style="font-size: 15px"></th>
               <th class="f-titel" style="font-size: 15px">
@@ -84,8 +93,9 @@
                 Designation
               </th>
               <th class="f-titel" style="font-size: 15px">
-                Quantity <br />
                 الكمية
+                <br />
+                Quantity
               </th>
               <th class="f-titel" style="font-size: 15px">
                 العدد في الحزمة \العلبة
@@ -101,6 +111,7 @@
                 prix total
               </th>
             </tr>
+
             <tr *ngFor="let f of factureData.data; let i = index">
               <td style="width: 20px">
                 <span *ngIf="f.done">
@@ -112,17 +123,36 @@
               <td>{{ f.package }}</td>
               <td>{{ f.prixUnitaire }}</td>
               <td>{{ f.prixTotal }}</td>
+              <td>
+                <i
+                  class="fa-solid fa-x"
+                  *ngIf="Editing"
+                  style="color: rgb(250, 117, 117); cursor: pointer"
+                  (click)="deleteItem(i)"
+                ></i>
+              </td>
             </tr>
           </table>
         </div>
-        <div class="debts-content flex justify-between">
-          <p *ngIf="getTotaleDebts() > 0">الدين سابقا: {{ getTotaleDebts()}}</p>
-          <p *ngIf="getTotaleDebts() > 0">
-            المجموع بعد الدين : {{ getTotaleDebts()+getTotal }}
-          </p>
-          <p *ngIf="factureData.payed_price">
-            المبلغ المدفوع : {{ factureData.payed_price }}
-          </p>
+        <div class="price-footer">
+          <span class="" *ngIf="getTotaleDebts>0">
+            <span>مجموع الدين سابقا</span>
+            <span style="font-weight: bold; margin: 0 5px"
+              >{{ getTotaleDebts }}</span
+            >
+          </span>
+          <span *ngIf="factureData.payed_price">
+            <span> المبلغ المدفوع</span>
+            <span style="font-weight: bold; margin: 0 5px"
+              >{{ factureData.payed_price }}</span
+            >
+          </span>
+          <span *ngIf="getTotaleDebts + getTotal > 0">
+            <span> المجموع مع الدين</span>
+            <span style="font-weight: bold; margin: 0 5px"
+              >{{ getTotaleDebts + getTotal}}</span
+            >
+          </span>
         </div>
         <div class="total-con">
           <span class="f-titel">الإجمالي:</span>
@@ -132,7 +162,7 @@
       </div>
     </div>
 
-    <div *ngIf="factureData.note" class="note" style="width: 50%">
+    <div *ngIf="factureData.note && showNote" class="note" style="width: 50%">
       <fieldset
         style="
           border: 1px solid lightblue;

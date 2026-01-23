@@ -1,0 +1,39 @@
+.role-con {
+  background-color: lightblue;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  padding: 5px 10px;
+  justify-content: space-between;
+}
+
+.role-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5px 5px;
+}
+.delet-row{
+  font-size: 10;
+  color: rgb(248, 114, 114);
+}
+.flex-option {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  // align-items: center;
+  justify-content: space-between !important;
+}
+.w-full{
+  width: 100% !important;
+}
+.prod-con {
+  border: 1px solid;
+  padding: 5px;
+  padding-top: 10px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+.sup-con {
+  margin: 5px;
+}

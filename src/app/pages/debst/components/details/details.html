@@ -55,15 +55,6 @@
             <div>
               <p *ngIf="factureData.name">الزبون: {{ factureData.name }}</p>
               <p *ngIf="factureData.tel">رقم الهاتف: {{ factureData.tel }}</p>
-              <p *ngIf="getTotaleDebts() > 0">
-                الدين سابقا: {{ getTotaleDebts()}}
-              </p>
-              <p *ngIf="getTotaleDebts() > 0">
-                المجموع بعد الدين : {{ getTotaleDebts()+getTotal }}
-              </p>
-              <p *ngIf="factureData.payed_price">
-                المبلغ المدفوع : {{ factureData.payed_price }}
-              </p>
             </div>
             <div class="text-right">
               <p>التاريخ: {{ factureData.date }}</p>
@@ -76,30 +67,15 @@
         </div>
 
         <div class="t-con">
-          <table class="w-full mt-1 border-collapse border border-gray-700">
+          <table class="w-full mt-1 border-collapse border border-gray-400">
             <tr>
-              <th class="f-titel" style="font-size: 15px"></th>
-              <th class="f-titel" style="font-size: 15px">
-                النوعية <br />
-                Designation
-              </th>
-              <th class="f-titel" style="font-size: 15px">
-                Quantity <br />
-                الكمية
-              </th>
-              <th class="f-titel" style="font-size: 15px">
-                العدد في الحزمة \العلبة
-                <br />
-                Numéro dans l'emballage
-              </th>
-              <th class="f-titel" style="font-size: 15px">
-                س.الفرد <br />
-                prix unitaire
-              </th>
-              <th class="f-titel" style="font-size: 15px">
-                س.الإجمالي <br />
-                prix total
-              </th>
+              <th class="f-titel"></th>
+              <th class="f-titel">النوعية / Designation</th>
+              <th class="f-titel">Quantity / الكمية</th>
+              <th class="f-titel">العدد في الحزمة / العلبة</th>
+
+              <th class="f-titel">س.الفرد / prix unitaire</th>
+              <th class="f-titel">س.الإجمالي / prix total</th>
             </tr>
             <tr *ngFor="let f of factureData.data; let i = index">
               <td style="width: 20px">
@@ -114,15 +90,6 @@
               <td>{{ f.prixTotal }}</td>
             </tr>
           </table>
-        </div>
-        <div class="debts-content flex justify-between">
-          <p *ngIf="getTotaleDebts() > 0">الدين سابقا: {{ getTotaleDebts()}}</p>
-          <p *ngIf="getTotaleDebts() > 0">
-            المجموع بعد الدين : {{ getTotaleDebts()+getTotal }}
-          </p>
-          <p *ngIf="factureData.payed_price">
-            المبلغ المدفوع : {{ factureData.payed_price }}
-          </p>
         </div>
         <div class="total-con">
           <span class="f-titel">الإجمالي:</span>

@@ -1,0 +1,363 @@
+<html dir="rtl" lang="ar">
+  <mat-card class="cardWithShadow">
+    <mat-card-content class="mat-card-content">
+      <mat-card-title class="title">قائمة </mat-card-title>
+
+      <mat-tab-group>
+        <!-- البحث -->
+        <mat-tab label="بحث">
+          <div class="search-card mt-3">
+            <div class="search-header">
+              <h3 class="search-title">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                البحث عن الفواتير
+              </h3>
+            </div>
+            <div class="search-form">
+              <div class="form-grid">
+                <div class="form-item">
+                  <label>
+                    <i class="fa-regular fa-calendar"></i>
+                    من تاريخ
+                  </label>
+                  <input
+                    class="input"
+                    type="date"
+                    name="fromDate"
+                    [(ngModel)]="fromDate"
+                  />
+                </div>
+                <div class="form-item">
+                  <label>
+                    <i class="fa-regular fa-calendar"></i>
+                    إلى تاريخ
+                  </label>
+                  <input
+                    class="input"
+                    type="date"
+                    name="toDate"
+                    [(ngModel)]="toDate"
+                  />
+                </div>
+                <div class="form-item">
+                  <label>
+                    <i class="fa-solid fa-phone"></i>
+                    رقم الهاتف
+                  </label>
+                  <input
+                    class="input"
+                    type="number"
+                    name="tel"
+                    placeholder="أدخل رقم الهاتف"
+                    [(ngModel)]="tel"
+                  />
+                </div>
+              </div>
+              <div class="search-actions">
+                <button
+                  class="btn btn-primary search-button"
+                  (click)="loadDATA()"
+                >
+                  <i class="fa-solid fa-magnifying-glass"></i>
+                  <span>بحث</span>
+                </button>
+                <button
+                  class="btn btn-secondary reset-button"
+                  (click)="resetSearch()"
+                >
+                  <i class="fa-solid fa-rotate"></i>
+                  <span>إعادة تعيين</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </mat-tab>
+        <!-- إضافة ملاحظة جديدة -->
+        <mat-tab label="إضافة ملاحظة جديد ">
+          <div class="search-card mt-3">
+            <div class="search-header">
+              <h3 class="search-title">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                البحث عن الفواتير
+              </h3>
+            </div>
+            <div class="search-form">
+              <div class="form-grid">
+                <div class="form-item">
+                  <label>
+                    <i class="fa-solid fa-person"></i>
+                    الاسم
+                  </label>
+                  <input
+                    class="input"
+                    type="text"
+                    name="tel"
+                    placeholder="  أدخل الاسم"
+                    [(ngModel)]="newDebt.name"
+                  />
+                </div>
+                <div class="form-item">
+                  <label>
+                    <i class="fa-solid fa-phone"></i>
+                    رقم الهاتف
+                  </label>
+                  <input
+                    class="input"
+                    type="number"
+                    name="tel"
+                    placeholder="أدخل رقم الهاتف"
+                    [(ngModel)]="newDebt.tel"
+                  />
+                </div>
+
+                <div class="form-item">
+                  <label>
+                    <i class="fa-solid fa-dollar"></i>
+                    المبلغ المدين
+                  </label>
+                  <input
+                    class="input"
+                    type="number"
+                    name="tel"
+                    placeholder=" أدخل المبلغ المدين"
+                    [(ngModel)]="newDebt.debt"
+                  />
+                </div>
+              </div>
+              <div class="search-actions">
+                <button class="btn btn-primary search-button" (click)="Add()">
+                  <i class="fa-solid fa-add" style="color: white"></i>
+                  <span>إضافة</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </mat-tab>
+      </mat-tab-group>
+
+      <!-- مؤشر التحميل -->
+      <loading *ngIf="isLoading"></loading>
+
+      <!-- جدول الفواتير -->
+      <div *ngIf="!isLoading" class="table-responsive">
+        <table class="table table-mobile">
+          <!-- رأس الجدول -->
+          <thead>
+            <tr>
+              <th class="text-center" scope="col">
+                <!-- arabic 'last update' -->
+
+                التاريخ
+              </th>
+              <th class="text-center" scope="col">
+                <!-- arabic 'name' -->
+                الاسم
+              </th>
+              <th class="text-center" scope="col">رقم الهاتف</th>
+              <th class="text-center" scope="col">المبلغ المدين</th>
+
+              <th scope="col" class="text-center">الإجراءات</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <ng-container *ngFor="let item of debts; trackBy: trackById">
+              <!-- MAIN ROW -->
+              <tr class="align-middle clickable" >
+                <td (click)="toggleRow(item)" >{{ formatDatehtml(item.timestamp) }}</td>
+                <td (click)="toggleRow(item)" >{{ item.name }}</td>
+                <td (click)="toggleRow(item)" >{{ item.tel }}</td>
+                <td (click)="toggleRow(item)" >{{ item.debt }}</td>
+
+                <td class="text-center">
+                  <button
+                    mat-icon-button
+                    [matMenuTriggerFor]="menu"
+                    (click)="$event.stopPropagation()"
+                  >
+                    <mat-icon>more_vert</mat-icon>
+                  </button>
+
+                  <mat-menu #menu="matMenu">
+                    <button mat-menu-item (click)="goToEditPage(item.id)">
+                      <mat-icon>edit</mat-icon>
+                      تعديل
+                    </button>
+                    <button mat-menu-item (click)="deleteDebt(item.id)">
+                      <mat-icon>delete</mat-icon>
+                      حذف
+                    </button>
+                  </mat-menu>
+                </td>
+              </tr>
+
+              <!-- EXPANDED ROW -->
+              <tr *ngIf="expandedRowId === item.id" id="expanded-row">
+                <td [attr.colspan]="5">
+                  <!-- إضافة تعليق -->
+                  <div>
+                    <div class="tabs">
+                      <span
+                        class="tab"
+                        [ngClass]="{active: payment.type === 'debt'}"
+                        (click)="payment.type = 'debt'"
+                      >
+                        إضافة مبلغ للدين</span
+                      >
+                      <span
+                        class="tab"
+                        [ngClass]="{active: payment.type === 'payment'}"
+                        (click)="payment.type = 'payment'"
+                      >
+                        تسديد مبلغ من الدين</span
+                      >
+                    </div>
+                    <div class="form-smull">
+                      <div class="form-item" style="width: 200px">
+                        <label>
+                          <i class="fa-regular fa-calendar"></i>
+                         <span> من تاريخ</span>
+                        </label>
+                        <input
+                          class="input"
+                          type="date"
+                          name="fromDate_payment"
+                          [(ngModel)]="fromDate_payment"
+                        />
+                      </div>
+                      <div class="form-item" style="width: 200px">
+                        <label>
+                          <i class="fa-regular fa-calendar"></i>
+                          إلى تاريخ
+                        </label>
+                        <input
+                          class="input"
+                          type="date"
+                          name="toDate_payment"
+                          [(ngModel)]="toDate_payment"
+                        />
+                      </div>
+
+                      <div class="form-item" style="width: 200px">
+                        <label>
+                          <span style="visibility: hidden">
+                            <!-- export as pdf  -->
+                            تصدير pdf
+                          </span>
+                        </label>
+                        <div style="display: flex">
+                          <button
+                            class="btn btn-secondary mx-1 reset-button"
+                            (click)="exportPDF()"
+                          >
+                            <i class="fa-solid fa-file"> </i>
+                            تصدير pdf
+                          </button>
+
+                          <button class="btn mx-1 btn-secondary reset-button">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                            <!-- search -->
+                            بحث
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="flex"
+                    style="
+                      gap: 12px;
+                      align-items: center;
+                      width: fit-content;
+                      background: #f9f9f9;
+                      padding: 8px;
+                      border-radius: 5px;
+                      margin-top: 10px;
+                    "
+                  >
+                    <input
+                      placeholder="إضافة دفعة جديدة"
+                      class="date"
+                      [(ngModel)]="payment.amount"
+                      name="newComment"
+                      style="flex: 1"
+                    />
+                    <i
+                      (click)="AddPayment(item.id);"
+                      class="fa-solid fa-paper-plane"
+                      style="
+                        padding: 12px;
+                        background: linear-gradient(
+                          135deg,
+                          #4a90e2 0%,
+                          #357abd 100%
+                        );
+                        color: white;
+                        border-radius: 50%;
+                        cursor: pointer;
+                        transition: all 0.3s ease;
+                        box-shadow: 0 2px 8px rgba(74, 144, 226, 0.3);
+                      "
+                      onmouseover="
+                        this.style.transform = 'scale(1.1)';
+                        this.style.boxShadow =
+                          '0 4px 12px rgba(74, 144, 226, 0.4)';
+                      "
+                      onmouseout="
+                        this.style.transform = 'scale(1)';
+                        this.style.boxShadow =
+                          '0 2px 8px rgba(74, 144, 226, 0.3)';
+                      "
+                    ></i>
+                  </div>
+
+                  <!-- التعليقات -->
+                  <div class="comments">
+                    <div
+                      class="comment"
+                      style="align-items: start; justify-content: end"
+                      *ngFor="let it of filtredPayments"
+                      [ngClass]="{'comment-debt': it.type === 'debt', 'comment-payment': it.type === 'payment'}"
+                    >
+                      <div class="comment-content">{{ it.note }}</div>
+                      <div
+                        style="
+                          width: 100%;
+                          display: flex;
+                          align-items: center;
+                          justify-content: space-between;
+                        "
+                      >
+                        <div class="c-date">
+                          {{ formatDatehtml(it.timestamp) }}
+                        </div>
+                        <div
+                          class="c-date"
+                          *ngIf="it.facteur"
+                          (click)="goToDetails(it.facteur)"
+                          style="cursor: pointer"
+                        >
+                          عرض الفاتورة
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- <div class="expanded-content">
+                    <p><strong>تفاصيل الدين:</strong></p>
+
+                    <ul>
+                      <li *ngFor="let d of item.data">
+                        {{ d.name }} — {{ d.price }}
+                      </li>
+                    </ul>
+                  </div> -->
+                </td>
+              </tr>
+            </ng-container>
+          </tbody>
+        </table>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</html>

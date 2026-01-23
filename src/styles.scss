@@ -1,32 +1,29 @@
 /* You can add global styles to this file, and also import other style files */
 
-
-
 /* 1️⃣ Register the regular font */
 @font-face {
-  font-family: 'Noto Naskh Arabic';
-  src: url('assets/fonts/notoNaskhArabic.ttf') format('truetype');
+  font-family: "Noto Naskh Arabic";
+  src: url("assets/fonts/notoNaskhArabic.ttf") format("truetype");
   font-weight: 400;
   font-style: normal;
 }
 
 /* 2️⃣ Register the bold font */
 @font-face {
-  font-family: 'Noto Naskh Arabic';
-  src: url('assets/fonts/notoNaskhArabicBold.ttf') format('truetype');
+  font-family: "Noto Naskh Arabic";
+  src: url("assets/fonts/notoNaskhArabicBold.ttf") format("truetype");
   font-weight: 700;
   font-style: normal;
 }
 
 /* 3️⃣ Apply globally */
-html, body {
+html,
+body {
   // font-family: 'Noto Naskh Arabic', sans-serif !important;
   direction: rtl; /* optional — use only if your app is in Arabic */
   font-weight: 400;
   // font-size: 16px;
 }
-
-
 
 html,
 body {
@@ -40,98 +37,282 @@ body {
   margin-left: 10px;
 }
 .text-p {
-  color: #5a86aa;
+  color: #4a90e2;
 }
 .bg-p {
-  background-color: #5a86aa;
+  background-color: #4a90e2;
 }
 
 td,
 th {
   // padding: 8px;
   text-align: center;
-  border: 1px solid #3f3e3e !important;
-  padding: 3px;
+  border: 1px solid #e1e8ed !important;
+  padding: 8px;
 }
-th{
-  font-size: 20px;
+th {
+  font-size: 18px;
+  font-weight: 600;
+  background: transparent !important;
+  color: #2a3547 !important;
+  border-bottom: 2px solid #4a90e2 !important;
 }
 .search-btn {
-  background-color: #5a86aa !important;
+  background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%) !important;
   color: white !important;
   border: none !important;
-  padding: 3px;
-  border-radius: 7px;
-  padding-left: 5px;
-  padding-right: 5px;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(74, 144, 226, 0.3);
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(74, 144, 226, 0.4);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
 }
 .loading-btn {
   background-color: white !important;
-  color: #5a86aa !important;
-  border: 1px solid #5a86aa !important;
-  padding: 3px;
-  border-radius: 7px;
-  padding-left: 5px;
-  padding-right: 5px;
+  color: #4a90e2 !important;
+  border: 2px solid #4a90e2 !important;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background-color: #e8f4fd !important;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(74, 144, 226, 0.2);
+  }
 }
 .f-w-600 {
-  color: #5a86aa !important;
+  color: #4a90e2 !important;
 }
 .search {
-  border: 1px solid #5a86aa !important;
-  border-radius: 5px;
+  border: 2px solid #e1e8ed !important;
+  border-radius: 8px;
   width: 100%;
-  padding: 5px 10px;
+  padding: 10px 14px;
+  transition: all 0.3s ease;
+
+  &:focus {
+    outline: none;
+    border-color: #4a90e2 !important;
+    box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
+  }
+
+  &:hover {
+    border-color: #c8d6e5 !important;
+  }
 }
 
 .error-text {
-  color: #f50408;
+  color: #e74c3c;
 }
 .center {
   text-align: center;
 }
 .cardWithShadow {
   height: 100% !important;
-min-height: 30vh;
+  min-height: 30vh;
 }
 .fa-arrow-up {
-  color: rgb(3, 194, 3);
+  color: #27ae60;
 }
 .fa-arrow-down {
-  color: #f50408;
+  color: #e74c3c;
 }
 .payments {
   overflow-y: scroll;
 }
 .title {
-  color: #5a86aa !important;
-  font-weight: bold;
+  color: #4a90e2 !important;
+  font-weight: 700;
   padding-bottom: 20px;
+  letter-spacing: 0.5px;
 }
 .loading-con {
   height: 60vh;
 }
 .myInput {
-  border: 1px solid #5a86aa !important;
-  border-radius: 5px;
+  border: 2px solid #e1e8ed !important;
+  border-radius: 8px;
   width: 100%;
-  padding: 5px 10px;
+  padding: 10px 14px;
+  transition: all 0.3s ease;
+
+  &:focus {
+    outline: none;
+    border-color: #4a90e2 !important;
+    box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
+  }
+
+  &:hover {
+    border-color: #c8d6e5 !important;
+  }
 }
-@media (max-width: 800px) {
-  th {
-    font-size: 13px;
-  }
-  td {
-    font-size: 11px;
-    height: fit-content;
-  }
+// Mobile Responsive Styles
+@media (max-width: 768px) {
+  // Typography
   .title {
-    font-size: 16px;
+    font-size: 18px !important;
+    padding-bottom: 12px;
   }
+
+  // Tables
+  .table-responsive {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    width: 100%;
+    margin: 0 -10px;
+    padding: 0 10px;
+  }
+
+  table {
+    width: 100%;
+    min-width: 600px;
+    font-size: 12px;
+    display: block;
+    overflow-x: auto;
+  }
+
+  th {
+    font-size: 11px !important;
+    padding: 8px 6px !important;
+    white-space: nowrap;
+  }
+
+  td {
+    font-size: 11px !important;
+    padding: 8px 6px !important;
+    height: fit-content;
+    white-space: nowrap;
+  }
+
+  // Forms
   .search {
     font-size: 14px;
+    width: 100%;
+    padding: 10px 12px;
   }
-  .search-btn {
+
+  .search-btn,
+  .cncl-search-btn {
+    font-size: 14px;
+    padding: 10px 16px;
+    width: 100%;
+    margin-bottom: 8px;
+  }
+
+  .myInput {
+    font-size: 14px;
+    padding: 10px 12px;
+  }
+
+  // Cards
+  .card {
+    padding: 16px;
+    margin: 8px;
+    border-radius: 10px;
+  }
+
+  .cardWithShadow {
+    margin: 8px;
+  }
+
+  // Buttons
+  .btn {
+    padding: 10px 16px;
+    font-size: 14px;
+    width: 100%;
+    margin-bottom: 8px;
+  }
+
+  .btn-primary {
+    width: 100%;
+  }
+
+  // Icons
+  .icon-view {
+    font-size: 24px;
+    margin-right: 20px;
+  }
+
+  // Spacing
+  .p-title {
+    font-size: 14px;
+  }
+
+  .sale-value {
+    font-size: 16px;
+  }
+
+  // Flex containers
+  .flex-row {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .justify-content-center {
+    flex-direction: column;
+  }
+
+  // Image containers
+  .image-container {
+    height: 150px;
+    margin: 8px;
+  }
+
+  .image-details-container {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .title {
+    font-size: 16px !important;
+  }
+
+  table {
+    font-size: 10px;
+    min-width: 500px;
+  }
+
+  th {
+    font-size: 10px !important;
+    padding: 6px 4px !important;
+  }
+
+  td {
+    font-size: 10px !important;
+    padding: 6px 4px !important;
+  }
+
+  .card {
+    padding: 12px;
+    margin: 5px;
+  }
+
+  .search-btn,
+  .cncl-search-btn,
+  .btn {
+    padding: 10px 12px;
+    font-size: 13px;
+  }
+
+  .p-title {
+    font-size: 13px;
+  }
+
+  .sale-value {
     font-size: 14px;
   }
 }
@@ -141,22 +322,46 @@ min-height: 30vh;
   align-items: center;
 }
 .search-btn {
-  background-color: #5a86aa;
+  background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%);
   color: white;
   border: none;
-  padding: 5px 5px;
-  border-radius: 5px;
+  padding: 10px 20px;
+  border-radius: 8px;
   cursor: pointer;
   font-size: 15px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(74, 144, 226, 0.3);
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(74, 144, 226, 0.4);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
 }
 .cncl-search-btn {
-  background-color: #fa5c30;
+  background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
   color: white;
   border: none;
-  padding: 5px 5px;
-  border-radius: 5px;
+  padding: 10px 20px;
+  border-radius: 8px;
   cursor: pointer;
   font-size: 15px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(231, 76, 60, 0.3);
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(231, 76, 60, 0.4);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
 }
 
 .text-nowrap {
@@ -173,10 +378,15 @@ min-height: 30vh;
 
 .icon-view {
   width: 20px;
-  color: rgb(79, 224, 246);
+  color: #4a90e2;
   font-size: 30px;
   margin: 5px;
   margin-right: 50px;
+  transition: color 0.3s ease;
+
+  &:hover {
+    color: #357abd;
+  }
 }
 
 .fit {
@@ -209,18 +419,21 @@ min-height: 30vh;
 }
 
 .done {
-  background-color: rgb(234, 252, 234);
+  background: linear-gradient(135deg, #e8f8f0 0%, #d5f4e6 100%);
+  border-left: 4px solid #27ae60;
 }
 
 .p-title {
-  color: #5a86aa;
+  color: #4a90e2;
   font-size: 15px;
-  font-weight: bold;
+  font-weight: 700;
+  letter-spacing: 0.3px;
 }
 .sale-value {
   font-size: 18px;
-  font-weight: bold;
-  color: #5a86aa;
+  font-weight: 700;
+  color: #4a90e2;
+  letter-spacing: 0.5px;
 }
 
 /* Importing Bootstrap SCSS file. */
@@ -229,5 +442,61 @@ min-height: 30vh;
 /* Importing Bootstrap SCSS file. */
 @import "bootstrap/scss/bootstrap";
 
+/* SweetAlert2 Arabic Support */
+.swal2-popup-arabic {
+  direction: rtl !important;
+  text-align: right !important;
+  font-family: "Noto Naskh Arabic", sans-serif !important;
 
- 
+  .swal2-title {
+    direction: rtl !important;
+    text-align: right !important;
+  }
+
+  .swal2-content {
+    direction: rtl !important;
+    text-align: right !important;
+  }
+
+  .swal2-confirm,
+  .swal2-cancel {
+    font-family: "Noto Naskh Arabic", sans-serif !important;
+  }
+}
+
+/* Custom Button Styles */
+.btn {
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%);
+  color: white;
+  box-shadow: 0 2px 8px rgba(74, 144, 226, 0.3);
+
+  &:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(74, 144, 226, 0.4);
+    background: linear-gradient(135deg, #357abd 0%, #2a5f8f 100%);
+  }
+
+  &:active:not(:disabled) {
+    transform: translateY(0);
+    box-shadow: 0 2px 6px rgba(74, 144, 226, 0.3);
+  }
+}

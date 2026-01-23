@@ -104,8 +104,8 @@ export class ClientsComponent implements OnInit {
         Swal.fire({
           position: 'center',
           icon: 'success',
-          confirmButtonColor: '#5a86aa',
-          title: 'تمت العملية بنجاح',
+          confirmButtonColor: '#4A90E2',
+          title: 'نجح',
           text: 'تمت إضافة الزبون بنجاح!',
           showConfirmButton: false,
           timer: 2000,
