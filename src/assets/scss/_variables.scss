@@ -1,6 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap");
 // font
-$font-family: 'DM Sans', sans-serif;
+$font-family: "DM Sans", sans-serif;
 
 // light color variable
 $sidebarbg: white;
@@ -15,43 +15,48 @@ $darksidebarbg: #2a3447;
 $darkbackground: #2a3447;
 $darkcardbg: #2a3447;
 $darktoolbar: #2a3447;
-$darkcardshadow: rgba(145, 158, 171, 0.3) 0px 0px 2px 0px, rgba(145, 158, 171, 0.02) 0px 12px 24px -4px;
+$darkcardshadow: rgba(145, 158, 171, 0.3) 0px 0px 2px 0px,
+  rgba(145, 158, 171, 0.02) 0px 12px 24px -4px;
 $darkborderColor: #333f55;
 $darkformborderColor: #465670;
 $darkhoverbgcolor: #333f55;
 $darkthemelightprimary: #253662;
-$darkthemelightaccent: #1C455D;
-$darkthemelightwarning: #4D3A2A;
-$darkthemelighterror: #4B313D;
-$darkthemelightsuccess: #1B3C48;
+$darkthemelightaccent: #1c455d;
+$darkthemelightwarning: #4d3a2a;
+$darkthemelighterror: #4b313d;
+$darkthemelightsuccess: #1b3c48;
 
 // Sidenav
 $sidenav-desktop: 270px !default;
 $sidenav-mini: 80px !default;
 $header-height: 70px !default;
 
-
 //BorderColor
 $borderColor: #e5eaef;
 $borderformColor: #dfe5ef;
 
-// custom
-$primary: #0096FF; 
-$accent: #97CADB;
-$warning: #fec90f;
-$error: #fc4b6c;
-$success: #00c292;
+// custom - Modern color palette
+$primary: #4a90e2; // Modern blue
+$primary-dark: #357abd;
+$primary-light: #6ba3e8;
+$accent: #e70202; // Soft cyan
+$accent-dark: #5ba3b3;
+$warning: #f5a623; // Warm amber
+$error: #e74c3c; // Vibrant red
+$success: #27ae60; // Fresh green
 $white: #ffffff;
 
-$light: #f2f6fa;
+$light: #f5f7fa; // Softer light background
 
-$gray-100:  #7c8fac;
+$gray-100: #8b9dc3; // Updated gray
+$gray-200: #e1e8ed;
+$gray-300: #c8d6e5;
 
-$light-primary: #ffe5dc;
-$light-accent: #e5fafb;
-$light-warning: #fff8ec;
-$light-error: #f9e7eb;
-$light-success: #ebfaf2;
+$light-primary: #e8f4fd;
+$light-accent: #e70202;
+$light-warning: #fff4e6;
+$light-error: #fde8e6;
+$light-success: #e8f8f0;
 
 // layout
 $boxedWidth: 1200px;

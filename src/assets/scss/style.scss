@@ -11,7 +11,6 @@
 @import "themecolors/default_theme";
 @include mat.all-component-themes($orangetheme);
 
-
 //container layout
 @import "overrides/materialoverrides";
 @import "container";
@@ -19,12 +18,36 @@
 @import "grid/grid";
 @import "helpers/custom-flex";
 @import "helpers/index";
-.card{
-box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;  padding: 20px;
+.card {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07), 0 1px 3px rgba(0, 0, 0, 0.06);
+  padding: 24px;
   margin: 10px;
-  border-radius: 10px;
+  border-radius: 12px;
+  border: 1px solid #e1e8ed;
+  background: #ffffff;
+  transition: all 0.3s ease;
+
+  &:hover {
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1), 0 4px 10px rgba(0, 0, 0, 0.08);
+    transform: translateY(-2px);
+  }
 }
 
+// Mobile Responsive for Cards
+@media (max-width: 768px) {
+  .card {
+    padding: 16px;
+    margin: 8px;
+    border-radius: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .card {
+    padding: 12px;
+    margin: 5px;
+  }
+}
 
 // pages
 @import "pages/auth";
@@ -32,47 +55,40 @@ box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;  padding: 20px;
 
 /* You can add global styles to this file, and also import other style files */
 
-
-
 /* 1️⃣ Register the regular font */
 @font-face {
-  font-family: 'Noto Naskh Arabic';
-  src: url('../fonts/notoNaskhArabic.ttf') format('truetype');
+  font-family: "Noto Naskh Arabic";
+  src: url("../fonts/notoNaskhArabic.ttf") format("truetype");
   font-weight: 600;
   font-style: normal;
 }
 
 /* 2️⃣ Register the bold font */
 @font-face {
-  font-family: 'Noto Naskh Arabic';
-  src: url('../fonts/notoNaskhArabicBold.ttf') format('truetype');
+  font-family: "Noto Naskh Arabic";
+  src: url("../fonts/notoNaskhArabicBold.ttf") format("truetype");
   font-weight: 700;
   font-style: normal;
 }
 
 /* 3️⃣ Apply globally */
-html, body {
-  font-family: 'Noto Naskh Arabic', sans-serif !important;
-          // font-family: 'Cairo', 'Amiri', 'Tajawal', sans-serif;
+html,
+body {
+  font-family: "Noto Naskh Arabic", sans-serif !important;
+  // font-family: 'Cairo', 'Amiri', 'Tajawal', sans-serif;
 
   direction: rtl; /* optional — use only if your app is in Arabic */
   font-weight: 400;
   // font-size: 16px;
 }
 
-
-
-
 .whitesmoke {
-    background-color: white !important;
+  background-color: white !important;
 }
 
-.whiteBG{
-    background-color: white !important;
+.whiteBG {
+  background-color: white !important;
 }
-.accent{
-     color: #0096FF  ;
+.accent {
+  color: #0096ff;
 }
-
-
- 

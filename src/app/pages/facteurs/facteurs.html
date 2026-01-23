@@ -2,60 +2,88 @@
   <mat-card class="cardWithShadow">
     <mat-card-content class="mat-card-content">
       <mat-card-title class="title">قائمة الفواتير</mat-card-title>
-      <span>
-        {{showNotes?"hide the notes ":"show the notes "}}
-        <i
+      <div class="notes-toggle">
+        <button
+          class="toggle-notes-btn"
           (click)="showNotes=!showNotes"
-          *ngIf="showNotes"
-          class="fa-solid fa-eye-slash"
-        ></i>
-        <i
-          (click)="showNotes=!showNotes"
-          *ngIf="!showNotes"
-          class="fa-solid fa-eye"
-        ></i>
-      </span>
-      <div class="card">
-        <div class="form">
-          <div class="form-item">
-            <label> To</label>
-            <input
-              class="date"
-              type="date"
-              name="Designation"
-              [(ngModel)]="toDate"
-            />
-          </div>
-          <div class="form-item">
-            <label> From </label>
-            <input
-              class="date"
-              type="date"
-              name="Quantity"
-              [(ngModel)]="fromDate"
-            />
-          </div>
-          <div class="form-item">
-            <label> tel </label>
-            <input
-              class="date"
-              type="number"
-              name="Quantity"
-              [(ngModel)]="tel"
-            />
-          </div>
-          <div class="form-item">
-            <!-- <label>الزبون</label>
-        <input
-          class="input"
-          name="prixTotal"
-          [(ngModel)]="client.name"
-        /> -->
- 
-          </div>
+          [class.active]="showNotes"
+        >
+          <i
+            [class.fa-eye-slash]="showNotes"
+            [class.fa-eye]="!showNotes"
+            class="fa-solid"
+          ></i>
+          <span>{{ showNotes ? "إخفاء الملاحظات" : "إظهار الملاحظات" }}</span>
+        </button>
+      </div>
+      <div class="search-card">
+        <div class="search-header">
+          <h3 class="search-title">
+            <i class="fa-solid fa-magnifying-glass" style="color: white"></i>
+            البحث عن الفواتير
+          </h3>
         </div>
-        <div style="width: fit-content; padding-top: 10px">
-          <button class="btn btn-primary" (click)="loadDATA()">search</button>
+        <div class="search-form">
+          <div class="form-grid">
+            <div class="form-item">
+              <label>
+                <i class="fa-regular fa-calendar"></i>
+                من تاريخ
+              </label>
+              <input
+                class="input"
+                type="date"
+                name="fromDate"
+                [(ngModel)]="fromDate"
+              />
+            </div>
+            <div class="form-item">
+              <label>
+                <i class="fa-regular fa-calendar"></i>
+                إلى تاريخ
+              </label>
+              <input
+                class="input"
+                type="date"
+                name="toDate"
+                [(ngModel)]="toDate"
+              />
+            </div>
+            <div class="form-item">
+              <label>
+                <i class="fa-solid fa-phone"></i>
+                رقم الهاتف
+              </label>
+              <input
+                class="input"
+                type="number"
+                name="tel"
+                placeholder="أدخل رقم الهاتف"
+                [(ngModel)]="tel"
+              />
+            </div>
+          </div>
+          <div class="search-actions">
+            <button class="btn btn-primary search-button" (click)="loadDATA()">
+              <i class="fa-solid fa-magnifying-glass" style="color: white"></i>
+              <span>بحث</span>
+            </button>
+            <button
+              class="btn btn-secondary reset-button"
+              (click)="exportAllAsPDF()"
+            >
+              <i class="fa-solid fa-file"></i>
+              <span> PDF</span>
+            </button>
+            <button
+              class="btn btn-secondary reset-button"
+              (click)="resetSearch()"
+            >
+              <i class="fa-solid fa-rotate"></i>
+              <span>إعادة تعيين</span>
+            </button>
+            <!-- / -->
+          </div>
         </div>
       </div>
 
@@ -64,15 +92,16 @@
 
       <!-- جدول الفواتير -->
       <div *ngIf="!isLoading" class="table-responsive">
-        <table class="table table-hover">
+        <table class="table table-hover table-mobile">
           <!-- رأس الجدول -->
           <thead>
             <tr>
               <th class="text-center" scope="col">التاريخ</th>
               <th class="text-center" scope="col">الزبون</th>
-              <th class="text-center" scope="col">tel</th>
-              <th class="text-center" *ngIf="showNotes" scope="col">notes</th>
-
+              <th class="text-center" scope="col">رقم الهاتف</th>
+              <th class="text-center" *ngIf="showNotes" scope="col">
+                الملاحظات
+              </th>
               <th class="text-center" scope="col">المبلغ الإجمالي</th>
               <th class="text-center" scope="col">عدد العناصر</th>
               <th class="text-center" scope="col">الناقل</th>
@@ -85,60 +114,106 @@
 
           <!-- جسم الجدول -->
           <tbody>
-            <tr
-              *ngFor="let item of facteurs; trackBy: trackById"
-              class="align-middle"
-            >
-              <td class="nowrap">{{ item.date }}</td>
-              <td class="nowrap">{{ item.name }}</td>
-              <td class="nowrap">{{ item.tel }}</td>
-              <td
-                class=""
-                style="text-wrap: wrap; max-width: 200px"
-                *ngIf="showNotes"
-              >
-                {{ item.note }}
-              </td>
-              <td>{{ item.total | number : "1.0-2" }}</td>
-              <td>{{ item.data.length }}</td>
-              <td>{{ item.transporter }}</td>
-              <td>{{ item.garage }}</td>
-              <td>{{ item.payed_price }}</td>
-              <td>{{ item.total-item.payed_price }}</td>
-
-              <!-- عمود الإجراءات -->
-              <td class="text-center">
-                <button
-                  mat-icon-button
-                  [matMenuTriggerFor]="menu"
-                  aria-label="خيارات الفاتورة"
-                  class="p-0 m-0"
+            <ng-container *ngFor="let item of facteurs; trackBy: trackById">
+              <tr class="align-middle" (click)="toggleRow(item.id)">
+                <td class="nowrap">{{ timestampToDate(item.timestamp) }}</td>
+                <td class="nowrap">{{ item.name }}</td>
+                <td class="nowrap">{{ item.tel }}</td>
+                <td
+                  class=""
+                  style="text-wrap: wrap; max-width: 200px"
+                  *ngIf="showNotes"
                 >
-                  <mat-icon>more_vert</mat-icon>
-                </button>
-                <mat-menu #menu="matMenu">
-                  <button mat-menu-item (click)="goToAddPage()">
-                    <mat-icon>add</mat-icon>
-                    <span>إضافة</span>
+                  {{ item.note }}
+                </td>
+                <td>{{ item.total | number : "1.0-2" }}</td>
+                <td>
+                  <span
+                    *ngIf="item.send"
+                    class="bg-green-500"
+                    style="
+                      background-color: rgb(205, 245, 205);
+                      color: green;
+                      font-weight: 700;
+                      padding: 2px 7px;
+                      border-radius: 8px;
+                    "
+                    >تم الإرسال</span
+                  >
+                  <span
+                    *ngIf="!item.send"
+                    class="bg-red-500"
+                    style="
+                      background-color: rgb(245, 218, 205);
+                      color: red;
+                      font-weight: 700;
+                      padding: 2px 7px;
+                      border-radius: 8px;
+                    "
+                    >لم يتم الإرسال</span
+                  >
+                </td>
+                <td>{{ item.transporter }}</td>
+                <td>{{ item.garage }}</td>
+                <td>{{ item.payed_price }}</td>
+                <td>{{ item.total-item.payed_price }}</td>
+
+                <!-- عمود الإجراءات -->
+                <td class="text-center">
+                  <button
+                    mat-icon-button
+                    [matMenuTriggerFor]="menu"
+                    aria-label="خيارات الفاتورة"
+                    class="p-0 m-0"
+                  >
+                    <mat-icon>more_vert</mat-icon>
                   </button>
-                  <button mat-menu-item (click)="goToEditPage(item.id)">
-                    <mat-icon>edit</mat-icon>
-                    <span>تعديل</span>
-                  </button>
-                  <button mat-menu-item (click)="deleteFacteur(item.id)">
-                    <mat-icon>delete</mat-icon>
-                    <span>حذف</span>
-                  </button>
-                  <button mat-menu-item (click)="goToDetails(item.id)">
-                    <mat-icon>visibility</mat-icon>
-                    <span>عرض التفاصيل</span>
-                  </button>
-                </mat-menu>
-              </td>
-            </tr>
+                  <mat-menu #menu="matMenu">
+                    <button
+                      mat-menu-item
+                      (click)="SendFacteur(item.id)"
+                      *ngIf="!item.send"
+                    >
+                      <mat-icon>send</mat-icon>
+                      <span>الإرسال</span>
+                    </button>
+                    <button mat-menu-item (click)="goToEditPage(item.id)">
+                      <mat-icon>edit</mat-icon>
+                      <span>تعديل</span>
+                    </button>
+                    <button mat-menu-item (click)="deleteFacteur(item.id)">
+                      <mat-icon>delete</mat-icon>
+                      <span>حذف</span>
+                    </button>
+                    <button mat-menu-item (click)="goToDetails(item.id)">
+                      <mat-icon>visibility</mat-icon>
+                      <span>عرض التفاصيل</span>
+                    </button>
+                  </mat-menu>
+                </td>
+              </tr>
+
+              <tr *ngIf="expandedRowId === item.id">
+                <td [attr.colspan]="11">
+                  <app-factcteur-card [factureData]="item"></app-factcteur-card>
+                </td>
+              </tr>
+            </ng-container>
           </tbody>
         </table>
       </div>
     </mat-card-content>
   </mat-card>
+  <div
+    id="facteuts-contents"
+    *ngIf="showFacteursToExport"
+    style="position: absolute; left: -9999px; top: 0"
+  >
+    <div *ngFor="let item of facteurs; trackBy: trackById">
+      <app-factcteur-card
+        [factureData]="item"
+        [ShowDebts]="true"
+      ></app-factcteur-card>
+    </div>
+  </div>
 </html>

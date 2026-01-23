@@ -2,7 +2,11 @@
   <div class="card hfull">
     <div class="form">
       <div class="form-item">
-        <label>النوعية / Designation</label>
+        <label>
+          Designation
+          <br />
+          النوعية
+        </label>
         <input
           class="input"
           name="Designation"
@@ -10,7 +14,10 @@
         />
       </div>
       <div class="form-item">
-        <label>Quantity / الكمية</label>
+        <label
+          >Quantity <br />
+          الكمية</label
+        >
         <input
           class="input"
           type="number"
@@ -19,7 +26,10 @@
         />
       </div>
       <div class="form-item">
-        <label>العدد في الحزمة / العلبة</label>
+        <label>
+          Numéro dans l'emballage<br />
+          العدد في الحزمة / العلبة
+        </label>
         <input
           class="input"
           type="number"
@@ -28,7 +38,11 @@
         />
       </div>
       <div class="form-item">
-        <label>س.الفرد / prix unitaire </label>
+        <label>
+          prix unitaire<br />
+
+          س.الفرد
+        </label>
         <input
           class="input"
           type="number"
@@ -36,17 +50,11 @@
           [(ngModel)]="item.prixUnitaire"
         />
       </div>
-      <!-- <div class="form-item">
-        <label>prix_total</label>
-        <input
-          class="input"
-          type="number"
-          name="prixTotal"
-          [(ngModel)]="item.prixTotal"
-        />
-      </div> -->
+
       <div class="form-item">
-        <label style="visibility: hidden">prix_total</label>
+        <label style="visibility: hidden">
+          prix unitaire<br />
+          prix_total</label>
         <button
           class="btn btn-primary"
           style="width: 200px"
@@ -57,10 +65,10 @@
       </div>
     </div>
 
-    <div class="form mb-5">
+    <div class="form mb-0">
       <div class="form-item">
         <label> الكراج</label>
-        <input class="input" name="Designation" [(ngModel)]="garage" />
+        <input class="input" name="Designation" [(ngModel)]="facture.garage" />
       </div>
       <div class="form-item">
         <label> المبلغ المدفوع </label>
@@ -68,112 +76,46 @@
           class="input"
           type="number"
           name="Quantity"
-          [(ngModel)]="payed_price"
+          [(ngModel)]="facture.payed_price"
         />
       </div>
       <div class="form-item">
         <label>الناقل </label>
-        <input class="input" name="package" [(ngModel)]="transporter" />
+        <input class="input" name="package" [(ngModel)]="facture.transporter" />
       </div>
 
       <div class="form-item">
         <label>رقم الهاتف</label>
-        <input class="input" name="prixTotal" [(ngModel)]="tel" />
+        <input class="input" name="prixTotal" [(ngModel)]="facture.tel" />
       </div>
       <div class="form-item">
         <label>الزبون</label>
-        <input class="input" name="prixTotal" [(ngModel)]="name" />
+        <input class="input" name="prixTotal" [(ngModel)]="facture.name" />
       </div>
 
       <div class="form-item">
         <label>ملاحظة</label>
-        <textarea class="text" name="prixTotal" [(ngModel)]="note"> </textarea>
+        <textarea class="text" name="prixTotal" [(ngModel)]="facture.note">
+        </textarea>
       </div>
     </div>
 
     <loading *ngIf="isLoading"></loading>
-    <div class="facteur-card" *ngIf="!isLoading">
-      <div>
-        <div class="head">
-          <div class="h-item right">
-            <div class="f-titel">ممثل حصير معتمد</div>
-            <div class="f-subtitel">سوق السبخة - حانوت رقم 188</div>
-            <div class="f-subtitel">عبدالله ولد السيد</div>
 
-            <div class="f-constact">هاتف 22664151 - 36664151</div>
-            <div class="f-constact">انواكشوط - موريتانيا</div>
-          </div>
-          <div class="h-item left">
-            <div class="f-titel">Représantant des Nottes</div>
-            <div class="f-subtitel">March Sebkha Boutique N°188</div>
-            <div class="f-subtitel">Abdellahi O/ Sidi</div>
+    <app-factcteur-card
+      *ngIf="!isLoading"
+      [factureData]="facture"
+      [showNote]="true"
+      [Editing]="true"
+    ></app-factcteur-card>
 
-            <div class="f-constact">tel : 36664151 - 22664151</div>
-            <div class="f-constact">NOUACHOTT - MAURITANIA</div>
-          </div>
-        </div>
-
-        <div class="flex justify-between">
-          <div >
-            <p *ngIf="name">الزبون: {{  name }}</p>
-            <p *ngIf="tel">رقم الهاتف: {{ tel }}</p>
-          </div>
-          <div class="text-right">
-            <p>التاريخ: {{ today }}</p>
-            <p *ngIf="garage">الكراج: {{ garage }}</p>
-            <p *ngIf="transporter">الحمال: {{ transporter }}</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="t-con">
-        <table class="w-full mt-1 border-collapse border border-gray-400">
-          <tr>
-            <th class="f-titel"></th>
-            <th class="f-titel">النوعية / Designation</th>
-            <th class="f-titel">Quantity / الكمية</th>
-            <th class="f-titel">العدد في الحزمة / العلبة</th>
-
-            <th class="f-titel">س.الفرد / prix unitaire</th>
-            <th class="f-titel">س.الإجمالي / prix total</th>
-          </tr>
-          <tr *ngFor="let f of facture; let i = index">
-            <td style="width: 20px">
-              <span *ngIf="f.done">
-                <i class="fa-solid fa-check"></i>
-              </span>
-            </td>
-            <td (click)="f.done = !f.done">
-              {{ f.Designation }}
-            </td>
-            <td>
-              {{ f.Quantity }}
-            </td>
-            <td>
-              {{ f.package }}
-            </td>
-            <td>
-              {{ f.prixUnitaire }}
-            </td>
-            <td>
-              {{ f.prixTotal }}
-            </td>
-          </tr>
-        </table>
-      </div>
-      <div class="total-con">
-        <span class="f-titel">الإجمالي:</span>
-        <span class="total">{{ getTotal }}</span>
-        <span class="f-titel"> Total</span>
-      </div>
-    </div>
     <div style="margin: 20px">
       <button
         class="btn btn-primary"
         style="width: 200px; margin-bottom: 20px"
         (click)="creatFacteur()"
       >
-        save
+        حفظ الفاتورة
       </button>
     </div>
   </div>

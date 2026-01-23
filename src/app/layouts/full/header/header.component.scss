@@ -1,5 +1,10 @@
 i {
-  color: #5a86aa;
+  color: #4A90E2;
+  transition: color 0.3s ease;
+  
+  &:hover {
+    color: #357ABD;
+  }
 }
 
 .spin-icon {
@@ -11,16 +16,18 @@ i {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #395872;
+  color: #5A6C7D;
   font-size: 15px;
   text-align: center;
+  font-weight: 500;
   // background-color: aqua;
-  // border-bottom:2px solid #5a86aa ;
+  // border-bottom:2px solid #4A90E2 ;
 }
 .e-name{
   font-size: 14px;
     font-family: 'Cairo', 'Amiri', 'Tajawal', sans-serif;
-  color: #5a86aa;
+  color: #4A90E2;
+  font-weight: 600;
   // background-color: antiquewhite;
   margin-bottom: 10px;
 }
@@ -66,14 +73,25 @@ i {
 
 }
 .btn-tenzil {
-  background-color: #5a86aa;
+  background: linear-gradient(135deg, #4A90E2 0%, #357ABD 100%);
   color: white;
-  border: 1px solid #5a86aa;
+  border: none;
   width: 100%;
-  padding: 10px 15px;
+  padding: 12px 18px;
   border-radius: 8px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(74, 144, 226, 0.3);
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(74, 144, 226, 0.4);
+  }
+  
+  &:active {
+    transform: translateY(0);
+  }
 }
 
 @keyframes spin {
@@ -86,9 +104,15 @@ i {
 }
 
 .fa-rotate {
-  color: #5a86aa;
+  color: #4A90E2;
   margin-right: 10px;
   font-size: 23px;
-  font-size: bold;
+  font-weight: bold;
   cursor: pointer;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    color: #357ABD;
+    transform: rotate(180deg);
+  }
 }

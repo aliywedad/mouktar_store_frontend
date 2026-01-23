@@ -9,13 +9,18 @@
 
 
 .hfull {
-  min-height: 80vh;
+  // min-height: 80vh;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 20px;
 }
-
+.price-footer{
+ display: flex;
+ justify-content: space-between;
+ padding: 5px 40px;
+   
+}
 .form {
   width: 100%;
   max-width: 100%;
@@ -207,14 +212,6 @@ th {
   }
 }
 
-.debts-content{
-  margin-top: 10px;
-  p{
-    font-size: 14px;
-    color: #2a3547;
-    font-weight: 600;
-  }
-}
 .total-con {
   width: 100%;
   display: flex;
@@ -326,7 +323,7 @@ th {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
     width: 100%;
-   }
+  }
 
   .facteur-card {
     overflow-x: auto;

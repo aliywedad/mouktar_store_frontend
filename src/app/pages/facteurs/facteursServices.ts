@@ -48,14 +48,32 @@ getfacteursData(
     });
   }
   addfacteur(User: any): Observable<any> {
-    return this.httpClient.post<any>(URLS.products, User, {
+    return this.httpClient.post<any>(URLS.facteurs, User, {
       headers: Service.getAuthHeaders(),
     });
   }
 
+    getDebtsByPhone(tel: string): Observable<any> {
+      const body = { tel: tel };
+    return this.httpClient.post<any>(URLS.getDebtsByPhone, body, {
+      headers: Service.getAuthHeaders(),
+    });
+  }
+
+
+
+  sendFacteur(id: string): Observable<any> {
+    const body = { id_facteur: id };
+    console.log('sending facteur with id ', id);
+    return this.httpClient.post<any>(URLS.confirmeFacteur, body, {
+      headers: Service.getAuthHeaders(),
+    });
+  }
+
+
   editProduct(User: any): Observable<any> {
-    const UserUrl = URLS.products + User.id + '/';
-    return this.httpClient.put<any>(UserUrl, User, {
+    const UserUrl = URLS.facteurs + User.id + '/';
+    return this.httpClient.patch<any>(UserUrl, User, {
       headers: Service.getAuthHeaders(),
     }); // Return observable
   }

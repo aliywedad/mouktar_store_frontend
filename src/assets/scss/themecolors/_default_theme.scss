@@ -1,30 +1,36 @@
 $mat-primary: (
-  100: #5a86aa,
-  500: #5a86aa,
-  700: #5a86aa,
+  100: #e8f4fd,
+  300: #6ba3e8,
+  500: #4a90e2,
+  700: #357abd,
   contrast: (
-    100: rgb(177, 30, 30),
-    500: rgb(247, 3, 3),
+    100: #357abd,
+    300: white,
+    500: white,
     700: white,
   ),
 );
 $mat-secondary: (
-  100: #5a86aa,
-  500: #5a86aa,
-  700: #5a86aa,
+  100: #0D6EFD,
+  300: #0D6EFD,
+  500: #0D6EFD,
+  700: #0D6EFD,
   contrast: (
-    100: white,
+    100: #5ba3b3,
+    300: white,
     500: white,
     700: white,
   ),
 );
 
 $mat-warn: (
-  100: #5a86aa,
-  500: #5a86aa,
-  700: #5a86aa,
+  100: #fff4e6,
+  300: #f8c471,
+  500: #f5a623,
+  700: #d68910,
   contrast: (
-    100: white,
+    100: #d68910,
+    300: white,
     500: white,
     700: white,
   ),
@@ -91,12 +97,19 @@ $darkorangetheme: mat.m2-define-dark-theme(
 }
 
 .activeMenu {
-  background-color: mat.m2-get-color-from-palette(
-    $theme-accent,
-    500
-  ) !important;
-
-  
+  background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%)
+   !important;
+   color: white !important;
+   font-weight: bold !important;
+   border-radius: 7px !important;
+   padding: 10px 15px !important;
+   margin: 5px 0 !important;
+   box-shadow: 0 4px 12px rgba(74, 144, 226, 0.2) !important;
+   transition: all 0.3s ease !important;
+   &:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 8px 24px rgba(74, 144, 226, 0.3) !important;
+  }
 }
 
 .mat-mdc-outlined-button {

@@ -13,13 +13,14 @@ import { EditUserComponent } from './pages/users/components/edit-user/edit-user.
 import { historyComponent } from './pages/history/history.component';
 import { FacteurComponent } from './pages/facteurs/facteurs';
 import { AddfacteurComponent } from './pages/facteurs/components/add-product/add-facteur.component';
-import { EditFacteurComponent } from './pages/facteurs/components/edit-product/edit-facteur.component';
+import { EditFacteurComponent } from './pages/facteurs/components/edit/edit-facteur.component';
 import { ClientsComponent } from './pages/clients/clients';
 import { AddClientComponent } from './pages/clients/components/add/add.component';
 import { EditClientComponent } from './pages/clients/components/edit/edit.component';
 import { FacteurDetailsComponent } from './pages/facteurs/components/details/details';
 import { NotesComponent } from './pages/notes/notes';
-
+import { DebtsComponent } from './pages/debst/debts';
+ 
 export const routes: Routes = [
   {
     path: '',
@@ -78,6 +79,10 @@ export const routes: Routes = [
       {
         path: 'add-clients',
         component: AddClientComponent,
+      },
+      {
+        path: 'debts',
+        component: DebtsComponent,
       },
       {
         path: 'edit-clients/:id',

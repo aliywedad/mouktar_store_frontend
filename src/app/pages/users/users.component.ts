@@ -126,23 +126,32 @@ export class UsersComponent implements OnInit {
 
   deleteUser(id: number) {
     Swal.fire({
-      title: 'هل أنت متأكد?',
-      text: 'سيتم حذف هذا المستخدم !',
+      title: 'هل أنت متأكد؟',
+      text: 'سيتم حذف هذا المستخدم!',
       icon: 'warning',
       showCancelButton: true,
-      confirmButtonColor: '#5a86aa',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'حذف !',
+      confirmButtonColor: '#E74C3C',
+      cancelButtonColor: '#4A90E2',
+      confirmButtonText: 'نعم، احذف',
       cancelButtonText: 'إلغاء',
+      reverseButtons: true,
+      customClass: {
+        popup: 'swal2-popup-arabic',
+        confirmButton: 'swal2-confirm-arabic',
+        cancelButton: 'swal2-cancel-arabic',
+      },
     }).then((result) => {
       if (result.isConfirmed) {
         this.myService.deteleUser(id).subscribe(() => {
           this.users = this.users.filter((user: any) => user.id !== id);
           this.applyFilter(this.filterControl.value ?? ''); // update filtered list
           Swal.fire({
+            title: 'نجح',
             text: 'تم الحذف بنجاح',
             icon: 'success',
-            confirmButtonColor: '#5a86aa',
+            confirmButtonColor: '#4A90E2',
+            confirmButtonText: 'موافق',
+            customClass: { popup: 'swal2-popup-arabic' },
           });
         });
       }

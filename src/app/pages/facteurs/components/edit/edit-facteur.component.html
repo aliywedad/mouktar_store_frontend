@@ -1,0 +1,195 @@
+<html dir="rtl" lang="ar">
+  <div class="card hfull">
+    <div class="form">
+      <div class="form-item">
+        <label>النوعية / Designation</label>
+        <input
+          class="input"
+          name="Designation"
+          [(ngModel)]="item.Designation"
+        />
+      </div>
+      <div class="form-item">
+        <label>Quantity / الكمية</label>
+        <input
+          class="input"
+          type="number"
+          name="Quantity"
+          [(ngModel)]="item.Quantity"
+        />
+      </div>
+      <div class="form-item">
+        <label>العدد في الحزمة / العلبة</label>
+        <input
+          class="input"
+          type="number"
+          name="package"
+          [(ngModel)]="item.package"
+        />
+      </div>
+      <div class="form-item">
+        <label>س.الفرد / prix unitaire </label>
+        <input
+          class="input"
+          type="number"
+          name="prixUnitaire"
+          [(ngModel)]="item.prixUnitaire"
+        />
+      </div>
+      <!-- <div class="form-item">
+        <label>prix_total</label>
+        <input
+          class="input"
+          type="number"
+          name="prixTotal"
+          [(ngModel)]="item.prixTotal"
+        />
+      </div> -->
+      <div class="form-item">
+        <label style="visibility: hidden">prix_total</label>
+        <button
+          class="btn btn-primary"
+          style="width: 200px"
+          (click)="addItem()"
+        >
+          save
+        </button>
+      </div>
+    </div>
+
+    <div class="form mb-5">
+      <div class="form-item">
+        <label> الكراج</label>
+        <input class="input" name="Designation" [(ngModel)]="facture.garage" />
+      </div>
+      <div class="form-item">
+        <label> المبلغ المدفوع </label>
+        <input
+          class="input"
+          type="number"
+          name="Quantity"
+          [(ngModel)]="facture.payed_price"
+        />
+      </div>
+      <div class="form-item">
+        <label>الناقل </label>
+        <input class="input" name="package" [(ngModel)]="facture.transporter" />
+      </div>
+
+      <div class="form-item">
+        <label>رقم الهاتف</label>
+        <input class="input" name="prixTotal" [(ngModel)]="facture.tel" />
+      </div>
+      <div class="form-item">
+        <label>الزبون</label>
+        <input class="input" name="prixTotal" [(ngModel)]="facture.name" />
+      </div>
+
+      <div class="form-item">
+        <label>ملاحظة</label>
+        <textarea class="text" name="note" [(ngModel)]="facture.note">
+        </textarea>
+      </div>
+    </div>
+
+    <loading *ngIf="isLoading"></loading>
+
+    <app-factcteur-card
+      [factureData]="facture"
+      [showNote]="true"
+      [Editing]="true"
+    ></app-factcteur-card>
+
+    <!-- <div class="facteur-card" *ngIf="!isLoading">
+      <div>
+        <div class="head">
+          <div class="h-item right">
+            <div class="f-titel">ممثل حصير معتمد</div>
+            <div class="f-subtitel">سوق السبخة - حانوت رقم 188</div>
+            <div class="f-subtitel">عبدالله ولد السيد</div>
+
+            <div class="f-constact">هاتف 22664151 - 36664151</div>
+            <div class="f-constact">انواكشوط - موريتانيا</div>
+          </div>
+          <div class="h-item left">
+            <div class="f-titel">Représantant des Nottes</div>
+            <div class="f-subtitel">March Sebkha Boutique N°188</div>
+            <div class="f-subtitel">Abdellahi O/ Sidi</div>
+
+            <div class="f-constact">tel : 36664151 - 22664151</div>
+            <div class="f-constact">NOUACHOTT - MAURITANIA</div>
+          </div>
+        </div>
+
+        <div class="flex justify-between">
+          <div>
+            <p *ngIf="facture.name">الزبون: {{ facture.name }}</p>
+            <p *ngIf="facture.tel">رقم الهاتف: {{ facture.tel }}</p>
+          </div>
+          <div class="text-right">
+            <p>التاريخ: {{ facture.date }}</p>
+            <p *ngIf="garage">الكراج: {{ facture.garage }}</p>
+            <p *ngIf="transporter">الناقل: {{ facture.transporter }}</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="t-con">
+        <table class="w-full mt-1 border-collapse border border-gray-400">
+          <tr>
+            <th class="f-titel"></th>
+            <th class="f-titel">النوعية / Designation</th>
+            <th class="f-titel">Quantity / الكمية</th>
+            <th class="f-titel">العدد في الحزمة / العلبة</th>
+
+            <th class="f-titel">س.الفرد / prix unitaire</th>
+            <th class="f-titel">س.الإجمالي / prix total</th>
+          </tr>
+          <tr *ngFor="let f of facture.data; let i = index">
+            <td style="width: 20px">
+              <span *ngIf="f.done">
+                <i class="fa-solid fa-check"></i>
+              </span>
+            </td>
+            <td (click)="f.done = !f.done">
+              {{ f.Designation }}
+            </td>
+            <td>
+              {{ f.Quantity }}
+            </td>
+            <td>
+              {{ f.package }}
+            </td>
+            <td>
+              {{ f.prixUnitaire }}
+            </td>
+            <td>
+              {{ f.prixTotal }}
+            </td>
+            <td>
+              <i
+                class="fa-solid fa-x"
+                style="color: rgb(250, 117, 117); cursor: pointer"
+                (click)="deleteItem(i)"
+              ></i>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="total-con">
+        <span class="f-titel">الإجمالي:</span>
+        <span class="total">{{ getTotal }}</span>
+        <span class="f-titel"> Total</span>
+      </div>
+    </div> -->
+    <div style="margin: 20px">
+      <button
+        class="btn btn-primary"
+        style="width: 200px; margin-bottom: 20px"
+        (click)="saveChanges()"
+      >
+        save
+      </button>
+    </div>
+  </div>
+</html>
