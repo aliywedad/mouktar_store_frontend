@@ -89,16 +89,17 @@
             <tr>
               <th class="f-titel" style="font-size: 15px"></th>
               <th class="f-titel" style="font-size: 15px">
-                النوعية <br />
-                Designation
-              </th>
-              <th class="f-titel" style="font-size: 15px">
                 الكمية
                 <br />
                 Quantity
               </th>
               <th class="f-titel" style="font-size: 15px">
-                العدد في الحزمة \العلبة
+                النوعية <br />
+                Designation
+              </th>
+
+              <th class="f-titel" style="font-size: 15px">
+                العدد في الحزمة \رول
                 <br />
                 Numéro dans l'emballage
               </th>
@@ -118,8 +119,9 @@
                   <i class="fa-solid fa-check"></i>
                 </span>
               </td>
-              <td (click)="f.done = !f.done">{{ f.Designation }}</td>
               <td>{{ f.Quantity }}</td>
+
+              <td (click)="f.done = !f.done">{{ f.Designation }}</td>
               <td>{{ f.package }}</td>
               <td>{{ f.prixUnitaire }}</td>
               <td>{{ f.prixTotal }}</td>
