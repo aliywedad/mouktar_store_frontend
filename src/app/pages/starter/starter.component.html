@@ -86,7 +86,7 @@
 
       <div class="form-item">
         <label>رقم الهاتف</label>
-        <input class="input" name="prixTotal" [(ngModel)]="facture.tel" />
+        <input class="input" name="prixTotal" [(ngModel)]="facture.tel" (change)="getDebtsByPhone(facture.tel)" />
       </div>
       <div class="form-item">
         <label>الزبون</label>

@@ -57,26 +57,7 @@ export class FacteurDetailsComponent implements OnInit {
     return total;
   }
 
-   debts: any[] = [];
-  getDebtsByPhone(tel: string) {
-    if (!tel || tel.trim() === '' || tel.length < 8) {
-      this.debts = [];
-      return;
-    }
-    // this.service.getDebtsByPhone(tel).subscribe((data) => {
-    //   this.debts = data.data;
-    //   console.log('debts data is ', this.debts);
-    // });
-
-
-  }
-  getTotaleDebts():number {
-    let total = 0;
-    this.debts.forEach((debt) => {
-      total += Number(debt.debt) ?? 0;
-    });
-    return total;
-  }
+ 
   
   ngOnInit() {
     this.isLoading = true;
@@ -90,7 +71,6 @@ export class FacteurDetailsComponent implements OnInit {
           console.log(res);
           this.factureData=res.data
           console.log("factureData ",this.factureData)
-          this.getDebtsByPhone(this.factureData.tel)
 
           this.isLoading = false;
 

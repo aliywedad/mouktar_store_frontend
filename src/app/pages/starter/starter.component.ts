@@ -16,6 +16,8 @@ import { MatTableModule } from '@angular/material/table';
 
 import { LoadingComponent } from 'src/app/tools/loading/loading.component';
 import { FacteurCardComponent } from '../factcteur-card/factcteur-card';
+import { facteursServicesComponent } from '../facteurs/facteursServices';
+import { Phone } from 'angular-feather/icons';
 @Component({
   selector: 'app-starter',
   standalone: true,
@@ -43,7 +45,7 @@ export class StarterComponent implements OnInit {
   transactions: any[] = [];
   constructor(
     private router: Router,
-    private service: AuthService,
+    private service: facteursServicesComponent,
 
     private myservice: StarterServicesComponent,
     private http: HttpClient,
@@ -63,12 +65,13 @@ export class StarterComponent implements OnInit {
     };
   }
   resetAll() {
-  this.facture = { data: [] ,
-  transporter : '',
-  payed_price : '',
-  garage : '',
-  note :'',
-  };
+    this.facture = {
+      data: [],
+      transporter: '',
+      payed_price: '',
+      garage: '',
+      note: '',
+    };
     this.resetItem();
   }
 
@@ -81,17 +84,17 @@ export class StarterComponent implements OnInit {
     done: false,
   };
 
-
   deleteItem(index: number) {
     this.facture.splice(index, 1);
+    this.facture.total = this.getTotal;
   }
   today = new Date().toLocaleDateString();
   addItem() {
-        this.item.prixTotal =
+    this.item.prixTotal =
       this.item.Quantity * this.item.prixUnitaire * this.item.package;
 
     if (
-      this.item.Designation === "" ||
+      this.item.Designation === '' ||
       this.item.prixTotal <= 0 ||
       this.item.Quantity <= 0 ||
       this.item.prixUnitaire <= 0 ||
@@ -105,12 +108,12 @@ export class StarterComponent implements OnInit {
         confirmButtonText: 'موافق',
         timer: 1500,
         showConfirmButton: false,
-          
       });
       return;
     }
 
     this.facture.data.push(this.item);
+    this.facture.total = this.getTotal;
     this.resetItem();
   }
 
@@ -121,70 +124,109 @@ export class StarterComponent implements OnInit {
     });
     return total;
   }
- 
+
   facture: any = {
     data: [],
-  transporter : '',
-  payed_price : '',
-  garage : '',
-  note :'',
+    transporter: '',
+    payed_price: 0,
+    garage: '',
+    note: '',
   };
   tel = '';
   name = '';
+  debts: any[] = [];
+  getDebtsByPhone(tel: number) {
+    console.warn('fetching debts for phone number : ', tel);
+    const str_tel = tel.toString();
+    if (!str_tel || str_tel.trim() === '' || str_tel.length < 8) {
+      this.debts = [];
+      this.facture.TotaleDebts = 0;
+      return;
+    } else {
+      const Phone = Number(tel);
+      this.service.getDebtsByPhone(Phone).subscribe((data) => {
+        this.debts = data.data;
+        this.facture.TotaleDebts = this.getTotaleDebts;
+        console.warn('debts data is ============= ', this.debts);
+      });
+    }
+  }
+  get getTotaleDebts(): number {
+    let total = 0;
+    if (!this.debts || this.debts.length === 0) {
+      return total;
+    }
+    this.debts.forEach((debt) => {
+      total += Number(debt.debt) ?? 0;
+    });
+    return total;
+  }
 
   async creatFacteur() {
-    this.isLoading = true;
-    this.facture['total'] = this.getTotal;
-    this.facture['timestamp']=new Date().getTime();
-    this.facture['date']=this.date;
-    await this.myservice
-      .createFacteur(
-        this.facture,
-        // this.date,
-        // Number(this.getTotal),
-        // this.transporter,
-        // Number(this.payed_price),
-        // this.note,
-        // this.garage,
-        // new Date().getTime(),
-        // this.tel,
-        // this.name,
-      )
-      .subscribe({
-        next: async (res) => {
-          console.log('user got the roles : ', res);
-          this.isLoading = false;
-          Swal.fire({
-            title: 'نجح',
-            text: 'تم إنشاء الفاتورة بنجاح.',
-            icon: 'success',
-            confirmButtonColor: '#4A90E2',
-            confirmButtonText: 'موافق',
-            timer: 1500,
-            showConfirmButton: false,
-            customClass: { popup: 'swal2-popup-arabic' },
-          });
-          this.facture = [];
-          this.resetAll();
-        },
-        error: (err) => {
-          console.error('Elorror:', err);
-          Swal.fire({
-            title: 'خطأ',
-            text:
-              err.message ||
-              'حدث خطأ أثناء إنشاء الفاتورة. يرجى المحاولة مرة أخرى.',
-            icon: 'error',
-            confirmButtonColor: '#E74C3C',
-            confirmButtonText: 'موافق',
-            customClass: { popup: 'swal2-popup-arabic' },
-          });
-          this.isLoading = false;
-        },
-        complete: () => {
-          console.log('Request completed!');
-        },
+    if (this.facture['tel'] == '' || this.facture['tel'] == 0) {
+      Swal.fire({
+        title: 'خطأ',
+        text: 'the phone number is required',
+        icon: 'error',
+        confirmButtonColor: '#E74C3C',
+        confirmButtonText: 'موافق',
+        customClass: { popup: 'swal2-popup-arabic' },
       });
+      return;
+    }
+    if (this.facture['data'].length == 0) {
+      Swal.fire({
+        title: 'خطأ',
+        text: ' you cant create an empty invoice !',
+        icon: 'error',
+        confirmButtonColor: '#E74C3C',
+        confirmButtonText: 'موافق',
+        customClass: { popup: 'swal2-popup-arabic' },
+      });
+      return;
+    }
+    this.isLoading = true;
+
+    this.facture['total'] = this.getTotal;
+    this.facture['timestamp'] = new Date().getTime();
+    this.facture['date'] = this.date;
+    this.facture['tel'] = Number(this.facture['tel'] ?? 0);
+    this.facture['payed_price'] = Number(this.facture['payed_price'] ?? 0);
+    await this.myservice.createFacteur(this.facture).subscribe({
+      next: async (res) => {
+        console.log('user got the roles : ', res);
+        this.isLoading = false;
+        Swal.fire({
+          title: 'نجح',
+          text: 'تم إنشاء الفاتورة بنجاح.',
+          icon: 'success',
+          confirmButtonColor: '#4A90E2',
+          confirmButtonText: 'موافق',
+          timer: 1500,
+          showConfirmButton: false,
+          customClass: { popup: 'swal2-popup-arabic' },
+        });
+        this.facture = [];
+        this.resetAll();
+      },
+      error: (err) => {
+        console.error('Elorror:', err);
+        Swal.fire({
+          title: 'خطأ',
+          text:
+            err.message ||
+            'حدث خطأ أثناء إنشاء الفاتورة. يرجى المحاولة مرة أخرى.',
+          icon: 'error',
+          confirmButtonColor: '#E74C3C',
+          confirmButtonText: 'موافق',
+          customClass: { popup: 'swal2-popup-arabic' },
+        });
+        this.isLoading = false;
+      },
+      complete: () => {
+        console.log('Request completed!');
+      },
+    });
   }
 
   ngOnInit(): void {}

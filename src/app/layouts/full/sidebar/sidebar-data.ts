@@ -24,6 +24,13 @@ export const navItems: NavItem[] = [
   },
 
 
+  {
+    displayName: 'prods',
+    arName: 'المنتجات',
+    iconName: 'fa-solid fa-file-invoice',
+    route: '/admin/prods',
+  },
+
     {
     displayName: 'notes',
     arName: 'الملاحظات',

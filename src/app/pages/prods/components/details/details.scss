@@ -9,19 +9,13 @@
 
 
 .hfull {
-  // min-height: 80vh;
+  min-height: 80vh;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 20px;
 }
-.price-footer{
- display: flex;
- justify-content: space-between;
- padding: 5px 40px;
- color: #5a6c7d;
-   
-}
+
 .form {
   width: 100%;
   max-width: 100%;

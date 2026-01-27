@@ -55,12 +55,35 @@ export class DebtsComponent implements OnInit {
   toggleRow(item: any) {
     this.expandedRowId = this.expandedRowId === item.id ? null : item.id;
     this.selectedPaymet = item.payments;
-    console.warn("date ",this.getFrom_paymentTimestamp(),this.getTo_paymentTimestamp());
-    this.filtredPayments =  this.selectedPaymet.filter(
-      (p: any) =>
-        p.timestamp >= this.getFrom_paymentTimestamp() &&
-        p.timestamp <= this.getTo_paymentTimestamp(),
+    console.warn(
+      'date ',
+      this.getFrom_paymentTimestamp(),
+      this.getTo_paymentTimestamp(),
     );
+    if (this.getFrom_paymentTimestamp() && this.getTo_paymentTimestamp()){
+      this.filtredPayments = this.selectedPaymet.filter(
+        (p: any) =>
+          p.timestamp >= this.getFrom_paymentTimestamp() &&
+          p.timestamp <= this.getTo_paymentTimestamp(),
+      );
+    }
+    else{
+      this.filtredPayments = this.selectedPaymet;
+    }
+
+  }
+
+  searchPayments() {
+    if (this.getFrom_paymentTimestamp() && this.getTo_paymentTimestamp()){
+      this.filtredPayments = this.selectedPaymet.filter(
+        (p: any) =>
+          p.timestamp >= this.getFrom_paymentTimestamp() &&
+          p.timestamp <= this.getTo_paymentTimestamp(),
+      );
+    }
+    else{
+      this.filtredPayments = this.selectedPaymet;
+    }
   }
   isLoading = false;
   debts: any = [];
@@ -205,7 +228,7 @@ export class DebtsComponent implements OnInit {
 
   exportPDF() {
     console.log('exportPDF called');
-    const element = document.getElementById('expanded-row');
+    const element = document.getElementById('debt-details-con');
     if (!element) return;
     //  element.style.height="100vh"
     html2canvas(element, {
@@ -240,7 +263,6 @@ export class DebtsComponent implements OnInit {
       pdf.save(`facture_${Date.now()}.pdf`);
     });
   }
-
 
   formatDatehtml(isoString: string): string {
     const dateObj = new Date(isoString);

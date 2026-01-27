@@ -115,19 +115,19 @@
           <!-- جسم الجدول -->
           <tbody>
             <ng-container *ngFor="let item of facteurs; trackBy: trackById">
-              <tr class="align-middle" (click)="toggleRow(item.id)">
-                <td class="nowrap">{{ timestampToDate(item.timestamp) }}</td>
-                <td class="nowrap">{{ item.name }}</td>
-                <td class="nowrap">{{ item.tel }}</td>
-                <td
+              <tr class="align-middle" >
+                <td (click)="toggleRow(item.id)" class="nowrap">{{ timestampToDate(item.timestamp) }}</td>
+                <td (click)="toggleRow(item.id)" class="nowrap">{{ item.name }}</td>
+                <td (click)="toggleRow(item.id)" class="nowrap">{{ item.tel }}</td>
+                <td (click)="toggleRow(item.id)"
                   class=""
                   style="text-wrap: wrap; max-width: 200px"
                   *ngIf="showNotes"
                 >
                   {{ item.note }}
                 </td>
-                <td>{{ item.total | number : "1.0-2" }}</td>
-                <td>
+                <td (click)="toggleRow(item.id)">{{ item.total | number : "1.0-2" }}</td>
+                <td (click)="toggleRow(item.id)">
                   <span
                     *ngIf="item.send"
                     class="bg-green-500"
@@ -153,10 +153,10 @@
                     >لم يتم الإرسال</span
                   >
                 </td>
-                <td>{{ item.transporter }}</td>
-                <td>{{ item.garage }}</td>
-                <td>{{ item.payed_price }}</td>
-                <td>{{ item.total-item.payed_price }}</td>
+                <td (click)="toggleRow(item.id)">{{ item.transporter }}</td>
+                <td (click)="toggleRow(item.id)">{{ item.garage }}</td>
+                <td (click)="toggleRow(item.id)">{{ item.payed_price }}</td>
+                <td (click)="toggleRow(item.id)">{{ item.total-item.payed_price }}</td>
 
                 <!-- عمود الإجراءات -->
                 <td class="text-center">

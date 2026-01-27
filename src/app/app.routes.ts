@@ -20,7 +20,8 @@ import { EditClientComponent } from './pages/clients/components/edit/edit.compon
 import { FacteurDetailsComponent } from './pages/facteurs/components/details/details';
 import { NotesComponent } from './pages/notes/notes';
 import { DebtsComponent } from './pages/debst/debts';
- 
+import { prodsComponent } from './pages/prods/prods';
+
 export const routes: Routes = [
   {
     path: '',
@@ -72,7 +73,7 @@ export const routes: Routes = [
         path: 'clients',
         component: ClientsComponent,
       },
-           {
+      {
         path: 'notes',
         component: NotesComponent,
       },
@@ -83,6 +84,10 @@ export const routes: Routes = [
       {
         path: 'debts',
         component: DebtsComponent,
+      },
+      {
+        path: 'prods',
+        component: prodsComponent,
       },
       {
         path: 'edit-clients/:id',

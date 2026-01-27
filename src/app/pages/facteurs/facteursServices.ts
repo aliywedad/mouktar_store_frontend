@@ -53,7 +53,7 @@ getfacteursData(
     });
   }
 
-    getDebtsByPhone(tel: string): Observable<any> {
+    getDebtsByPhone(tel: number): Observable<any> {
       const body = { tel: tel };
     return this.httpClient.post<any>(URLS.getDebtsByPhone, body, {
       headers: Service.getAuthHeaders(),

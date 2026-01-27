@@ -10,8 +10,7 @@
             <div class="search-header">
               <h3 class="search-title">
                 <i class="fa-solid fa-magnifying-glass"></i>
-                البحث عن الفواتير
-              </h3>
+البحث عن الديون              </h3>
             </div>
             <div class="search-form">
               <div class="form-grid">
@@ -73,13 +72,12 @@
           </div>
         </mat-tab>
         <!-- إضافة ملاحظة جديدة -->
-        <mat-tab label="إضافة ملاحظة جديد ">
+        <mat-tab label=" إضافة دَيْن جديد ">
           <div class="search-card mt-3">
             <div class="search-header">
               <h3 class="search-title">
                 <i class="fa-solid fa-magnifying-glass"></i>
-                البحث عن الفواتير
-              </h3>
+إضافة دَيْن جديد               </h3>
             </div>
             <div class="search-form">
               <div class="form-grid">
@@ -163,11 +161,13 @@
           <tbody>
             <ng-container *ngFor="let item of debts; trackBy: trackById">
               <!-- MAIN ROW -->
-              <tr class="align-middle clickable" >
-                <td (click)="toggleRow(item)" >{{ formatDatehtml(item.timestamp) }}</td>
-                <td (click)="toggleRow(item)" >{{ item.name }}</td>
-                <td (click)="toggleRow(item)" >{{ item.tel }}</td>
-                <td (click)="toggleRow(item)" >{{ item.debt }}</td>
+              <tr class="align-middle clickable">
+                <td (click)="toggleRow(item)">
+                  {{ formatDatehtml(item.timestamp) }}
+                </td>
+                <td (click)="toggleRow(item)">{{ item.name }}</td>
+                <td (click)="toggleRow(item)">{{ item.tel }}</td>
+                <td (click)="toggleRow(item)">{{ item.debt }}</td>
 
                 <td class="text-center">
                   <button
@@ -194,164 +194,214 @@
               <!-- EXPANDED ROW -->
               <tr *ngIf="expandedRowId === item.id" id="expanded-row">
                 <td [attr.colspan]="5">
-                  <!-- إضافة تعليق -->
-                  <div>
-                    <div class="tabs">
-                      <span
-                        class="tab"
-                        [ngClass]="{active: payment.type === 'debt'}"
-                        (click)="payment.type = 'debt'"
-                      >
-                        إضافة مبلغ للدين</span
-                      >
-                      <span
-                        class="tab"
-                        [ngClass]="{active: payment.type === 'payment'}"
-                        (click)="payment.type = 'payment'"
-                      >
-                        تسديد مبلغ من الدين</span
-                      >
-                    </div>
-                    <div class="form-smull">
-                      <div class="form-item" style="width: 200px">
-                        <label>
-                          <i class="fa-regular fa-calendar"></i>
-                         <span> من تاريخ</span>
-                        </label>
-                        <input
-                          class="input"
-                          type="date"
-                          name="fromDate_payment"
-                          [(ngModel)]="fromDate_payment"
-                        />
-                      </div>
-                      <div class="form-item" style="width: 200px">
-                        <label>
-                          <i class="fa-regular fa-calendar"></i>
-                          إلى تاريخ
-                        </label>
-                        <input
-                          class="input"
-                          type="date"
-                          name="toDate_payment"
-                          [(ngModel)]="toDate_payment"
-                        />
-                      </div>
-
-                      <div class="form-item" style="width: 200px">
-                        <label>
-                          <span style="visibility: hidden">
-                            <!-- export as pdf  -->
-                            تصدير pdf
-                          </span>
-                        </label>
-                        <div style="display: flex">
-                          <button
-                            class="btn btn-secondary mx-1 reset-button"
-                            (click)="exportPDF()"
-                          >
-                            <i class="fa-solid fa-file"> </i>
-                            تصدير pdf
-                          </button>
-
-                          <button class="btn mx-1 btn-secondary reset-button">
-                            <i class="fa-solid fa-magnifying-glass"></i>
-                            <!-- search -->
-                            بحث
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div
-                    class="flex"
-                    style="
-                      gap: 12px;
-                      align-items: center;
-                      width: fit-content;
-                      background: #f9f9f9;
-                      padding: 8px;
-                      border-radius: 5px;
-                      margin-top: 10px;
-                    "
-                  >
-                    <input
-                      placeholder="إضافة دفعة جديدة"
-                      class="date"
-                      [(ngModel)]="payment.amount"
-                      name="newComment"
-                      style="flex: 1"
-                    />
-                    <i
-                      (click)="AddPayment(item.id);"
-                      class="fa-solid fa-paper-plane"
-                      style="
-                        padding: 12px;
-                        background: linear-gradient(
-                          135deg,
-                          #4a90e2 0%,
-                          #357abd 100%
-                        );
-                        color: white;
-                        border-radius: 50%;
-                        cursor: pointer;
-                        transition: all 0.3s ease;
-                        box-shadow: 0 2px 8px rgba(74, 144, 226, 0.3);
-                      "
-                      onmouseover="
-                        this.style.transform = 'scale(1.1)';
-                        this.style.boxShadow =
-                          '0 4px 12px rgba(74, 144, 226, 0.4)';
-                      "
-                      onmouseout="
-                        this.style.transform = 'scale(1)';
-                        this.style.boxShadow =
-                          '0 2px 8px rgba(74, 144, 226, 0.3)';
-                      "
-                    ></i>
-                  </div>
-
-                  <!-- التعليقات -->
-                  <div class="comments">
-                    <div
-                      class="comment"
-                      style="align-items: start; justify-content: end"
-                      *ngFor="let it of filtredPayments"
-                      [ngClass]="{'comment-debt': it.type === 'debt', 'comment-payment': it.type === 'payment'}"
-                    >
-                      <div class="comment-content">{{ it.note }}</div>
-                      <div
-                        style="
-                          width: 100%;
-                          display: flex;
-                          align-items: center;
-                          justify-content: space-between;
-                        "
-                      >
-                        <div class="c-date">
-                          {{ formatDatehtml(it.timestamp) }}
-                        </div>
-                        <div
-                          class="c-date"
-                          *ngIf="it.facteur"
-                          (click)="goToDetails(it.facteur)"
-                          style="cursor: pointer"
+                  <div class="con">
+                    <!-- إضافة تعليق -->
+                    <div>
+                      <div class="tabs">
+                        <span
+                          class="tab"
+                          [ngClass]="{active: payment.type === 'debt'}"
+                          (click)="payment.type = 'debt'"
                         >
-                          عرض الفاتورة
+                          إضافة مبلغ للدين</span
+                        >
+                        <span
+                          class="tab"
+                          [ngClass]="{active: payment.type === 'payment'}"
+                          (click)="payment.type = 'payment'"
+                        >
+                          تسديد مبلغ من الدين</span
+                        >
+                      </div>
+                      <div class="form-smull">
+                        <div class="form-item" style="width: 200px">
+                          <label>
+                            <i class="fa-regular fa-calendar"></i>
+                            <span> من تاريخ</span>
+                          </label>
+                          <input
+                            class="input"
+                            type="date"
+                            name="fromDate_payment"
+                            [(ngModel)]="fromDate_payment"
+                          />
+                        </div>
+                        <div class="form-item" style="width: 200px">
+                          <label>
+                            <i class="fa-regular fa-calendar"></i>
+                            إلى تاريخ
+                          </label>
+                          <input
+                            class="input"
+                            type="date"
+                            name="toDate_payment"
+                            [(ngModel)]="toDate_payment"
+                          />
+                        </div>
+
+                        <div class="form-item" style="width: 200px">
+                          <label>
+                            <span style="visibility: hidden">
+                              <!-- export as pdf  -->
+                              تصدير pdf
+                            </span>
+                          </label>
+                          <div style="display: flex">
+                            <button
+                              class="btn btn-secondary mx-1 reset-button"
+                              (click)="exportPDF()"
+                            >
+                              <i class="fa-solid fa-file"> </i>
+                              تصدير pdf
+                            </button>
+
+                            <button
+                              class="btn mx-1 btn-secondary reset-button"
+                              (click)="searchPayments()"
+                            >
+                              <i class="fa-solid fa-magnifying-glass"></i>
+                              <!-- search -->
+                              بحث
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      class="flex"
+                      style="
+                        gap: 12px;
+                        align-items: center;
+                        width: fit-content;
+                        background: #f9f9f9;
+                        padding: 8px;
+                        border-radius: 5px;
+                        margin-top: 10px;
+                      "
+                    >
+                      <input
+                        placeholder="إضافة دفعة جديدة"
+                        class="date"
+                        [(ngModel)]="payment.amount"
+                        name="newComment"
+                        style="flex: 1"
+                      />
+                      <i
+                        (click)="AddPayment(item.id);"
+                        class="fa-solid fa-paper-plane"
+                        style="
+                          padding: 12px;
+                          background: linear-gradient(
+                            135deg,
+                            #4a90e2 0%,
+                            #357abd 100%
+                          );
+                          color: white;
+                          border-radius: 50%;
+                          cursor: pointer;
+                          transition: all 0.3s ease;
+                          box-shadow: 0 2px 8px rgba(74, 144, 226, 0.3);
+                        "
+                        onmouseover="
+                          this.style.transform = 'scale(1.1)';
+                          this.style.boxShadow =
+                            '0 4px 12px rgba(74, 144, 226, 0.4)';
+                        "
+                        onmouseout="
+                          this.style.transform = 'scale(1)';
+                          this.style.boxShadow =
+                            '0 2px 8px rgba(74, 144, 226, 0.3)';
+                        "
+                      ></i>
+                    </div>
+                    <div id="debt-details-con" class="p-3">
+                      <div class="info-con">
+                        <span class="info-box">
+                          <strong> الاسم :</strong>
+                          {{ item.name }}
+                        </span>
+                        <span class="info-box">
+                          <strong> رقم الهاتف :</strong>
+                          {{ item.tel }}
+                        </span>
+                        <span class="info-box">
+                          <strong> إجمالي الدَّيْن:</strong>
+                          {{ item.debt }}
+                        </span>
+                      </div>
+
+                      <!-- التعليقات -->
+                      <div class="com-con">
+                        <div class="comments">
+                          <span class="comments-title">المبالغ المدفوعة:</span>
+                          <ng-container *ngFor="let it of filtredPayments">
+                            <div
+                              class="comment"
+                              style="align-items: start; justify-content: end"
+                              *ngIf="it.type === 'payment'"
+                              [ngClass]="{'comment-debt': it.type === 'debt', 'comment-payment': it.type === 'payment'}"
+                            >
+                              <div class="comment-content">{{ it.note }}</div>
+                              <div
+                                style="
+                                  width: 100%;
+                                  display: flex;
+                                  align-items: center;
+                                  justify-content: space-between;
+                                "
+                              >
+                                <div class="c-date">
+                                  {{ formatDatehtml(it.timestamp) }}
+                                </div>
+                                <div
+                                  class="c-date"
+                                  *ngIf="it.facteur"
+                                  (click)="goToDetails(it.facteur)"
+                                  style="cursor: pointer"
+                                >
+                                  عرض الفاتورة
+                                </div>
+                              </div>
+                            </div>
+                          </ng-container>
+                        </div>
+
+                        <div class="comments">
+                          <span class="comments-title">المبالغ المدينة :</span>
+                          <ng-container *ngFor="let it of filtredPayments">
+                            <div
+                              class="comment"
+                              style="align-items: start; justify-content: end"
+                              *ngIf="it.type === 'debt'"
+                              [ngClass]="{'comment-debt': it.type === 'debt', 'comment-payment': it.type === 'payment'}"
+                            >
+                              <div class="comment-content">{{ it.note }}</div>
+                              <div
+                                style="
+                                  width: 100%;
+                                  display: flex;
+                                  align-items: center;
+                                  justify-content: space-between;
+                                "
+                              >
+                                <div class="c-date">
+                                  {{ formatDatehtml(it.timestamp) }}
+                                </div>
+                                <div
+                                  class="c-date"
+                                  *ngIf="it.facteur"
+                                  (click)="goToDetails(it.facteur)"
+                                  style="cursor: pointer"
+                                >
+                                  عرض الفاتورة
+                                </div>
+                              </div>
+                            </div>
+                          </ng-container>
                         </div>
                       </div>
                     </div>
                   </div>
-
-                  <!-- <div class="expanded-content">
-                    <p><strong>تفاصيل الدين:</strong></p>
-
-                    <ul>
-                      <li *ngFor="let d of item.data">
-                        {{ d.name }} — {{ d.price }}
-                      </li>
-                    </ul>
-                  </div> -->
                 </td>
               </tr>
             </ng-container>

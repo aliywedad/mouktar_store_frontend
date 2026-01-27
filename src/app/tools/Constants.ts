@@ -22,12 +22,7 @@ export class URLS {
   static clients = URLS.serverPath + 'clients/';
   static notes = URLS.serverPath + 'notes/';
   static debts = URLS.serverPath + 'debts/';
-  
- 
-  
-
-
-
+  static prods = URLS.serverPath + 'products/';
 
 
 

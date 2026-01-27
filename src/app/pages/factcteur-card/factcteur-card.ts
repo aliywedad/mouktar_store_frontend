@@ -70,21 +70,22 @@ export class FacteurCardComponent implements OnInit {
 
   debts: any[] = [];
 
-  getDebtsByPhone(tel: string) {
-    if (
-      !tel ||
-      tel.trim() === '' ||
-      tel.length < 8 
-    ) {
-      this.debts = [];
-      return;
-    } else {
-      this.service.getDebtsByPhone(tel).subscribe((data) => {
-        this.debts = data.data;
-        console.warn('debts data is ============= ', this.debts);
-      });
-    }
-  }
+  // getDebtsByPhone(tel: string) {
+  //   tel =tel.toString()
+  //   if (
+  //     !tel ||
+  //     tel.trim() === '' ||
+  //     tel.length < 8 
+  //   ) {
+  //     this.debts = [];
+  //     return;
+  //   } else {
+  //     this.service.getDebtsByPhone(tel).subscribe((data) => {
+  //       this.debts = data.data;
+  //       console.warn('debts data is ============= ', this.debts);
+  //     });
+  //   }
+  // }
 
   get getTotaleDebts(): number {
     let total = 0;
@@ -98,14 +99,7 @@ export class FacteurCardComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (this.ShowDebts && this.factureData?.tel) {
-      this.getDebtsByPhone(this.factureData.tel);
-    }
-    else{
-      console.log("no phone number provided for debts fetch")
-      console.log("ShowDebts is ",this.ShowDebts)
-      console.log("factureData.tel is ",this.factureData?.tel)
-    }
+ 
   }
 
   printFacture() {
