@@ -48,6 +48,40 @@ export class EditFacteurComponent implements OnInit {
       this.userHasTheRole = true;
     }
   }
+
+  selectedFile: File | null = null;
+  uploadedImageUrl: string | ArrayBuffer | null = null;
+
+  onFileSelected(event: any) {
+    this.selectedFile = event.target.files[0];
+
+    // show preview
+    const reader = new FileReader();
+    reader.onload = (e) => (this.uploadedImageUrl = reader.result);
+    reader.readAsDataURL(this.selectedFile!);
+  }
+  uploadImage(): Promise<string | null> {
+    return new Promise((resolve, reject) => {
+      if (!this.selectedFile) {
+        resolve(null);
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append('image', this.selectedFile);
+
+      this.http
+        .post<{ url: string }>('http://localhost:8000/api/upload/', formData)
+        .subscribe({
+          next: (res) => {
+            this.uploadedImageUrl = res.url; // ✅ REAL URL
+            resolve(res.url);
+          },
+          error: (err) => reject(err),
+        });
+    });
+  }
+
   resetItem() {
     this.item = {
       prixTotal: 0,
@@ -99,12 +133,53 @@ export class EditFacteurComponent implements OnInit {
     });
     return total;
   }
-
+  showPreview = false;
   facture: any = {};
+downloadImage(url: string) {
+  if (!url) return;
 
+  fetch(url)
+    .then(res => res.blob())
+    .then(blob => {
+      const blobUrl = window.URL.createObjectURL(blob);
+
+      const a = document.createElement('a');
+      a.href = blobUrl;
+      a.download = url.split('/').pop() || 'facture.jpg';
+
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+
+      window.URL.revokeObjectURL(blobUrl);
+    })
+    .catch(err => console.error('Download failed', err));
+}
+
+  /* Toggle preview */
+  togglePreview() {
+    this.showPreview = !this.showPreview;
+  }
+
+  get getUrl() {
+    if (this.uploadedImageUrl) {
+      return this.uploadedImageUrl;
+    } else {
+      console.warn('image url is ================ ', this.facture.image_url);
+      return this.facture.image_url;
+    }
+  }
   async saveChanges() {
     this.isLoading = true;
     this.facture['total'] = this.getTotal;
+
+    const imageUrl = await this.uploadImage(); // ✅ waits correctly
+
+    if (imageUrl) {
+      this.facture['image_url'] = imageUrl; // ✅ URL, not base64
+    }
+    console.warn('facture to save is ', imageUrl);
+
     await this.myservice.editProduct(this.facture).subscribe({
       next: async (res) => {
         console.log('user got the roles : ', res);
@@ -119,7 +194,7 @@ export class EditFacteurComponent implements OnInit {
           showConfirmButton: false,
           customClass: { popup: 'swal2-popup-arabic' },
         });
-         this.loadDATA();
+        this.loadDATA();
       },
       error: (err) => {
         console.error('Elorror:', err);

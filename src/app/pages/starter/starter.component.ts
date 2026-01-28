@@ -131,16 +131,30 @@ export class StarterComponent implements OnInit {
     payed_price: 0,
     garage: '',
     note: '',
+    total: 0,
   };
   tel = '';
   name = '';
   debts: any[] = [];
   getDebtsByPhone(tel: number) {
+    this.debts = [];
+    this.facture.TotaleDebts = 0;
     console.warn('fetching debts for phone number : ', tel);
     const str_tel = tel.toString();
     if (!str_tel || str_tel.trim() === '' || str_tel.length < 8) {
       this.debts = [];
       this.facture.TotaleDebts = 0;
+
+      // alert that the tel has to be 8 digits
+      Swal.fire({
+        title: 'تحذير',
+        text: 'رقم الهاتف يجب أن يكون مكون من 8 أرقام على الأقل.',
+        icon: 'warning',
+        confirmButtonColor: '#4A90E2',
+        confirmButtonText: 'موافق',
+        timer: 1500,
+        showConfirmButton: false,
+      });
       return;
     } else {
       const Phone = Number(tel);
@@ -165,23 +179,26 @@ export class StarterComponent implements OnInit {
   async creatFacteur() {
     if (this.facture['tel'] == '' || this.facture['tel'] == 0) {
       Swal.fire({
-        title: 'خطأ',
-        text: 'the phone number is required',
-        icon: 'error',
-        confirmButtonColor: '#E74C3C',
+        title: 'تحذير',
+        text: 'رقم الهاتف يجب أن يكون مكون من 8 أرقام على الأقل.',
+        icon: 'warning',
+        confirmButtonColor: '#4A90E2',
         confirmButtonText: 'موافق',
-        customClass: { popup: 'swal2-popup-arabic' },
+        timer: 1500,
+        showConfirmButton: false,
       });
       return;
     }
     if (this.facture['data'].length == 0) {
+      //  alert that at least one item is required
       Swal.fire({
-        title: 'خطأ',
-        text: ' you cant create an empty invoice !',
-        icon: 'error',
-        confirmButtonColor: '#E74C3C',
+        title: 'تحذير',
+        text: 'يجب إضافة منتج واحد على الأقل.',
+        icon: 'warning',
+        confirmButtonColor: '#4A90E2',
         confirmButtonText: 'موافق',
-        customClass: { popup: 'swal2-popup-arabic' },
+        timer: 1500,
+        showConfirmButton: false,
       });
       return;
     }

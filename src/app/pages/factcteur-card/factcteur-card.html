@@ -143,16 +143,16 @@
               >{{ factureData.TotaleDebts }}</span
             >
           </span>
-          <span *ngIf="factureData.payed_price">
+          <span  >
             <span> المبلغ المدفوع</span>
             <span style="font-weight: bold; margin: 0 5px"
               >{{ factureData.payed_price }}</span
             >
           </span>
           <span *ngIf="factureData.TotaleDebts + factureData.total > 0">
-            <span> المجموع مع الدين</span>
+            <span> المجموع  الدين</span>
             <span style="font-weight: bold; margin: 0 5px"
-              >{{ factureData.TotaleDebts + factureData.total}}</span
+              >{{ factureData.TotaleDebts + (factureData.total-factureData.payed_price)}}</span
             >
           </span>
         </div>

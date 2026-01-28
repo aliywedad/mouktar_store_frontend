@@ -54,7 +54,8 @@
       <div class="form-item">
         <label style="visibility: hidden">
           prix unitaire<br />
-          prix_total</label>
+          prix_total</label
+        >
         <button
           class="btn btn-primary"
           style="width: 200px"
@@ -86,7 +87,7 @@
 
       <div class="form-item">
         <label>رقم الهاتف</label>
-        <input class="input" name="prixTotal" [(ngModel)]="facture.tel" (change)="getDebtsByPhone(facture.tel)" />
+        <input class="input" name="prixTotal" [(ngModel)]="facture.tel" />
       </div>
       <div class="form-item">
         <label>الزبون</label>
@@ -99,6 +100,16 @@
         </textarea>
       </div>
     </div>
+
+<div style="width: 100%;">
+      <label
+      (click)="getDebtsByPhone(facture.tel)"
+      class="btn bg-blue-500 m-2 border border-blue border-2 cursor-pointer"
+    >
+      <i class="fa-solid fa-rotate"></i>
+      تحقق من الديون السابقة
+    </label>
+</div>
 
     <loading *ngIf="isLoading"></loading>
 
