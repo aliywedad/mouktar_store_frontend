@@ -1,0 +1,41 @@
+
+    <div>
+      <div class="form-item mb-5">
+        <div>
+          <!-- Upload -->
+          <label
+            for="upload"
+            class="btn bg-blue-500 m-2 border border-blue border-2 cursor-pointer"
+          >
+            <i class="fa-solid fa-upload"></i>
+            رفع صورة الفاتورة
+          </label>
+
+          <!-- Download -->
+          <button
+            class="btn bg-blue-500 m-2 border border-blue border-2"
+            (click)="downloadImage(facture.image_url)"
+            [disabled]="!facture.image_url"
+          >
+            <i class="fa-solid fa-download"></i>
+            تحميل صورة الفاتورة
+          </button>
+
+          <input
+            type="file"
+            id="upload"
+            hidden
+            (change)="onFileSelected($event)"
+          />
+        </div>
+
+        <!-- Preview -->
+        <div *ngIf="facture.image_url || uploadedImageUrl" class="mt-4">
+          <img
+            [src]="getUrl"
+            alt="معاينة الصورة"
+            style="max-width: 600px; max-height: 600px"
+          />
+        </div>
+      </div>
+    </div>

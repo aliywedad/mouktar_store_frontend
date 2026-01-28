@@ -2,13 +2,17 @@
   <div class="card hfull">
     <div class="form">
       <div class="form-item">
-        <label>النوعية / Designation</label>
-        <input
-          class="input"
-          name="Designation"
-          [(ngModel)]="item.Designation"
-        />
+        <label>
+          Designation
+          <br />
+          النوعية
+        </label>
+        <autocomplete
+          [products]="prods"
+          (productSelected)="onProductSelect($event, item)"
+        ></autocomplete>
       </div>
+
       <div class="form-item">
         <label>Quantity / الكمية</label>
         <input
@@ -100,48 +104,46 @@
       [Editing]="true"
     ></app-factcteur-card>
 
-<div>
-  <div class="form-item mb-5">
     <div>
-      <!-- Upload -->
-      <label
-        for="upload"
-        class="btn bg-blue-500 m-2 border border-blue border-2 cursor-pointer"
-      >
-        <i class="fa-solid fa-upload"></i>
-        رفع صورة الفاتورة
-      </label>
+      <div class="form-item mb-5">
+        <div>
+          <!-- Upload -->
+          <label
+            for="upload"
+            class="btn bg-blue-500 m-2 border border-blue border-2 cursor-pointer"
+          >
+            <i class="fa-solid fa-upload"></i>
+            رفع صورة الفاتورة
+          </label>
 
-   
+          <!-- Download -->
+          <button
+            class="btn bg-blue-500 m-2 border border-blue border-2"
+            (click)="downloadImage(facture.image_url)"
+            [disabled]="!facture.image_url"
+          >
+            <i class="fa-solid fa-download"></i>
+            تحميل صورة الفاتورة
+          </button>
 
-      <!-- Download -->
-      <button
-        class="btn bg-blue-500 m-2 border border-blue border-2"
-        (click)="downloadImage(facture.image_url)"
-        [disabled]="!facture.image_url"
-      >
-        <i class="fa-solid fa-download"></i>
-        تحميل صورة الفاتورة
-      </button>
+          <input
+            type="file"
+            id="upload"
+            hidden
+            (change)="onFileSelected($event)"
+          />
+        </div>
 
-      <input
-        type="file"
-        id="upload"
-        hidden
-        (change)="onFileSelected($event)"
-      />
+        <!-- Preview -->
+        <div *ngIf="facture.image_url || uploadedImageUrl" class="mt-4">
+          <img
+            [src]="getUrl"
+            alt="معاينة الصورة"
+            style="max-width: 600px; max-height: 600px"
+          />
+        </div>
+      </div>
     </div>
-
-    <!-- Preview -->
-    <div *ngIf=" facture.image_url || uploadedImageUrl" class="mt-4">
-      <img
-        [src]="getUrl"
-        alt="معاينة الصورة"
-        style="max-width: 600px; max-height: 600px"
-      />
-    </div>
-  </div>
-</div>
 
     <div style="margin: 20px">
       <button

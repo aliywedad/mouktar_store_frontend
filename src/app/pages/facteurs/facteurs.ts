@@ -22,7 +22,6 @@ import html2canvas from 'html2canvas';
 
 import jsPDF from 'jspdf';
 
-
 @Component({
   selector: 'app-facteurs',
   standalone: true,
@@ -57,10 +56,32 @@ export class FacteurComponent implements OnInit {
   userRoles: any = [];
   UserHaveRole = false;
   isAdmin = false;
+
+  downloadImage(url: string) {
+    if (!url) return;
+
+    fetch(url)
+      .then((res) => res.blob())
+      .then((blob) => {
+        const blobUrl = window.URL.createObjectURL(blob);
+
+        const a = document.createElement('a');
+        a.href = blobUrl;
+        a.download = url.split('/').pop() || 'facture.jpg';
+
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+
+        window.URL.revokeObjectURL(blobUrl);
+      })
+      .catch((err) => console.error('Download failed', err));
+  }
+
   getFromTimestamp(): number {
     return new Date(this.fromDate + 'T00:00:00').getTime();
   }
-    expandedRowId: string | null = null;
+  expandedRowId: string | null = null;
 
   toggleRow(id: string) {
     this.expandedRowId = this.expandedRowId === id ? null : id;
@@ -89,65 +110,60 @@ export class FacteurComponent implements OnInit {
     this.loadDATA();
   }
 
+  showFacteursToExport = false;
+  exportAllAsPDF() {
+    console.log('exportAllAsPDF started');
 
-showFacteursToExport=false
-exportAllAsPDF() {
-  console.log('exportAllAsPDF started');
+    this.showFacteursToExport = true;
 
-  this.showFacteursToExport = true;
+    // Wait for Angular to render the DOM
+    setTimeout(async () => {
+      try {
+        const element = document.getElementById('facteuts-contents');
+        if (!element) {
+          console.error('Export element not found');
+          return;
+        }
 
-  // Wait for Angular to render the DOM
-  setTimeout(async () => {
-    try {
-      const element = document.getElementById('facteuts-contents');
-      if (!element) {
-        console.error('Export element not found');
-        return;
-      }
+        const canvas = await html2canvas(element, {
+          scale: 2,
+          useCORS: true,
+          windowWidth: 1200, // 👈 force desktop viewport
+          windowHeight: element.scrollHeight,
+        });
 
-   const canvas = await html2canvas(element, {
-  scale: 2,
-  useCORS: true,
-  windowWidth: 1200,   // 👈 force desktop viewport
-  windowHeight: element.scrollHeight
-});
+        const imgData = canvas.toDataURL('image/png');
+        const pdf = new jsPDF('p', 'mm', 'a4');
 
-      const imgData = canvas.toDataURL('image/png');
-      const pdf = new jsPDF('p', 'mm', 'a4');
+        const pageWidth = pdf.internal.pageSize.getWidth();
+        const pageHeight = pdf.internal.pageSize.getHeight();
 
-      const pageWidth = pdf.internal.pageSize.getWidth();
-      const pageHeight = pdf.internal.pageSize.getHeight();
+        const imgWidth = pageWidth;
+        const imgHeight = (canvas.height * imgWidth) / canvas.width;
 
-      const imgWidth = pageWidth;
-      const imgHeight = (canvas.height * imgWidth) / canvas.width;
+        let heightLeft = imgHeight;
+        let position = 0;
 
-      let heightLeft = imgHeight;
-      let position = 0;
-
-      pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
-      heightLeft -= pageHeight;
-
-      while (heightLeft > 0) {
-        position = heightLeft - imgHeight;
-        pdf.addPage();
         pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
         heightLeft -= pageHeight;
+
+        while (heightLeft > 0) {
+          position = heightLeft - imgHeight;
+          pdf.addPage();
+          pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+          heightLeft -= pageHeight;
+        }
+
+        pdf.save(`factures_${Date.now()}.pdf`);
+      } catch (error) {
+        console.error('Error exporting PDF:', error);
+      } finally {
+        // Hide AFTER export completes
+        this.showFacteursToExport = false;
+        console.log('exportAllAsPDF finished');
       }
-
-      pdf.save(`factures_${Date.now()}.pdf`);
-
-    } catch (error) {
-      console.error('Error exporting PDF:', error);
-    } finally {
-      // Hide AFTER export completes
-      this.showFacteursToExport = false;
-      console.log('exportAllAsPDF finished');
-    }
-  }, 0); // 👈 critical
-}
-
-
-  
+    }, 0); // 👈 critical
+  }
 
   loadDATA() {
     this.isLoading = true;
@@ -193,7 +209,6 @@ exportAllAsPDF() {
       confirmButtonText: 'نعم، احذف الفاتورة',
       cancelButtonText: 'إلغاء',
       reverseButtons: true,
-     
     }).then((result) => {
       if (result.isConfirmed) {
         this.myService.detelefacteur(id).subscribe({
@@ -208,7 +223,6 @@ exportAllAsPDF() {
               timer: 2000,
               timerProgressBar: true,
               showConfirmButton: false,
-              
             });
           },
           error: (error) => {
@@ -229,72 +243,69 @@ exportAllAsPDF() {
     });
   }
 
-
   SendFacteur(id: string) {
-  Swal.fire({
-    title: 'هل أنت متأكد؟',
-    text: 'سيتم تأكيد وإرسال الفاتورة ولا يمكن التراجع عن ذلك.',
-    icon: 'warning',
-    showCancelButton: true,
-    confirmButtonColor: '#4A90E2',
-    cancelButtonColor: '#d33',
-    confirmButtonText: 'نعم، أكد الفاتورة',
-    cancelButtonText: 'إلغاء',
-    reverseButtons: true,
-    customClass: {
-      confirmButton: 'swal2-confirm-arabic',
-      cancelButton: 'swal2-cancel-arabic',
-    },
-  }).then((result) => {
-    if (!result.isConfirmed) return;
-
-    this.isLoading = true;
-
-    this.myService.sendFacteur(id).subscribe({
-      next: () => {
-        this.isLoading = false;
-
-        // Update local list (mark as sent instead of deleting)
-        const facteur = this.facteurs.find((f: any) => f.id === id);
-        if (facteur) {
-          facteur.send = true;
-        }
-
-        Swal.fire({
-          title: 'تم بنجاح ✅',
-          text: 'تم تأكيد الفاتورة وإرسالها بنجاح.',
-          icon: 'success',
-          confirmButtonColor: '#4A90E2',
-          confirmButtonText: 'حسناً',
-          timer: 2000,
-          timerProgressBar: true,
-          showConfirmButton: false,
-          customClass: {
-            popup: ' ',
-          },
-        });
+    Swal.fire({
+      title: 'هل أنت متأكد؟',
+      text: 'سيتم تأكيد وإرسال الفاتورة ولا يمكن التراجع عن ذلك.',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#4A90E2',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'نعم، أكد الفاتورة',
+      cancelButtonText: 'إلغاء',
+      reverseButtons: true,
+      customClass: {
+        confirmButton: 'swal2-confirm-arabic',
+        cancelButton: 'swal2-cancel-arabic',
       },
+    }).then((result) => {
+      if (!result.isConfirmed) return;
 
-      error: (error) => {
-        this.isLoading = false;
-        console.error('Error sending facture:', error);
+      this.isLoading = true;
 
-        Swal.fire({
-          title: 'خطأ ❌',
-          text: 'حدث خطأ أثناء تأكيد الفاتورة. يرجى المحاولة مرة أخرى.',
-          icon: 'error',
-          confirmButtonColor: '#d33',
-          confirmButtonText: 'حسناً',
-          customClass: {
-            popup: ' ',
-          },
-        });
-      },
+      this.myService.sendFacteur(id).subscribe({
+        next: () => {
+          this.isLoading = false;
+
+          // Update local list (mark as sent instead of deleting)
+          const facteur = this.facteurs.find((f: any) => f.id === id);
+          if (facteur) {
+            facteur.send = true;
+          }
+
+          Swal.fire({
+            title: 'تم بنجاح ✅',
+            text: 'تم تأكيد الفاتورة وإرسالها بنجاح.',
+            icon: 'success',
+            confirmButtonColor: '#4A90E2',
+            confirmButtonText: 'حسناً',
+            timer: 2000,
+            timerProgressBar: true,
+            showConfirmButton: false,
+            customClass: {
+              popup: ' ',
+            },
+          });
+        },
+
+        error: (error) => {
+          this.isLoading = false;
+          console.error('Error sending facture:', error);
+
+          Swal.fire({
+            title: 'خطأ ❌',
+            text: 'حدث خطأ أثناء تأكيد الفاتورة. يرجى المحاولة مرة أخرى.',
+            icon: 'error',
+            confirmButtonColor: '#d33',
+            confirmButtonText: 'حسناً',
+            customClass: {
+              popup: ' ',
+            },
+          });
+        },
+      });
     });
-  });
-}
-
-
+  }
 
   showSuccessAlert(message: string) {
     Swal.fire({

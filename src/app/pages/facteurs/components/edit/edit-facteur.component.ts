@@ -10,10 +10,11 @@ import { RoleAlert } from 'src/app/tools/RoleAlert/loading.component';
 import { FormsModule, NgForm } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { MatTableModule } from '@angular/material/table';
-
+import { AutocompleteComponent } from 'src/app/tools/auto-complete/auto-complete.component';
 import { LoadingComponent } from 'src/app/tools/loading/loading.component';
 import { facteursServicesComponent } from '../../facteursServices';
 import { FacteurCardComponent } from 'src/app/pages/factcteur-card/factcteur-card';
+import { prodsServicesComponent } from 'src/app/pages/prods/prodsServices';
 @Component({
   selector: 'app-starter',
   standalone: true,
@@ -21,6 +22,7 @@ import { FacteurCardComponent } from 'src/app/pages/factcteur-card/factcteur-car
     FormsModule,
     CommonModule,
     FacteurCardComponent,
+    AutocompleteComponent,
     MatTableModule,
     MatProgressSpinnerModule,
     RoleAlert,
@@ -36,17 +38,33 @@ export class EditFacteurComponent implements OnInit {
   isLoading = false;
 
   date = new Date().toISOString().split('T')[0];
-  // day: any = {};
+  onProductSelect(product: any, item: any) {
+    item.Designation = product;
+  }
+
   transactions: any[] = [];
   constructor(
     private myService: facteursServicesComponent,
     private route: ActivatedRoute,
     private myservice: facteursServicesComponent,
     private http: HttpClient,
+    private prodService: prodsServicesComponent,
   ) {
     if (Constants.admin?.roles?.indexOf('admin') !== -1) {
       this.userHasTheRole = true;
     }
+  }
+
+  prods: any = [];
+
+  loadProductsDATA() {
+    this.prodService
+      .getprodsData(undefined, undefined, undefined)
+      .subscribe((data) => {
+        this.prods = data.data;
+        console.log('prods  ta is ================= ', this.prods);
+        this.isLoading = false;
+      });
   }
 
   selectedFile: File | null = null;
@@ -57,11 +75,13 @@ export class EditFacteurComponent implements OnInit {
 
     // show preview
     const reader = new FileReader();
-    reader.onload = (e) => (this.uploadedImageUrl = reader.result  );
+    reader.onload = (e) => (this.uploadedImageUrl = reader.result);
     reader.readAsDataURL(this.selectedFile!);
 
-
-     console.warn('uploadedImageUrl in onFileSelected is ', this.uploadedImageUrl)
+    console.warn(
+      'uploadedImageUrl in onFileSelected is ',
+      this.uploadedImageUrl,
+    );
   }
   uploadImage(): Promise<string | null> {
     return new Promise((resolve, reject) => {
@@ -69,19 +89,15 @@ export class EditFacteurComponent implements OnInit {
         resolve(null);
         return;
       }
-
       const formData = new FormData();
       formData.append('image', this.selectedFile);
-
-      this.http
-        .post<{ url: string }>(URLS.uploadAPI, formData)
-        .subscribe({
-          next: (res) => {
-            this.uploadedImageUrl = res.url; // ✅ REAL URL
-            resolve(res.url);
-          },
-          error: (err) => reject(err),
-        });
+      this.http.post<{ url: string }>(URLS.uploadAPI, formData).subscribe({
+        next: (res) => {
+          this.uploadedImageUrl = res.url; // ✅ REAL URL
+          resolve(res.url);
+        },
+        error: (err) => reject(err),
+      });
     });
   }
 
@@ -165,7 +181,6 @@ export class EditFacteurComponent implements OnInit {
   }
 
   get getUrl() {
-    
     if (this.uploadedImageUrl) {
       return this.uploadedImageUrl;
     } else {
@@ -215,9 +230,11 @@ export class EditFacteurComponent implements OnInit {
         this.isLoading = false;
       },
       complete: () => {
+        this.isLoading = false;
         console.log('Request completed!');
       },
     });
+    this.isLoading = false;
   }
   loadDATA() {
     const debt_id = this.route.snapshot.paramMap.get('id');
@@ -228,9 +245,11 @@ export class EditFacteurComponent implements OnInit {
         console.log('facteurs  ta is ', this.facture);
         this.isLoading = false;
       });
+      this.isLoading = false;
     }
   }
   ngOnInit(): void {
+    this.loadProductsDATA();
     this.loadDATA();
   }
 }

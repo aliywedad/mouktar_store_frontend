@@ -115,18 +115,27 @@
           <!-- جسم الجدول -->
           <tbody>
             <ng-container *ngFor="let item of facteurs; trackBy: trackById">
-              <tr class="align-middle" >
-                <td (click)="toggleRow(item.id)" class="nowrap">{{ timestampToDate(item.timestamp) }}</td>
-                <td (click)="toggleRow(item.id)" class="nowrap">{{ item.name }}</td>
-                <td (click)="toggleRow(item.id)" class="nowrap">{{ item.tel }}</td>
-                <td (click)="toggleRow(item.id)"
+              <tr class="align-middle">
+                <td (click)="toggleRow(item.id)" class="nowrap">
+                  {{ timestampToDate(item.timestamp) }}
+                </td>
+                <td (click)="toggleRow(item.id)" class="nowrap">
+                  {{ item.name }}
+                </td>
+                <td (click)="toggleRow(item.id)" class="nowrap">
+                  {{ item.tel }}
+                </td>
+                <td
+                  (click)="toggleRow(item.id)"
                   class=""
                   style="text-wrap: wrap; max-width: 200px"
                   *ngIf="showNotes"
                 >
                   {{ item.note }}
                 </td>
-                <td (click)="toggleRow(item.id)">{{ item.total | number : "1.0-2" }}</td>
+                <td (click)="toggleRow(item.id)">
+                  {{ item.total | number : "1.0-2" }}
+                </td>
                 <td (click)="toggleRow(item.id)">
                   <span
                     *ngIf="item.send"
@@ -156,7 +165,9 @@
                 <td (click)="toggleRow(item.id)">{{ item.transporter }}</td>
                 <td (click)="toggleRow(item.id)">{{ item.garage }}</td>
                 <td (click)="toggleRow(item.id)">{{ item.payed_price }}</td>
-                <td (click)="toggleRow(item.id)">{{ item.total-item.payed_price }}</td>
+                <td (click)="toggleRow(item.id)">
+                  {{ item.total-item.payed_price }}
+                </td>
 
                 <!-- عمود الإجراءات -->
                 <td class="text-center">
@@ -177,7 +188,7 @@
                       <mat-icon>send</mat-icon>
                       <span>الإرسال</span>
                     </button>
-                    <button   mat-menu-item (click)="goToEditPage(item.id)">
+                    <button mat-menu-item (click)="goToEditPage(item.id)">
                       <mat-icon>edit</mat-icon>
                       <span>تعديل</span>
                     </button>
@@ -195,7 +206,35 @@
 
               <tr *ngIf="expandedRowId === item.id">
                 <td [attr.colspan]="11">
-                  <app-factcteur-card [factureData]="item"></app-factcteur-card>
+                  <div style="display: flex">
+                    <app-factcteur-card
+                      [factureData]="item"
+                    ></app-factcteur-card>
+                    <div *ngIf="item.image_url">
+                      <div class="form-item mb-5">
+                        <div>
+                          <!-- Download -->
+                          <button
+                            class="btn bg-blue-500 m-2 border border-blue border-2"
+                            (click)="downloadImage(item.image_url )"
+                            [disabled]="!item.image_url"
+                          >
+                            <i class="fa-solid fa-download"></i>
+                            تحميل صورة الفاتورة
+                          </button>
+                        </div>
+
+                        <!-- Preview -->
+                        <div *ngIf="item.image_url " class="mt-4">
+                          <img
+                            [src]="item.image_url "
+                            alt="معاينة الصورة"
+                            style="max-width: 600px; max-height: 600px"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </td>
               </tr>
             </ng-container>

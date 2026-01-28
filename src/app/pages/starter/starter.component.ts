@@ -63,7 +63,7 @@ export class StarterComponent implements OnInit {
 
   loadProductsDATA() {
     this.myService
-      .getprodsData(undefined, undefined, this.tel)
+      .getprodsData(undefined, undefined, undefined)
       .subscribe((data) => {
         this.prods = data.data;
         console.log('prods  ta is ================= ', this.prods);
