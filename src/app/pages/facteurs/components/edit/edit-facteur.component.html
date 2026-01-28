@@ -133,9 +133,9 @@
     </div>
 
     <!-- Preview -->
-    <div *ngIf=" facture.image_url" class="mt-4">
+    <div *ngIf=" facture.image_url || uploadedImageUrl" class="mt-4">
       <img
-        [src]="facture.image_url"
+        [src]="getUrl"
         alt="معاينة الصورة"
         style="max-width: 600px; max-height: 600px"
       />

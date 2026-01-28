@@ -57,8 +57,11 @@ export class EditFacteurComponent implements OnInit {
 
     // show preview
     const reader = new FileReader();
-    reader.onload = (e) => (this.uploadedImageUrl = reader.result);
+    reader.onload = (e) => (this.uploadedImageUrl = reader.result  );
     reader.readAsDataURL(this.selectedFile!);
+
+
+     console.warn('uploadedImageUrl in onFileSelected is ', this.uploadedImageUrl)
   }
   uploadImage(): Promise<string | null> {
     return new Promise((resolve, reject) => {
@@ -71,7 +74,7 @@ export class EditFacteurComponent implements OnInit {
       formData.append('image', this.selectedFile);
 
       this.http
-        .post<{ url: string }>('http://localhost:8000/api/upload/', formData)
+        .post<{ url: string }>(URLS.uploadAPI, formData)
         .subscribe({
           next: (res) => {
             this.uploadedImageUrl = res.url; // ✅ REAL URL
@@ -135,26 +138,26 @@ export class EditFacteurComponent implements OnInit {
   }
   showPreview = false;
   facture: any = {};
-downloadImage(url: string) {
-  if (!url) return;
+  downloadImage(url: string) {
+    if (!url) return;
 
-  fetch(url)
-    .then(res => res.blob())
-    .then(blob => {
-      const blobUrl = window.URL.createObjectURL(blob);
+    fetch(url)
+      .then((res) => res.blob())
+      .then((blob) => {
+        const blobUrl = window.URL.createObjectURL(blob);
 
-      const a = document.createElement('a');
-      a.href = blobUrl;
-      a.download = url.split('/').pop() || 'facture.jpg';
+        const a = document.createElement('a');
+        a.href = blobUrl;
+        a.download = url.split('/').pop() || 'facture.jpg';
 
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
 
-      window.URL.revokeObjectURL(blobUrl);
-    })
-    .catch(err => console.error('Download failed', err));
-}
+        window.URL.revokeObjectURL(blobUrl);
+      })
+      .catch((err) => console.error('Download failed', err));
+  }
 
   /* Toggle preview */
   togglePreview() {
@@ -162,6 +165,7 @@ downloadImage(url: string) {
   }
 
   get getUrl() {
+    
     if (this.uploadedImageUrl) {
       return this.uploadedImageUrl;
     } else {

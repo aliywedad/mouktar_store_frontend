@@ -15,8 +15,10 @@ export class Constants {
 export class URLS {
   static serverPath = 'https://mouktar.karnty.com/';
   // static serverPath = 'http://127.0.0.1:8000/';
-  
+   
+  // 
   static facteurs = URLS.serverPath + 'facteurs/';
+  static uploadAPI = URLS.serverPath + 'api/upload/';
   static getDebtsByPhone = URLS.serverPath + 'getDebtsByPhone/';
   static confirmeFacteur = URLS.serverPath + 'confirmeFacteur/';
   static clients = URLS.serverPath + 'clients/';
