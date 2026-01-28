@@ -7,12 +7,13 @@
           <br />
           النوعية
         </label>
-        <input
-          class="input"
-          name="Designation"
-          [(ngModel)]="item.Designation"
-        />
+        <autocomplete
+          [products]="prods"
+         
+          (productSelected)="onProductSelect($event, item)"
+        ></autocomplete>
       </div>
+
       <div class="form-item">
         <label
           >Quantity <br />
@@ -101,15 +102,15 @@
       </div>
     </div>
 
-<div style="width: 100%;">
+    <div style="width: 100%">
       <label
-      (click)="getDebtsByPhone(facture.tel)"
-      class="btn bg-blue-500 m-2 border border-blue border-2 cursor-pointer"
-    >
-      <i class="fa-solid fa-rotate"></i>
-      تحقق من الديون السابقة
-    </label>
-</div>
+        (click)="getDebtsByPhone(facture.tel)"
+        class="btn bg-blue-500 m-2 border border-blue border-2 cursor-pointer"
+      >
+        <i class="fa-solid fa-rotate"></i>
+        تحقق من الديون السابقة
+      </label>
+    </div>
 
     <loading *ngIf="isLoading"></loading>
 

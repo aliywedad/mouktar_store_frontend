@@ -18,6 +18,8 @@ import { LoadingComponent } from 'src/app/tools/loading/loading.component';
 import { FacteurCardComponent } from '../factcteur-card/factcteur-card';
 import { facteursServicesComponent } from '../facteurs/facteursServices';
 import { Phone } from 'angular-feather/icons';
+import { AutocompleteComponent } from 'src/app/tools/auto-complete/auto-complete.component';
+import { prodsServicesComponent } from '../prods/prodsServices';
 @Component({
   selector: 'app-starter',
   standalone: true,
@@ -26,6 +28,7 @@ import { Phone } from 'angular-feather/icons';
     FormsModule,
     FacteurCardComponent,
     CommonModule,
+    AutocompleteComponent,
     MatTableModule,
     MatProgressSpinnerModule,
     RoleAlert,
@@ -45,6 +48,8 @@ export class StarterComponent implements OnInit {
   transactions: any[] = [];
   constructor(
     private router: Router,
+    private myService: prodsServicesComponent,
+
     private service: facteursServicesComponent,
 
     private myservice: StarterServicesComponent,
@@ -54,6 +59,25 @@ export class StarterComponent implements OnInit {
       this.userHasTheRole = true;
     }
   }
+  prods: any = [];
+
+  loadProductsDATA() {
+    this.myService
+      .getprodsData(undefined, undefined, this.tel)
+      .subscribe((data) => {
+        this.prods = data.data;
+        console.log('prods  ta is ================= ', this.prods);
+        this.isLoading = false;
+      });
+  }
+  onProductSelect(product: any, item: any) {
+    // console.log('Selected product:', product);
+    // console.log('Item before update:', item);
+    item.Designation=product
+    // item = product;
+    // item.price = product.sale_price;
+  }
+
   resetItem() {
     this.item = {
       prixTotal: 0,
@@ -161,6 +185,20 @@ export class StarterComponent implements OnInit {
       this.service.getDebtsByPhone(Phone).subscribe((data) => {
         this.debts = data.data;
         this.facture.TotaleDebts = this.getTotaleDebts;
+        if(this.debts.length==0 || this.debts.length==undefined){
+          // alert that there is no debts for this phone number
+          Swal.fire({
+            position: "top-end",
+            title: 'معلومات',
+            text: 'لا توجد ديون لهذا الرقم.',
+            icon: 'info',
+            confirmButtonColor: '#4A90E2',
+            confirmButtonText: 'موافق',
+            timer: 1500,
+            showConfirmButton: false,
+          });
+        }
+
         console.warn('debts data is ============= ', this.debts);
       });
     }
@@ -246,5 +284,7 @@ export class StarterComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.loadProductsDATA();
+  }
 }

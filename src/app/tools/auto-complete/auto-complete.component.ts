@@ -46,7 +46,7 @@ export class AutocompleteComponent {
     this.productSelected.emit(this.input.nativeElement.value|| '' );
     const filterValue = (this.input.nativeElement.value || '').toLowerCase();
     this.filteredOptions = this.products.filter(p =>
-      p.toLowerCase().includes(filterValue)
+      p.name.toLowerCase().includes(filterValue)
     );
   }
 

@@ -1,9 +1,11 @@
 <mat-form-field class="example-full-width">
-  <mat-label>رقم الهاتف</mat-label>
+  <mat-label>
+    
+  </mat-label>
   <input
     #input
     type="text"
-    placeholder="الرقم  "
+    
     matInput
     [formControl]="myControl"
     [matAutocomplete]="auto"
@@ -11,9 +13,12 @@
     (focus)="filter()"
   />
 
-  <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onSelect($event.option.value)">
-    <mat-option *ngFor="let option of filteredOptions" [value]="option">
-      {{ option }} 
+  <mat-autocomplete
+    #auto="matAutocomplete"
+    (optionSelected)="onSelect($event.option.value)"
+  >
+    <mat-option *ngFor="let option of filteredOptions" [value]="option.name">
+      {{ option.name }}
     </mat-option>
   </mat-autocomplete>
 </mat-form-field>

@@ -52,18 +52,15 @@ export class prodsComponent implements OnInit {
   expandedRowId: string | null = null;
   selectedPaymet: any = [];
   filtredPayments: any[] = [];
- 
- 
+
   isLoading = false;
   prods: any = [];
   tel = '';
- 
+
   newItem: any = {
     name: '',
-   
   };
 
- 
   Add() {
     this.isLoading = true;
     ((this.newItem.timestamp = new Date().getTime()),
